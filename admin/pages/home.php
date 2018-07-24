@@ -1,4 +1,4 @@
-<div class="main" id="wrapper" style="">	
+<div class="home" style="">	
 	<div class="container-fluid" id="btn-control">		
 		<p class="col-sm-3">
 			<button type="button" class="btn btn-success" id="btn-mng-img" href="#">Quản lý ảnh</button>
@@ -13,20 +13,16 @@
 			<button type="button" class="btn btn-success" id="btn-post-content" href="#">Hướng dẫn post bài viết</button>
 		</p>
 	</div>
-	
-    <div id="page-wrapper">    	
 
-        <div class="container-fluid">
-            <div class="row" id="main" >            	
+    <div class="container-fluid">
+        <div class="row" id="main" >            	
 
-                <div class="col-sm-12 col-md-12 well" id="content">
-                    <h1>Welcome Admin!</h1>
-                </div>                
+            <div class="col-sm-12 col-md-12 well" id="content">
+                <h1>Welcome Admin!</h1>
+            </div>                
 
-            </div>
-            <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
+        <!-- /.row -->
     </div>
-    <!-- /#page-wrapper -->    
+    <!-- /.container-fluid -->    
 </div>

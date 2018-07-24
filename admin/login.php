@@ -1,3 +1,20 @@
+<?php
+require_once ('./class/database.php');
+include_once ('./libs/funcs.php');
+
+if(isset($_SESSION['login'], $_SESSION['account'], $_SESSION['password']) && $_SESSION['login'] && $_SESSION['account'] &&  $_SESSION['password']){
+	$_SESSION['login'] = $_COOKIE['login']; 
+	$_SESSION['account'] = $_COOKIE['account'];
+	$_SESSION['password'] = $_COOKIE['password'];
+}
+
+if (isset($_POST['account'], $_POST['password']) && $_POST['account'] && $_POST['password']){
+	// check user
+	
+}
+?>
+
+<!-- =========================================================================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +22,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>First Web Project</title>
 	<meta name="viewport" content="width=device-width initial-scale=1.0">
-	<script src="./libs/js/jquery-3.3.1.min.js" type="text/javascript"></script>
-	<script src="./libs/js/bootstrap.min.js" type="text/javascript"></script>
-	<link href="./libs/css/bootstrap.min.css" rel="stylesheet" />
+	<script src="./js/jquery-3.3.1.min.js" type="text/javascript"></script>
+	<script src="./js/bootstrap.min.js" type="text/javascript"></script>
+	<link href="./css/bootstrap.min.css" rel="stylesheet" />
 	<!-- login -->
-	<script src="./libs/js/login.js" type="text/javascript"></script>
-	<link href="./libs/css/login.css" rel="stylesheet" />
+	<script src="./js/login.js" type="text/javascript"></script>
+	<link href="./css/login.css" rel="stylesheet" />
 	<!-- /login -->	
 
 </head>
@@ -28,10 +45,10 @@
                 </div>
                 <div class="wrap">
                     <p class="form-title">
-                        Đăng Nhập</p>
-                    <form class="login">
-                    <input type="text" placeholder="Username" />
-                    <input type="password" placeholder="Password" />
+                        Đăng Nhập</p>n
+                    <form class="login" action="" method="post">
+                    <input type="text" name="account" placeholder="Username" />
+                    <input type="password" name="password" placeholder="Password" />
                     <input type="submit" value="Đăng Nhập" class="btn btn-success btn-sm" />
                     <div class="remember-forgot">
                         <div class="row">
@@ -51,8 +68,7 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <!-- <div class="posted-by">Posted By: <a href="http://www.jquery2dotnet.com">Bhaumik Patel</a></div> -->
+        </div>      
     </div>
 </body>
 </html>

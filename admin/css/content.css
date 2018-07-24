@@ -1,0 +1,22 @@
+.content fieldset.creation-border {
+    border: solid 1px #DDD !important;
+    padding: 0 10px 10px 10px;
+    border-bottom: none;
+}
+
+.content legend.creation-border {
+    width: auto !important;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+
+}
+
+.content .input-group-addon {
+    min-width: 200px;
+    text-align: right;
+}
+
+.content .input-group {
+    padding: 10px 0px;
+}

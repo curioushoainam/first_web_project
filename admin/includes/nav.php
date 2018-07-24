@@ -7,8 +7,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="http://cijulenlinea.ucr.ac.cr/dev-users/">
-            <img src="#" alt="LOGO"">
+        <a class="navbar-brand" href="#">
+            <img src="./images/logo.jpg" alt="LOGO"" style="width: 210px;">
         </a>
     </div>
     <!-- Top Menu Items -->
@@ -30,11 +30,19 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
             <li>
-                <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> MENU 1 <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                <a href="?view=home"><i class="fa fa-fw fa-user-plus"></i> DASHBOARD</a>
+            </li>
+            <li>
+                <a href="?view=admin"><i class="fa fa-fw fa-user-plus"></i>  ADMIN</a>
+            </li>
+            <li>
+                <a href="?view=users"><i class="fa fa-fw fa-paper-plane-o"></i> USERS</a>
+            </li>
+            <li>
+                <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> MENU <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 <ul id="submenu-1" class="collapse">
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 1.1</a></li>
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 1.2</a></li>
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 1.3</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Admin </a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Users </a></li>                    
                 </ul>
             </li>
             <li>

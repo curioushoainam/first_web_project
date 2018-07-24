@@ -1,0 +1,27 @@
+.edit_account {
+	margin-top: 100px;
+}
+
+@media(min-width:1800px) {   
+    .edit_account {
+		margin-left: 400px;
+		margin-right: 400px;
+	}
+}
+
+
+@media(min-width:1200px) {   
+    .edit_account {
+		margin-left: 100px;
+		margin-right: 100px;
+	}
+}
+
+
+
+@media(min-width:800px) {   
+    .edit_account {
+    	margin-top: 0px;
+		
+	}
+}

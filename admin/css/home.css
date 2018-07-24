@@ -1,0 +1,16 @@
+
+#btn-control{
+    width: 100%;
+    padding: 120px 0px 0px 0px;
+    background-color: #fff;
+}
+
+@media(min-width:768px) {   
+    #btn-control {
+        padding: 35px 10px 5px;
+    }
+}
+
+.error {
+	color: red;
+}
