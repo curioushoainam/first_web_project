@@ -8,22 +8,60 @@ class Process_account extends Database {
 		return $this->loadaRow(array($account, $password));
 	}
 	
-	function list_active_accounts(){
-		$sql = 'SELECT * FROM `' . $this->table .'` WHERE trang_thai != 2';
+	function list_active_accounts($start = 0, $qty = 0){
+		$limit = '';
+		if($qty > 0) {
+			$limit = " LIMIT $start,$qty";
+		}
+		$sql = 'SELECT * FROM `' . $this->table .'` WHERE trang_thai = 1' .$limit;				
 		$this->setQuery($sql);
 		return $this->loadRows();
 	}
 
-	function list_all_accounts(){
-		$sql = 'SELECT * FROM `' . $this->table .'`';
+	function list_all_accounts($start = 0, $qty = 0){
+		$limit = '';
+		if($qty > 0) {
+			$limit = " LIMIT $start,$qty";
+		}
+		$sql = 'SELECT * FROM `' . $this->table .'`' .$limit;
 		$this->setQuery($sql);
 		return $this->loadRows();
 	}
 
-	function list_hidden_accounts(){
-		$sql = 'SELECT * FROM `' . $this->table .'` WHERE trang_thai = 2';
+	function list_hidden_accounts($start = 0, $qty = 0){
+		$limit = '';
+		if($qty > 0) {
+			$limit = " LIMIT $start,$qty";
+		}
+		$sql = 'SELECT * FROM `' . $this->table .'` WHERE trang_thai = 0' .$limit;
 		$this->setQuery($sql);
 		return $this->loadRows();
+	}
+
+	function list_deleted_accounts($start = 0, $qty = 0){
+		$limit = '';
+		if($qty > 0) {
+			$limit = " LIMIT $start,$qty";
+		}
+		$sql = 'SELECT * FROM `' . $this->table .'` WHERE trang_thai = 2' .$limit;
+		$this->setQuery($sql);
+		return $this->loadRows();
+	}
+	function total_accounts($status = ''){
+		if ($status == 'all'){
+			$sql = 'SELECT COUNT(ma) AS total FROM `' . $this->table .'`';
+		}
+		else if ($status == 'hidden') {
+			$sql = 'SELECT COUNT(ma) AS total FROM `' . $this->table .'` WHERE trang_thai = 0';
+		}
+		else if ($status == 'deleted') {
+			$sql = 'SELECT COUNT(ma) AS total FROM `' . $this->table .'` WHERE trang_thai = 2';
+		}		
+		else {
+			$sql = 'SELECT COUNT(ma) AS total FROM `' . $this->table .'` WHERE trang_thai = 1';
+		}
+		$this->setQuery($sql);
+		return $this->loadRow()->total;
 	}
 
 	function getAccountInfo($ma){
@@ -44,19 +82,15 @@ class Process_account extends Database {
 		return $this->execute($ma);
 	}
 
-	// Hàm này remove account ra khỏi database
-	function remove_account($ma){
-		$sql = 'DELETE FROM `' . $this->table .'` WHERE ma = ?';
-		$this->setQuery($sql);
-		return $this->execute($ma);
-	}
-
 	// Hàm kiểm tra sự tồn tại của account
 	// Nếu tồn tại, trả về true; ngược lại là false
 	function isAccount($account){
-		$sql = 'SELECT * FROM `' . $this->table .'` WHERE ten_dang_nhap = ?';
+		$sql = 'SELECT ma FROM `' . $this->table .'` WHERE ten_dang_nhap = ?';
 		$this->setQuery($sql);
-		return $this->loadRow(array($account));
+		if ($this->loadRow(array($account)))
+			return true;
+		else
+			return false;
 	}
 
 	// Hàm kiểm tra sự tồn tại của email
@@ -64,7 +98,10 @@ class Process_account extends Database {
 	function isEmail($email){
 		$sql = 'SELECT * FROM `' . $this->table .'` WHERE email = ?';
 		$this->setQuery($sql);
-		return $this->loadRow(array($email));
+		if ($this->loadRow(array($email)))
+			return true;
+		else
+			return false;		
 	}
 
 	function addAccount($newAccount = array()){
@@ -74,10 +111,10 @@ class Process_account extends Database {
 	}
 
 	// Hàm trả về giá trị mật khẩu của mã tương ứng
-	function getPassword($ma){
-		$sql = 'SELECT mat_khau FROM `' . $this->table .'` WHERE ma = ?';
+	function getPassword($username){
+		$sql = 'SELECT mat_khau FROM `' . $this->table .'` WHERE ten_dang_nhap = ?';
 		$this->setQuery($sql);
-		return $this->loadRow(array($ma));
+		return $this->loadRow(array($username));
 	}
 
 	function updateAccount($param = array()){

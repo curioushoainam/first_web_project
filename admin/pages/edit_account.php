@@ -176,7 +176,7 @@ $account = $process_account->getAccountInfo($ma);
                 <div class="col-md-8 inputGroupContainer">
                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span><select id="trang_thai" name="trang_thai" class="form-control">
                         <?php 
-                        $trang_thais = [0,1,2];
+                        $trang_thais = [0,1];
                         foreach ($trang_thais as $item){
                             $selectVar = $account->trang_thai == $item ? 'selected' : '';
                             echo '<option '.$selectVar.' value="'. $item .'">'.   $item .'</option>'; 

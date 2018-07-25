@@ -7,7 +7,7 @@ include_once ('./libs/funcs.php');
 
 
 //if (!checklogin())
-//	chuyentrang('login.php');
+	//chuyentrang('login.php');
 ?>
 <!-- =============================================================== -->
 
@@ -29,6 +29,7 @@ include_once ('./libs/funcs.php');
 	<link href="./css/content.css" rel="stylesheet" />
 	<link href="./css/error.css" rel="stylesheet" />
 	<link href="./css/add_account.css" rel="stylesheet" />
+	<link href="./css/pagination.css" rel="stylesheet" />
 	<!-- /Sidebar -->	
 
 </head>
