@@ -5,17 +5,18 @@ require_once ('./class/Process_account.php');
 $paging = new Pagination();
 $process_account = new Process_account();
 
-if(!empty($_GET['status']) && $_GET['status']){
-	
+
+$rpp = $_SESSION['rpp'];
+
+if(!empty($_GET['status']) && $_GET['status']){	
 
 	if ($_GET['status'] == 'all'){
 		$config = array(
 		    'current_page'  => isset($_GET['page']) ? $_GET['page'] : 1, // Trang hiện tại
 		    'total_record'  => $process_account->total_accounts($_GET['status']), 		// Tổng số record
-		    'limit'         => 5,				// limit
+		    'limit'         => $rpp,				// limit
 		    'link_full'     => '?view=admin&status=all&page={page}',// Link full có dạng như sau: domain/com/page/{page}
-		    'link_first'    => '?view=admin&status=all',	// Link trang đầu tiên
-		    'range'         => 9 				// Số button trang bạn muốn hiển thị 
+		    'link_first'    => '?view=admin&status=all',	// Link trang đầu tiên		    
 		);
 		$paging->init($config);		
 		$accounts = $process_account->list_all_accounts($paging->get_config('start'), $paging->get_config('limit'));
@@ -24,10 +25,9 @@ if(!empty($_GET['status']) && $_GET['status']){
 		$config = array(
 		    'current_page'  => isset($_GET['page']) ? $_GET['page'] : 1, // Trang hiện tại
 		    'total_record'  => $process_account->total_accounts($_GET['status']), 		// Tổng số record
-		    'limit'         => 5,				// limit
+		    'limit'         => $rpp,				// limit
 		    'link_full'     => '?view=admin&status=hidden&page={page}',// Link full có dạng như sau: domain/com/page/{page}
-		    'link_first'    => '?view=admin&status=hidden',	// Link trang đầu tiên
-		    'range'         => 9 				// Số button trang bạn muốn hiển thị 
+		    'link_first'    => '?view=admin&status=hidden',	// Link trang đầu tiên		     
 		);
 		$paging->init($config);		
 		$accounts = $process_account->list_hidden_accounts($paging->get_config('start'), $paging->get_config('limit'));
@@ -36,10 +36,9 @@ if(!empty($_GET['status']) && $_GET['status']){
 		$config = array(
 		    'current_page'  => isset($_GET['page']) ? $_GET['page'] : 1, // Trang hiện tại
 		    'total_record'  => $process_account->total_accounts($_GET['status']), 		// Tổng số record
-		    'limit'         => 5,				// limit
+		    'limit'         => $rpp,				// limit
 		    'link_full'     => '?view=admin&status=deleted&page={page}',// Link full có dạng như sau: domain/com/page/{page}
-		    'link_first'    => '?view=admin&status=deleted',	// Link trang đầu tiên
-		    'range'         => 9 				// Số button trang bạn muốn hiển thị 
+		    'link_first'    => '?view=admin&status=deleted',	// Link trang đầu tiên		     
 		);
 		$paging->init($config);
 		$accounts = $process_account->list_deleted_accounts($paging->get_config('start'), $paging->get_config('limit'));
@@ -48,10 +47,9 @@ if(!empty($_GET['status']) && $_GET['status']){
 	$config = array(
 	    'current_page'  => isset($_GET['page']) ? $_GET['page'] : 1, // Trang hiện tại
 	    'total_record'  => $process_account->total_accounts(), 		// Tổng số record
-	    'limit'         => 5,				// limit
+	    'limit'         => $rpp,				// limit
 	    'link_full'     => '?view=admin&page={page}',// Link full có dạng như sau: domain/com/page/{page}
-	    'link_first'    => '?view=admin',	// Link trang đầu tiên
-	    'range'         => 9 				// Số button trang bạn muốn hiển thị 
+	    'link_first'    => '?view=admin',	// Link trang đầu tiên	     
 	);
 	$paging->init($config);		
 	$accounts = $process_account->list_active_accounts($paging->get_config('start'), $paging->get_config('limit'));
@@ -89,10 +87,13 @@ if(!empty($_GET['status']) && $_GET['status']){
 					<button type="submit" class="btn btn-primary btn-sm" name="btn-search" id="btn-search" href="#"><span class="glyphicon"></span> Search</button> -->
 					<label>Số dòng trên trang</label>
 					<select class="search" name="rpp" id="rpp">
-						<option value="3">3</option>
-						<option value="5">5</option>
-						<option value="10">10</option>
-						<option value="25">25</option>											
+					<?php  	
+						$rpp_arr = [5, 10, 25];
+						foreach ($rpp_arr as $item){
+                        $selectVar = $_SESSION['rpp'] == $item ? 'selected' : '';
+                        echo '<option '.$selectVar.' value="'. $item .'">'.   $item .'</option>'; 
+                    	}
+					?>																
 					</select>
 				</div>
 			</form>
@@ -147,11 +148,11 @@ if(!empty($_GET['status']) && $_GET['status']){
 	    		<td><?= $account->ngay_tao ?></td> 
 	    		<td><?= $account->ngay_cap_nhat ?></td>	    		
 	    		<td>
-	    			<a href="#" id="<?= $account->ma ?>" class="view_data" data-toggle="modal" data-target="#dataModal"><span class="glyphicon glyphicon-list-alt"></span></a>
+	    			<a href="#" id="<?= $account->ma ?>" class="view_data" data-toggle="modal" data-target="#modal_view"><span class="glyphicon glyphicon-list-alt" title="View"></span></a>
 	    			 | 
-					<a href="?view=edit_account&id=<?= $account->ma ?>"><span class="glyphicon glyphicon-edit"></span></a>
+					<a href="?view=edit_account&id=<?= $account->ma ?>"><span class="glyphicon glyphicon-edit" title="Edit"></span></a>
 					 | 
-					<a href="?view=delete_account&id=<?= $account->ma ?>"><span class="glyphicon glyphicon-trash"></span></a>
+					<a href="#" id="<?= $account->ma ?>" class="deleting_account" data-toggle="modal" data-target="#modal_delete"><span class="glyphicon glyphicon-trash" title="Delete"></span></a>
 
 	    		</td>
 	    	</tr>
@@ -161,7 +162,7 @@ if(!empty($_GET['status']) && $_GET['status']){
 	    </tbody>
 	  </table>
 	</div>
-	<div class="col-sm-offset-4">	
+	<div>	
 		<!-- Pagination -->
 		<?php			
 			echo $paging->html();
@@ -170,7 +171,34 @@ if(!empty($_GET['status']) && $_GET['status']){
 	</div>
 </div>
 
-<?php 
-include_once ('./includes/modal.php');
+<?php
+
+include_once ('./includes/modal_view.php');
+include_once ('./includes/modal_delete.php');
+
 ?>
 
+<div><p>Session => <?= $_SESSION['rpp'] ?></p></div>
+<div class="feeback"></div>
+
+<script src="./js/jquery.session.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#rpp').change(function(){
+			var rpp = $('#rpp').val();
+			alert('js => ' + rpp);
+			$.ajax({
+				url : './libs/setValuebyAjax.php',
+				type : 'text',
+				method : 'post',
+				data    : {rpp : rpp},
+				success : function(data){
+					$('.feeback').html(data);
+				},
+				error : function(err){
+					$('.feeback').html(err);
+				}
+			});
+		});
+	});
+</script>

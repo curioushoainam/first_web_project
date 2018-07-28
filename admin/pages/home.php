@@ -1,16 +1,16 @@
 <div class="home" style="">	
 	<div class="container-fluid" id="btn-control">		
 		<p class="col-sm-3">
-			<button type="button" class="btn btn-success" id="btn-mng-img" href="#">Quản lý ảnh</button>
+			<a type="button" class="btn btn-success" id="btn-mng-img" href="?view=ql_anh">Quản lý ảnh</a>
 		</p>	
 		<p class="col-sm-3">
-			<button type="button" class="btn btn-success" id="btn-up-many-imgs" href="#">Upload nhiều ảnh</button>
+			<a type="button" class="btn btn-success" id="btn-up-many-imgs" href="?view=up_nhieu_hinh">Upload nhiều ảnh</a>
 		</p>	
 		<p class="col-sm-3">
-			<button type="button" class="btn btn-success" id="btn-up-one-img" href="#">Upload 1 ảnh</button>
+			<a type="button" class="btn btn-success" id="btn-up-many-imgs" href="?view=up_mot_hinh">Upload 1 ảnh</a>
 		</p>	
 		<p class="col-sm-3">
-			<button type="button" class="btn btn-success" id="btn-post-content" href="#">Hướng dẫn post bài viết</button>
+			<a type="button" class="btn btn-success" id="btn-post-content" href="?view=huong_dan_post_bai">Hướng dẫn post bài viết</a>
 		</p>
 	</div>
 

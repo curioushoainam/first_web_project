@@ -3,9 +3,9 @@ require_once ('./../config.php');
 require_once ('./../class/database.php');
 require_once ('./../class/Process_account.php');
 require_once ('./../class/Validation.php');
+
 $process_account = new Process_account();
 $validation = new Validation();
-$account = $process_account->getAccountInfo($_POST['ma']);
 
 if(isset($_POST['ma']) && $_POST['ma']){
 	$ma = $validation->test_input($_POST['ma']);

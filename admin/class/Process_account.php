@@ -76,10 +76,10 @@ class Process_account extends Database {
 		return $this->execute($ma);
 	}
 
-	function delete_account($ma){
-		$sql = 'UPDATE `' . $this->table .'` SET trang_thai = 2 WHERE ma = ?';
+	function delete_account($date, $ma){
+		$sql = 'UPDATE `' . $this->table .'` SET trang_thai = 2, ngay_cap_nhat = ? WHERE ma = ?';
 		$this->setQuery($sql);
-		return $this->execute($ma);
+		return $this->execute(array($date, $ma));
 	}
 
 	// Hàm kiểm tra sự tồn tại của account
@@ -105,16 +105,19 @@ class Process_account extends Database {
 	}
 
 	function addAccount($newAccount = array()){
-		$sql = 'INSERT INTO `'. $this->table .'`(ten_dang_nhap, email, mat_khau, ho_ten, dia_chi, ma_nhom, trang_thai, ngay_tao) VALUES (?,?,?,?,?,?,?,?)';
+		$sql = 'INSERT INTO `'. $this->table .'`(ten_dang_nhap, email, mat_khau, avatar, ho_ten, dia_chi, ma_nhom, trang_thai, ngay_tao) VALUES (?,?,?,?,?,?,?,?,?)';
 		$this->setQuery($sql);
 		return $this->execute($newAccount);
 	}
 
-	// Hàm trả về giá trị mật khẩu của mã tương ứng
-	function getPassword($username){
+	// Hàm trả về True nếu $username có password trùng với $password người nhập
+	function checkPassword($username, $password){
 		$sql = 'SELECT mat_khau FROM `' . $this->table .'` WHERE ten_dang_nhap = ?';
-		$this->setQuery($sql);
-		return $this->loadRow(array($username));
+		$this->setQuery($sql);		 	
+		if ($this->loadRow(array($username))->mat_khau === $password)
+			return true;
+		else
+			return false;
 	}
 
 	function updateAccount($param = array()){
@@ -133,6 +136,12 @@ class Process_account extends Database {
 		$sql = 'SELECT ma FROM `' . $this->table . '` WHERE email = ?';		
 		$this->setQuery($sql);
 		return $this->loadRows(array($email));
+	}
+
+	function getAvatar($account){
+		$sql = 'SELECT avatar FROM `' . $this->table . '` WHERE ten_dang_nhap = ?';		
+		$this->setQuery($sql);
+		return $this->loadRow(array($account))->avatar;
 	}
 }
 

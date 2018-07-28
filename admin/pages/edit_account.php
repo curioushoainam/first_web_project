@@ -6,29 +6,12 @@ $process_account = new Process_account();
 $validation = new Validation();
 
 // define variables and set to empty values
-$ten_dang_nhap = $mat_khau = $emailErr = $ho_tenErr = $dia_chiErr = $ma_nhomErr = $trang_thaiErr = '';
+$emailErr = $ho_tenErr = $dia_chiErr = $ma_nhomErr = $trang_thaiErr = '';
 $email = $ho_ten = $dia_chi = $ma_nhom = $trang_thai = '';
 
 $ma = $_GET['id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-
-    // if(empty($_POST['ten_dang_nhap'])){
-    //     $ten_dang_nhapErr = "Tên đăng nhập là bắt buộc";        
-    // } else {
-    //     $ten_dang_nhap = $validation->test_input($_POST['ten_dang_nhap']);
-    //     // kiểm tra $ten_dang_nhap có đúng quy tắc hay không
-    //     if (!$validation->isCommonChars($ten_dang_nhap)){           
-    //         $ten_dang_nhapErr = "Chỉ gồm chữ cái, chữ số và _";
-            
-    //     } else {
-    //         // kiểm tra $ten_dang_nhap đã tồn tại trong database chưa; true nếu tồn tại
-    //         $ten_dang_nhapErr . ' in ten_dang_nhapErr' ;
-    //         if ($process_account->isAccount($ten_dang_nhap)){
-    //             $ten_dang_nhapErr . "Tài khoản đã tồn tại";                
-    //         }
-    //     }
-    // }    
     
     if(empty($_POST['email'])){
         $emailErr = "Email là bắt buộc";
@@ -45,19 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     $emailErr = "Email đã tồn tại";
             }
         }
-    }
-
-    // if(empty($_POST['mat_khau'])){
-    //     $mat_khauErr = "Mật khẩu là bắt buộc";
-    // } else {
-    //     $mat_khau = $validation->test_input($_POST['mat_khau']);
-    //     // kiểm tra $email có đúng quy tắc hay không
-    //     if (!$validation->isPassword($mat_khau)){
-    //         $mat_khauErr = "Mật khẩu không hợp lệ";
-    //     } else {
-    //         $mat_khau = md5($mat_khau);
-    //     }
-    // }
+    }    
 
     if(empty($_POST['ho_ten'])){
         $ho_tenlErr = "Họ tên là bắt buộc";
@@ -76,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $ma_nhomErr = "Mã nhóm không hợp lệ";
         } 
     }
-
     
     if(empty($_POST['trang_thai']) && $_POST['trang_thai'] !== '0'){
         $trang_thaiErr = "Trạng thái là bắt buộc";
@@ -87,21 +57,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $mtrang_thaiErr = "Trạng thái không hợp lệ";
         }        
     }
-
-    if (!($emailErr || $ho_tenErr || $dia_chiErr || $ma_nhomErr || $trang_thaiErr)){        
+    
+    if (!($emailErr || $ho_tenErr || $dia_chiErr || $ma_nhomErr || $trang_thaiErr)){             
         $ngay_cap_nhat = date("Y-m-d h:m:s");       
-        $process_account->updateAccount(array($email, $ho_ten, $dia_chi, $ma_nhom, $trang_thai , $ngay_cap_nhat, $ma));                               
+        $process_account->updateAccount(array($email, $ho_ten, $dia_chi, $ma_nhom, $trang_thai , $ngay_cap_nhat, $ma));
         chuyentrang('?view=admin');
     }
 }
+
 ?>
 
 <?php
 $action_link = htmlspecialchars($_SERVER["PHP_SELF"]) . '?view=edit_account&id='. $ma;
-
 $account = $process_account->getAccountInfo($ma);
-//$ids = $process_account->getIDofEmail('admin1@email.com');
-//viewArray($ids);
+
 ?>
 
 <div class="edit_account" style="">    
@@ -117,15 +86,7 @@ $account = $process_account->getAccountInfo($ma);
                     <p></p>
                 </div>
              </div>
-             <!-- <div class="form-group">
-                <label class="col-md-2 control-label">Mật khẩu</label>
-                <div class="col-md-8 inputGroupContainer">
-                   <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span><input id="mat_khau" name="mat_khau" placeholder="" class="form-control" required="true" value="<?= $mat_khau; ?>" type="text" readonly></div>
-                </div>
-                <div class="col-md-2 error">
-                    <p></p>
-                </div>
-             </div> -->
+             
              <div class="form-group">
                 <label class="col-md-2 control-label">Email</label>
                 <div class="col-md-8 inputGroupContainer">
@@ -187,8 +148,7 @@ $account = $process_account->getAccountInfo($ma);
                 <div class="col-md-2 error">
                     <p><?= $trang_thaiErr; ?></p>
                 </div>
-             </div>
-
+            </div>            
             <div class="form-group" >
                 <div class="col-sm-4 col-xs-4" style="text-align: right;">
                     <button type="submit" class="btn btn-success" name="" id="">Update</button>

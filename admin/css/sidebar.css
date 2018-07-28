@@ -28,7 +28,7 @@
 /* Top Navigation */
 
 .top-nav {
-    padding: 0 15px;
+    padding: 0 15px;    
 }
 
 .top-nav>li {
@@ -37,8 +37,10 @@
 }
 
 .top-nav>li>a {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    /*padding-top: 20px;
+    padding-bottom: 20px;*/
+    padding-top: 10px;          /*ntr*/
+    padding-bottom: 10px;       /*ntr*/
     line-height: 20px;
     color: #fff;
 }
@@ -139,4 +141,15 @@
 
 .navbar-brand {
     padding: 5px 15px;
+}
+
+.navbar .nav > li > a > .avatar {
+    vertical-align: middle;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;    
+    background-color: white;
 }

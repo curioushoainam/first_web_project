@@ -1,10 +1,11 @@
 <?php 
+require_once ('./libs/funcs.php');
 require_once ('./class/Process_account.php');
 require_once ('./class/Validation.php');
 
 // define variables and set to empty values
-$ten_dang_nhapErr = $emailErr = $mat_khauErr = $ho_tenErr = $dia_chiErr = $ma_nhomErr = $trang_thaiErr = '';
-$ten_dang_nhap = $email = $mat_khau = $ho_ten = $dia_chi = $ma_nhom = $trang_thai = '';
+$ten_dang_nhapErr = $emailErr = $mat_khauErr = $avatar = $ho_tenErr = $dia_chiErr = $ma_nhomErr = $trang_thaiErr = '';
+$ten_dang_nhap = $email = $mat_khau = $avatarErr = $ho_ten = $dia_chi = $ma_nhom = $trang_thai = '';
  
 $process_account = new Process_account();
 $validation = new Validation(); 
@@ -23,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             // kiểm tra $ten_dang_nhap đã tồn tại trong database chưa; true nếu tồn tại
             $ten_dang_nhapErr . ' in ten_dang_nhapErr' ;
             if ($process_account->isAccount($ten_dang_nhap)){
-                $ten_dang_nhapErr . "Tài khoản đã tồn tại";                
+                $ten_dang_nhapErr = "Tài khoản đã tồn tại";                
             }
         }
     }
@@ -81,19 +82,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         if (!$validation->isNumber($trang_thai)){
             $mtrang_thaiErr = "Trạng thái không hợp lệ";
         } 
-    }    
+    }
+
+    if (isset($_FILES['avatar'])){        
+        if (!($ten_dang_nhapErr || $emailErr ||$mat_khauErr || $ho_tenErr || $dia_chiErr || $ma_nhomErr || $trang_thaiErr)){
+            $result = upload_file($_FILES['avatar'], AVATAR_PATH, $ten_dang_nhap, AVATAR_SIZE);
+            if($result['error']){
+                $avatarErr = $result['msg'];                
+            } else {                
+                $avatar = $validation->test_input($result['msg']);                         
+                $createdDate = date("Y-m-d h:m:s");
+                $process_account->addAccount(array($ten_dang_nhap, $email, $mat_khau, $avatar, $ho_ten, $dia_chi, $ma_nhom, $trang_thai , $createdDate));                            
+                chuyentrang('?view=admin');
+            }
+        }
+    } else {         
+        $avatarErr = "Hình làm avatar avatar không tồn tại";
+    }
     
-    if (!($ten_dang_nhapErr || $emailErr || $mat_khauErr || $ho_tenErr || $dia_chiErr || $ma_nhomErr || $trang_thaiErr)){
-         $createdDate = date("Y-m-d h:m:s");       
-        $process_account->addAccount(array($ten_dang_nhap, $email, $mat_khau, $ho_ten, $dia_chi, $ma_nhom, $trang_thai , $createdDate));
-        unset($_SESSION['add_account']);                     
-        chuyentrang('?view=admin');        
-    } 
+    // if (!($ten_dang_nhapErr || $emailErr || $mat_khauErr || $ho_tenErr || $dia_chiErr || $ma_nhomErr || $trang_thaiErr)){
+    //      $createdDate = date("Y-m-d h:m:s");       
+    //     $process_account->addAccount(array($ten_dang_nhap, $email, $mat_khau, $ho_ten, $dia_chi, $ma_nhom, $trang_thai , $createdDate));                            
+    //     chuyentrang('?view=admin');        
+    // } 
 }
 ?>
 
 <div class="add_account" style="">	
-	<form class="well form-horizontal" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) . '?view=add_account'; ?>" method="post">
+	<form class="well form-horizontal" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) . '?view=add_account'; ?>" method="post" enctype="multipart/form-data">
 		<fieldset class="creation-border">
 			<legend class="creation-border">Thêm quản trị</legend>			
              <div class="form-group">
@@ -117,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
              <div class="form-group">
                 <label class="col-md-2 control-label">Mật khẩu</label>
                 <div class="col-md-8 inputGroupContainer">
-                   <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span><input id="mat_khau" name="mat_khau" placeholder="" class="form-control" required="true" value="" type="password"></div>
+                   <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span><input id="mat_khau" name="mat_khau" placeholder="" class="form-control" required="true" value="12#$abCD" type="password" readonly></div>
                 </div>
                 <div class="col-md-2 error">
                     <p><?= $mat_khauErr; ?></p>
@@ -167,17 +183,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="col-md-2 error">
                     <p><?= $trang_thaiErr; ?></p>
                 </div>
-             </div>
-
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Avatar</label>
+                <div class="col-md-8 inputGroupContainer">
+                    <div><input type="file" name="avatar" required /></div>
+                </div>
+                <div class="col-md-2 error">
+                    <p><?= $avatarErr; ?></p>
+                </div>
+            </div>
 			<div class="form-group" >
 				<div class="col-sm-4 col-xs-4" style="text-align: right;">
 					<button type="submit" class="btn btn-success" name="" id="">Submit</button>
 				</div>
 				<div class="col-sm-offset-4 col-xs-offset-8">
 					<a class="btn btn-default" name="cancel" id="cancel" href="?view=admin">Cancel</a>
-				</div>
-				
+				</div>				
 			</div>						
 		</fieldset>
-	</form>	  
+	</form>
 </div>

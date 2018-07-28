@@ -1,5 +1,4 @@
-<!-- Modal -->
-<div id="dataModal" class="modal fade" role="dialog">
+<div id="modal_view" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
          <!-- Modal content-->
@@ -9,7 +8,7 @@
                 <h4 class="modal-title">Thông tin chi tiết</h4>
             </div>
 
-            <div class="modal-body" id="member_info">
+            <div class="modal-body" id="account_info">
                 <div class="row">                    
                 </div>                                 
             </div>
@@ -20,7 +19,6 @@
         </div>
     </div>
 </div>
-<!-- /Modal Login -->
 <script>
     $(document).ready(function(){
         $('.view_data').click(function(){
@@ -31,13 +29,13 @@
                 method  : "post",
                 data    : {ma : ma},
                 success : function(data){
-                    $('#member_info').html(data);
-                    $('#dataModal').modal("show");
+                    $('#account_info').html(data);
+                    $('#modal_view').modal("show");
                 },
                 error   : function(err){
 
                 }
             });
-        });
+        });       
     });
 </script>

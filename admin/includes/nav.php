@@ -15,14 +15,15 @@
     <ul class="nav navbar-right top-nav">
         <li><a href="#" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i>
             </a>
-        </li>            
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin User <b class="fa fa-angle-down"></b></a>
+        </li>   
+                                 
+        <li class="dropdown">            
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<?= isset($_SESSION['avatar']) && $_SESSION['avatar']?$_SESSION['avatar'] : './images/avatars/anonymous.png' ?>" alt="Avatar" class="avatar" title="<?= isset($_SESSION['account']) && $_SESSION['account']?$_SESSION['account'] : 'Anonymous' ?>"></a>            
             <ul class="dropdown-menu">
                 <li><a href="#"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
                 <li><a href="#"><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
                 <li class="divider"></li>
-                <li><a href="#"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
+                <li><a href="?view=logout"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
             </ul>
         </li>
     </ul>

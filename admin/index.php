@@ -6,8 +6,8 @@ include_once ('./libs/ckeditor_funcs.php');
 include_once ('./libs/funcs.php');
 
 
-//if (!checklogin())
-	//chuyentrang('login.php');
+if (!checklogin())
+	chuyentrang('login.php');
 ?>
 <!-- =============================================================== -->
 
