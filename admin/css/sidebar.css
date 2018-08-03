@@ -1,11 +1,12 @@
 /*@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');*/
-@media(min-width:768px) {
+/*@media(min-width:768px) {
     body {
         margin-top: 50px;
     }   
-}
+}*/
 
 #wrapper {
+    margin-top: 180px;  
     padding-left: 0;    
 }
 
@@ -15,8 +16,15 @@
     background-color: #fff;
 }
 
+@media(min-width:300px) {
+    #wrapper {
+        margin-top: 120px;
+    }    
+}
+
 @media(min-width:768px) {
     #wrapper {
+        margin-top: 40px;
         padding-left: 225px;
     }
 

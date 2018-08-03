@@ -21,6 +21,7 @@ if (!checklogin())
 	<script src="./js/jquery-3.3.1.min.js" type="text/javascript"></script>
 	<script src="./js/bootstrap.min.js" type="text/javascript"></script>
 	<link href="./css/bootstrap.min.css" rel="stylesheet" />
+	<link href="./css/font-awesome.min.css" rel="stylesheet" />
 	<!-- Sidebar -->
 	<script src="./js/sidebar.js" type="text/javascript"></script>
 	<link href="./css/sidebar.css" rel="stylesheet" />
@@ -61,13 +62,14 @@ if (!checklogin())
 ?>
 <!-- /Footer -->
 
-
 <script>
 	// $(document).ready(function(){
 	// 	alert("Hello World");
 	// });	
 </script>
 <!-- echo '<script type="text/javascript">alert("'. $var .'")</script>'; -->
+
 </body>
 </html>
+
 <?php ob_end_flush();?>

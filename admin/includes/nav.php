@@ -13,7 +13,7 @@
     </div>
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
-        <li><a href="#" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i>
+        <li><a data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Stats"><i class="fa fa-bar-chart-o"></i>
             </a>
         </li>   
                                  
@@ -31,38 +31,56 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
             <li>
-                <a href="?view=home"><i class="fa fa-fw fa-user-plus"></i> DASHBOARD</a>
+                <a href="?view=home"><i class="fa fa-fw fa-dashboard"></i> DASHBOARD</a>
             </li>
+            
             <li>
-                <a href="?view=admin"><i class="fa fa-fw fa-user-plus"></i>  ADMIN</a>
-            </li>
+                <a data-toggle="collapse" data-target="#subadmin"><i class="fa fa-fw fa-group"></i> ADMINISTRATORS <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                <ul id="subadmin" class="collapse">
+                    <li><a href="?view=admin"><i class="fa fa-angle-double-right"></i> Admin </a></li>
+                    <li><a href="?view=admin&status=all"><i class="fa fa-angle-double-right"></i> Admin Group </a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Permission </a></li>                  
+                </ul>
+            </li>            
             <li>
-                <a href="?view=users"><i class="fa fa-fw fa-paper-plane-o"></i> USERS</a>
-            </li>
-            <li>
-                <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> MENU <i class="fa fa-fw fa-angle-down pull-right"></i></a>
-                <ul id="submenu-1" class="collapse">
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Admin </a></li>
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Users </a></li>                    
+                <a href="#" data-toggle="collapse" data-target="#subproduct"><i class="fa fa-television"></i> PRODUCTS <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                <ul id="subproduct" class="collapse">
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Product </a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Add Product </a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Catalog </a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Supplier </a></li>
                 </ul>
             </li>
             <li>
-                <a href="#" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-star"></i>  MENU 2 <i class="fa fa-fw fa-angle-down pull-right"></i></a>
-                <ul id="submenu-2" class="collapse">
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.1</a></li>
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.2</a></li>
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> SUBMENU 2.3</a></li>
+                <a href="#" data-toggle="collapse" data-target="#subarticle"><i class="fa fa-newspaper-o "></i>  ARTICLES <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                <ul id="subarticle" class="collapse">
+                    <li><a href="?view=article"><i class="fa fa-angle-double-right"></i> Article </a></li>                    <
+                    <li><a href="?view=article_group"><i class="fa fa-angle-double-right"></i> Article Group </a></li>
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-fw fa-user-plus"></i>  MENU 3</a>
+                <a href="?view=home"><i class="fa fa-fw fa-cart-plus"></i> CART </a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-fw fa-paper-plane-o"></i> MENU 4</a>
+                <a href="?view=home"><i class="fa fa-fw fa-server"></i> MENU </a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-fw fa fa-question-circle"></i> MENU 5</a>
+                <a href="?view=home"><i class="fa fa-fw fa-inbox"></i> INBOX </a>
             </li>
+            <li>
+                <a href="#" data-toggle="collapse" data-target="#submedia"><i class="fa fa-fw fa-youtube-play"></i> MEDIA <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                <ul id="submedia" class="collapse">
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Slider </a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Banner </a></li>
+                </ul> 
+            </li>
+            <li>
+                <a href="?view=configure"><i class="fa fa-fw fa fa-cogs"></i> CONFIGURE </a>
+            </li>
+            <li>
+                <a href="?view=home"><i class="fa fa-fw fa-history"></i> HISTORY </a>
+            </li>
+            
         </ul>
     </div>
     <!-- /.navbar-collapse -->

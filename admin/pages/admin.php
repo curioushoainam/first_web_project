@@ -5,8 +5,13 @@ require_once ('./class/Process_account.php');
 $paging = new Pagination();
 $process_account = new Process_account();
 
-
-$rpp = $_SESSION['rpp'];
+if(isset($_SESSION['rpp']) && $_SESSION['rpp']){
+	if(isset($_POST['rpp']) && $_POST['rpp']){
+   		$_SESSION['rpp']=$_POST["rpp"];   
+	}
+} else {
+	$_SESSION['rpp'] = 5;
+}
 
 if(!empty($_GET['status']) && $_GET['status']){	
 
@@ -14,7 +19,7 @@ if(!empty($_GET['status']) && $_GET['status']){
 		$config = array(
 		    'current_page'  => isset($_GET['page']) ? $_GET['page'] : 1, // Trang hiện tại
 		    'total_record'  => $process_account->total_accounts($_GET['status']), 		// Tổng số record
-		    'limit'         => $rpp,				// limit
+		    'limit'         => $_SESSION['rpp'],				// limit
 		    'link_full'     => '?view=admin&status=all&page={page}',// Link full có dạng như sau: domain/com/page/{page}
 		    'link_first'    => '?view=admin&status=all',	// Link trang đầu tiên		    
 		);
@@ -25,7 +30,7 @@ if(!empty($_GET['status']) && $_GET['status']){
 		$config = array(
 		    'current_page'  => isset($_GET['page']) ? $_GET['page'] : 1, // Trang hiện tại
 		    'total_record'  => $process_account->total_accounts($_GET['status']), 		// Tổng số record
-		    'limit'         => $rpp,				// limit
+		    'limit'         => $_SESSION['rpp'],				// limit
 		    'link_full'     => '?view=admin&status=hidden&page={page}',// Link full có dạng như sau: domain/com/page/{page}
 		    'link_first'    => '?view=admin&status=hidden',	// Link trang đầu tiên		     
 		);
@@ -36,7 +41,7 @@ if(!empty($_GET['status']) && $_GET['status']){
 		$config = array(
 		    'current_page'  => isset($_GET['page']) ? $_GET['page'] : 1, // Trang hiện tại
 		    'total_record'  => $process_account->total_accounts($_GET['status']), 		// Tổng số record
-		    'limit'         => $rpp,				// limit
+		    'limit'         => $_SESSION['rpp'],				// limit
 		    'link_full'     => '?view=admin&status=deleted&page={page}',// Link full có dạng như sau: domain/com/page/{page}
 		    'link_first'    => '?view=admin&status=deleted',	// Link trang đầu tiên		     
 		);
@@ -47,7 +52,7 @@ if(!empty($_GET['status']) && $_GET['status']){
 	$config = array(
 	    'current_page'  => isset($_GET['page']) ? $_GET['page'] : 1, // Trang hiện tại
 	    'total_record'  => $process_account->total_accounts(), 		// Tổng số record
-	    'limit'         => $rpp,				// limit
+	    'limit'         => $_SESSION['rpp'],				// limit
 	    'link_full'     => '?view=admin&page={page}',// Link full có dạng như sau: domain/com/page/{page}
 	    'link_first'    => '?view=admin',	// Link trang đầu tiên	     
 	);
@@ -73,7 +78,7 @@ if(!empty($_GET['status']) && $_GET['status']){
 			
 		</div>	
 		<div class="col-sm-offset-10">
-			<form role="form" class="form-horizontal" action="" >
+			<form role="form" class="form-horizontal" method="post">
 				<div class="form-group">
 					<!-- <input type="text" class="search" name="ten" id="ten" placeholder="tên" >
 					<select class="search" name="ma_nhom" id="ma_nhom">
@@ -86,7 +91,7 @@ if(!empty($_GET['status']) && $_GET['status']){
 					</select>
 					<button type="submit" class="btn btn-primary btn-sm" name="btn-search" id="btn-search" href="#"><span class="glyphicon"></span> Search</button> -->
 					<label>Số dòng trên trang</label>
-					<select class="search" name="rpp" id="rpp">
+					<select class="search" name="rpp" id="rpp" onchange="this.form.submit()">
 					<?php  	
 						$rpp_arr = [5, 10, 25];
 						foreach ($rpp_arr as $item){
@@ -175,30 +180,6 @@ if(!empty($_GET['status']) && $_GET['status']){
 
 include_once ('./includes/modal_view.php');
 include_once ('./includes/modal_delete.php');
+// include_once ('./includes/modal_feedback.php');
 
 ?>
-
-<div><p>Session => <?= $_SESSION['rpp'] ?></p></div>
-<div class="feeback"></div>
-
-<script src="./js/jquery.session.js"></script>
-<script>
-	$(document).ready(function(){
-		$('#rpp').change(function(){
-			var rpp = $('#rpp').val();
-			alert('js => ' + rpp);
-			$.ajax({
-				url : './libs/setValuebyAjax.php',
-				type : 'text',
-				method : 'post',
-				data    : {rpp : rpp},
-				success : function(data){
-					$('.feeback').html(data);
-				},
-				error : function(err){
-					$('.feeback').html(err);
-				}
-			});
-		});
-	});
-</script>

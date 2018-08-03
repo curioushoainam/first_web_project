@@ -8,7 +8,7 @@ function ckeditor($name, $content, $toolbar = 'standard'){
         $ckeditor_loaded = true;
     } 
     //$code .= '<textarea id="'. $name .'">'. htmlentities($content) .'</textarea>';
-	$code .= '<textarea id="'. $name .'">'. htmlentities($content) .'</textarea>';
+	$code .= '<textarea id="'. $name .'" name="'. $name .'">'. htmlentities($content) .'</textarea>';
     $code .= '<script type="text/javascript">';
     $code .= ' config = {};
                 config.entities_latin = false;

@@ -1,11 +1,11 @@
 <?php
 class Process_account extends Database {
-	private $table = 'quan_tri';
+	private $table = 'admin';
 	
 	function login($account, $password){
 		$sql = 'SELECT * FROM 	`'. $this->table .'` WHERE ten_dang_nhap=? AND mat_khau=?';	
 		$this->setQuery($sql);	
-		return $this->loadaRow(array($account, $password));
+		return $this->loadRow(array($account, $password));
 	}
 	
 	function list_active_accounts($start = 0, $qty = 0){
