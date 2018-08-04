@@ -2,6 +2,7 @@
 ob_start();
 require_once ('./config.php');
 include_once ('./class/Database.php');
+include_once ('./class/Validation.php');
 include_once ('./libs/ckeditor_funcs.php');
 include_once ('./libs/funcs.php');
 
@@ -67,7 +68,7 @@ if (!checklogin())
 	// 	alert("Hello World");
 	// });	
 </script>
-<!-- echo '<script type="text/javascript">alert("'. $var .'")</script>'; -->
+<!-- echo '<script type="text/javascript">alert("'. '==> DEBUG <==' .'")</script>'; -->
 
 </body>
 </html>

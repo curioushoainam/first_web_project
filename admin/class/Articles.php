@@ -7,7 +7,7 @@ class Articles extends Database {
 		if($qty > 0) {
 			$limit = " LIMIT $start,$qty";
 		}
-		$sql = 'SELECT * FROM `' . $this->table .'`' .$limit;
+		$sql = 'SELECT * FROM `' . $this->table .'` ORDER BY ma DESC' .$limit;
 		$this->setQuery($sql);
 		return $this->loadRows();
 	}

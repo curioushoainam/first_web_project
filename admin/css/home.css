@@ -14,3 +14,15 @@
 .error {
 	color: red;
 }
+
+.edit_table table tbody td input {
+	background: transparent;
+	border: transparent;
+    
+}
+
+.edit_table table tbody td select {
+	background: transparent;
+	border: transparent;
+    
+}
