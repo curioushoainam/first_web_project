@@ -143,6 +143,12 @@ class Process_account extends Database {
 		$this->setQuery($sql);
 		return $this->loadRow(array($account))->avatar;
 	}
+
+	function getGroupName($id){
+		$sql = 'SELECT adg.ten FROM `admin` as ad JOIN `admin_group` as adg WHERE ad.ma_nhom = adg.ma AND ad.ma_nhom = ?';
+		$this->setQuery($sql);
+		return $this->loadRow(array($id))->ten;
+	}
 }
 
 ?>

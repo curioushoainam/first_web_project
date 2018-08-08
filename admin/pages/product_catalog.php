@@ -16,9 +16,6 @@ $input = array(
 	'ngay_cap_nhat'=>NULL	
 );
 
-$result = $databaseFuncs->read3('product_catalog',array('*'),array('ma'=>['>',1,'AND'],'trang_thai'=>['!=',2,'AND'],'ten'=>['!=','','']));
-viewArr($result);
-
 if ($_SERVER["REQUEST_METHOD"] == "POST"){	
 	if(isset($_POST['edit']) && $_POST['edit'] && isset($_GET['id']) && $_GET['id']){		
 		$id = $validation->test_input($_GET['id']);

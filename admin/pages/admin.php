@@ -148,7 +148,7 @@ if(!empty($_GET['status']) && $_GET['status']){
 	    		<td style="text-align: left;"><?= $account->ho_ten ?></td>
 	    		<td style="text-align: left;"><?= $account->ten_dang_nhap ?></td>
 	    		<td style="text-align: left;"><?= $account->email ?></td>
-	    		<td><?= $account->ma_nhom ?></td>
+	    		<td><?= $process_account->getGroupName($account->ma_nhom) ?></td>
 	    		<td><?= $account->trang_thai ?></td>
 	    		<td><?= $account->ngay_tao ?></td> 
 	    		<td><?= $account->ngay_cap_nhat ?></td>	    		

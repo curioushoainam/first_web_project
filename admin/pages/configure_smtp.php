@@ -82,7 +82,7 @@ $smtp = $configure->getSMTPConfig();
 	    <div class="form-group">
 	        <label class="col-md-2 control-label">Mail From</label>
 	        <div class="col-md-8">
-	           <input id="mail_from" name="mail_from" class="form-control smtp" type="text" required value="<?= $smtp->mail_from ?>">
+	           <input id="mail_from" name="mail_from" class="form-control smtp" type="email" required value="<?= $smtp->mail_from ?>">
 	        </div>
 	        <div class="col-md-2 error">
 	            <p><?= $mail_fromErr ?></p>
@@ -140,8 +140,11 @@ $smtp = $configure->getSMTPConfig();
 
 	    <div class="form-group">
 	        <label class="col-md-2 control-label">SMTP Secure</label>
-	        <div class="col-md-8">
-	           <input id="smtp_secure" name="smtp_secure" class="form-control smtp" type="text" required value="<?= $smtp->smtp_secure ?>">
+	        <div class="col-md-8">	           
+	           <select name="smtp_secure" id="smtp_secure" class="form-control smtp" type="text" required>
+	           		<option value="ssl">ssl</option>
+	           		<option value="tls">tls</option>
+	           </select>
 	        </div>
 	        <div class="col-md-2 error">
 	            <p><?= $smtp_secureErr ?></p>
@@ -150,8 +153,11 @@ $smtp = $configure->getSMTPConfig();
 
 	    <div class="form-group">
 	        <label class="col-md-2 control-label">SMTP Port</label>
-	        <div class="col-md-8">
-	           <input id="smtp_port" name="smtp_port" class="form-control smtp" type="text" required value="<?= $smtp->smtp_port ?>">
+	        <div class="col-md-8">	           
+	           <select name="smtp_port" id="smtp_port" class="form-control smtp" type="text" required>
+	           		<option value="465">465</option>
+	           		<option value="465">587</option>	           	
+	           </select>
 	        </div>
 	        <div class="col-md-2 error">
 	            <p><?= $smtp_portErr ?></p>
@@ -171,19 +177,19 @@ $smtp = $configure->getSMTPConfig();
 
 <script>
 	$(document).ready(function(){
-		$('.smtp').attr('readonly', 'readonly');		
+		$('.smtp').attr('disabled', 'disabled');		
 		$("#smtp_save").hide();
 		$("#smtp_cancel").hide();
 
 		$("#smtp_edit").click(function(){			
-			$('.smtp').removeAttr('readonly');			
+			$('.smtp').removeAttr('disabled');			
 			$("#smtp_save").show();
 			$("#smtp_cancel").show();
 			$("#smtp_edit").hide();
 		});
 
 		$("#smtp_cancel").click(function(){			
-			$('.smtp').attr('readonly', 'readonly');
+			$('.smtp').attr('disabled', 'disabled');
 			$("#smtp_save").hide();			
 			$("#smtp_cancel").hide();
 			$("#smtp_edit").show();

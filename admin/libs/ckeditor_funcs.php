@@ -1,6 +1,7 @@
 <?php 
 //echo "from ckeditor";
-function ckeditor($name, $content, $toolbar = 'standard'){
+// $dimenison is a array[height in px or em, width in % or px]
+function ckeditor($name, $content,$size = array('10em','100%'), $toolbar = 'standard'){
     global $ckeditor_loaded;
     $code = '';
     if (!$ckeditor_loaded){
@@ -15,6 +16,8 @@ function ckeditor($name, $content, $toolbar = 'standard'){
                 config.language = "en";
                 config.filebrowserBrowseUrl = "./libs/asset/ckfinder/ckfinder.html";
                 config.filebrowserImageBrowseUrl = "./libs/asset/ckfinder/ckfinder.html";
+                config.height = "'.$size[0].'";                
+                config.width = "'.$size[1].'";
         ';
 	if ($toolbar == 'basic'){
     $code .= "config.toolbarGroups = [

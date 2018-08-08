@@ -21,6 +21,7 @@ function checklogin(){
 
 function chuyentrang($link){
     header('location: '.$link);
+    exit();
 }
 
 /*

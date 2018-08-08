@@ -1,20 +1,27 @@
 <?php
 error_reporting(0);
-function sendMail($nguoi_nhan,$tieu_de,$noi_dung, $bat_html=0)
+function sendMail($smtp_config, $nguoi_nhan,$tieu_de,$noi_dung, $bat_html=0)
 {
-
 	include 'class.phpmailer.php';
 	include 'class.smtp.php';	
-	$mailcfg['mailfrom'] = 'php23453thang@gmail.com';
-	$mailcfg['fromname'] = 'Hỗ trợ website abc.com';
-	$mailcfg['smtpauth'] = 1;
-	$mailcfg['smtphost'] = 'smtp.gmail.com';
-	$mailcfg['smtpuser'] = 'php23453thang@gmail.com'; //ten dang nhap gmail (server mail ben thu 3)
-	$mailcfg['smtppass'] = 'php@2017'; //mat khau dang nhap email
-	$mailcfg['smtpsecure'] = 'ssl';//:'tls';
-	$mailcfg['smtpport'] =  465;//587
+	$mailcfg['mailfrom'] = $smtp_config->mail_from;
+	$mailcfg['fromname'] = $smtp_config->from_name;
+	$mailcfg['smtpauth'] = $smtp_config->smtp_auth;
+	$mailcfg['smtphost'] = $smtp_config->smtp_host;
+	$mailcfg['smtpuser'] = $smtp_config->smtp_user;
+	$mailcfg['smtppass'] = $smtp_config->smtp_pass;
+	$mailcfg['smtpsecure'] = $smtp_config->smtp_secure;
+	$mailcfg['smtpport'] =  $smtp_config->smtp_port;
 	
-	
+	// $mailcfg['mailfrom'] = 'curiousnamhoaitruong@gmail.com';
+	// $mailcfg['fromname'] = 'Hỗ trợ website xyz.com';
+	// $mailcfg['smtpauth'] = 1;
+	// $mailcfg['smtphost'] = 'smtp.gmail.com';
+	// $mailcfg['smtpuser'] = 'curiousnamhoaitruong@gmail.com'; //ten dang nhap gmail (server mail ben thu 3)
+	// $mailcfg['smtppass'] = 'afthbmkrfeclpmcn'; //mat khau dang nhap email
+	// $mailcfg['smtpsecure'] = 'ssl';//:'tls';
+	// $mailcfg['smtpport'] =  465;//587
+
 	$mail = new PHPMailer();
 	$mail->IsSMTP(); // set mailer to use SMTP
 	

@@ -1,11 +1,11 @@
 <?php
 ob_start();
-require_once ('./config.php');
-include_once ('./class/Database.php');
-include_once ('./class/Validation.php');
-include_once ('./libs/ckeditor_funcs.php');
-include_once ('./libs/funcs.php');
-
+require ('./config.php');
+include ('./class/Database.php');
+include ('./class/Validation.php');
+include ('./libs/funcs.php');
+require ('./class/DatabaseFuncs.php');
+include ('./libs/ckeditor_funcs.php');
 
 if (!checklogin())
 	chuyentrang('login.php');

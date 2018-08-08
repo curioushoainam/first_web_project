@@ -38,8 +38,8 @@
                 <a data-toggle="collapse" data-target="#subadmin"><i class="fa fa-fw fa-group"></i> ADMINISTRATORS <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 <ul id="subadmin" class="collapse">
                     <li><a href="?view=admin"><i class="fa fa-angle-double-right"></i> Admin </a></li>
-                    <li><a href="?view=admin&status=all"><i class="fa fa-angle-double-right"></i> Admin Group </a></li>
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Permission </a></li>                  
+                    <li><a href="?view=admin_group"><i class="fa fa-angle-double-right"></i> Admin Group </a></li>
+                    <li><a href="?view=permission"><i class="fa fa-angle-double-right"></i> Permission </a></li>                  
                 </ul>
             </li>            
             <li>
@@ -54,18 +54,26 @@
             <li>
                 <a href="#" data-toggle="collapse" data-target="#subarticle"><i class="fa fa-newspaper-o "></i>  ARTICLES <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 <ul id="subarticle" class="collapse">
-                    <li><a href="?view=article"><i class="fa fa-angle-double-right"></i> Article </a></li>                    <
+                    <li><a href="?view=article"><i class="fa fa-angle-double-right"></i> Article </a></li>
                     <li><a href="?view=article_group"><i class="fa fa-angle-double-right"></i> Article Group </a></li>
                 </ul>
             </li>
             <li>
-                <a href="?view=home"><i class="fa fa-fw fa-cart-plus"></i> CART </a>
+                <a data-toggle="collapse" data-target="#subcart"><i class="fa fa-fw fa-cart-plus"></i> CART <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                <ul id="subcart" class="collapse">
+                    <li><a href="?view=orders"><i class="fa fa-angle-double-right"></i> Orders </a></li>
+                    <li><a href="?view=create_order"><i class="fa fa-angle-double-right"></i> Create Order </a></li>
+                </ul>
             </li>
             <li>
                 <a href="?view=home"><i class="fa fa-fw fa-server"></i> MENU </a>
             </li>
             <li>
-                <a href="?view=home"><i class="fa fa-fw fa-inbox"></i> INBOX </a>
+                <a href="#" data-toggle="collapse" data-target="#subinbox"><i class="fa fa-fw fa-inbox"></i> EMAIL <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                <ul id="subinbox" class="collapse">
+                    <li><a href="?view=inbox"><i class="fa fa-angle-double-right"></i> Inbox </a></li>
+                    <li><a href="?view=email"><i class="fa fa-angle-double-right"></i> Send Email </a></li>
+                </ul>
             </li>
             <li>
                 <a href="#" data-toggle="collapse" data-target="#submedia"><i class="fa fa-fw fa-youtube-play"></i> MEDIA <i class="fa fa-fw fa-angle-down pull-right"></i></a>
