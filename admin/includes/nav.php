@@ -62,7 +62,7 @@
                 <a data-toggle="collapse" data-target="#subcart"><i class="fa fa-fw fa-cart-plus"></i> CART <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 <ul id="subcart" class="collapse">
                     <li><a href="?view=orders"><i class="fa fa-angle-double-right"></i> Orders </a></li>
-                    <li><a href="?view=create_order"><i class="fa fa-angle-double-right"></i> Create Order </a></li>
+                    <li><a href="?view=order_create"><i class="fa fa-angle-double-right"></i> Create Order </a></li>
                 </ul>
             </li>
             <li>
