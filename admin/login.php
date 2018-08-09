@@ -28,7 +28,7 @@ if (isset($_POST['account'], $_POST['password']) && $_POST['account'] && $_POST[
                     if (isset($_POST['remember']) && $_POST['remember']){
                         setcookie('login', $_SESSION['login'], time() + 3600*24*30);
                         setcookie('account', $_SESSION['account'], time() + 3600*24*30);
-                        setcookie('password', $_SESSION['password'], time() + 3600*24*30); 
+                        setcookie('password', $_SESSION['password'], time() + 3600*24*30);
                         setcookie('avatar', $_SESSION['avatar'], time() + 3600*24*30);                  
                     }
                     

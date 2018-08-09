@@ -198,7 +198,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="col-md-8 col-md-offset-2">
                     <div class="pull-right" style="text-align: right;">
                         <button type="submit" class="btn btn-success" name="article_group_add" id="article_group_add" value="true">Add</button>
-                        <a type="button" class="btn btn-default" href="?view=article_group">Cancel</a>
+                        <a type="button" class="btn btn-default" href="?view=articleGroup">Cancel</a>
                     </div>
                 </div>      
             </div>                      

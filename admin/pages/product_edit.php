@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	<form class="well form-horizontal" method="post" enctype="multipart/form-data">
         <fieldset class="creation-border">
             <legend class="creation-border">
-                <div class="pull-left"><span><a href="?view=products">Sản phẩm  </a></span> >>  Thông tin chi tiết </div>
+                <div class="pull-left"><span><a href="?view=product">Sản phẩm  </a></span> >>  Thông tin chi tiết </div>
                 <div class="pull-right"><input type="button" class="btn btn-info" id="edit" name="edit" value="Edit"></div>
             </legend>
             <div class="form-group">

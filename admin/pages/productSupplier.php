@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		// viewArr($input);		
 		$result = $databaseFuncs->update('product_supplier',$input,array('ma'=>$id));
 		if($result)			
-			chuyentrang('?view=product_supplier');
+			chuyentrang('?view=productSupplier');
 		else 
 			echo '<script type="text/javascript">alert("'. 'Cập nhật thất bại' .'")</script>';
 	}
@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		$id = $validation->test_input($_GET['id']);
 		$result = $databaseFuncs->update('product_supplier',array('trang_thai'=>2,'ngay_cap_nhat'=>date('Y-m-d H:i:s')),array('ma'=>$id));
 		if($result)			
-			chuyentrang('?view=product_supplier');
+			chuyentrang('?view=productSupplier');
 		else 
 			echo '<script type="text/javascript">alert("'. 'Xóa item=>'.$id.' thất bại' .'")</script>';
 	}
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 														'ngay_cap_nhat'=>NULL	
 														));
 		$lastID = $databaseFuncs->getLastId();
-		chuyentrang('?view=product_supplier&status=edit&id='.$lastID);
+		chuyentrang('?view=productSupplier&status=edit&id='.$lastID);
 	}
 
 
@@ -142,9 +142,9 @@ $data = $databaseFuncs->read('product_supplier',array('*'));
 	    <form action="" method="post">	
 	    	<tr> 
 	    		<td>
-	    			<a href="?view=product_supplier&status=edit&id=<?= $row->ma ?>"><span class="glyphicon glyphicon-edit" title="Edit"></span></a>
+	    			<a href="?view=productSupplier&status=edit&id=<?= $row->ma ?>"><span class="glyphicon glyphicon-edit" title="Edit"></span></a>
 					 | 
-					<a href="?view=product_supplier&status=delete&id=<?= $row->ma ?>"><span class="glyphicon glyphicon-trash" title="Delete"></span></a>
+					<a href="?view=productSupplier&status=delete&id=<?= $row->ma ?>"><span class="glyphicon glyphicon-trash" title="Delete"></span></a>
 	    		</td> 
 	    		<td><?= $ma ?></td>
 	    		<td><input type="text" style="width: 30px;" value="<?= $ma_cha ?>" name="ma_cha<?= $ma ?>" <?= $readonly ?>></td> 
@@ -166,7 +166,7 @@ $data = $databaseFuncs->read('product_supplier',array('*'));
 	    		<td><?= $ngay_cap_nhat ?></td>
 	    		<td>
 	    			<button class="btn-success" style="margin: 2px " <?= $hide ?> type="submit" name="<?= $name ?>" value="true"><?= $button ?></button> 
-	    			<button style="margin: 2px " <?= $hide ?>><a href="?view=product_supplier">Cancel</a></button>
+	    			<button style="margin: 2px " <?= $hide ?>><a href="?view=productSupplier">Cancel</a></button>
     			</td>
 	    	</tr>
 	    </form>

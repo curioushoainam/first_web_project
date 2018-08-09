@@ -166,6 +166,12 @@ class Process_account extends Database {
 		$this->setQuery($sql);
 		return $this->loadRow(array($id))->ten;
 	}
+
+	function getMngLevel($account){
+		$sql = 'SELECT ad.ma,adm.level FROM `admin_mng` adm JOIN admin ad WHERE adm.admin_ma = ad.ma AND ad.ten_dang_nhap =?';
+		$this->setQuery($sql);
+		return $this->loadRow(array($account));
+	}
 }
 
 ?>

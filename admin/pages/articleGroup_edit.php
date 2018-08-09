@@ -211,7 +211,7 @@ if(isset($_GET['id']) && $_GET['id']){
                 <div class="col-md-8 col-md-offset-2">
                     <div class="pull-right" style="text-align: right;">
                         <button type="submit" class="btn btn-success" name="article_group_update" id="article_group_update" value="true">Update</button>
-                        <a type="button" class="btn btn-default" href="?view=article_group">Cancel</a>
+                        <a type="button" class="btn btn-default" href="?view=articleGroup">Cancel</a>
                     </div>
                 </div>      
             </div>                      

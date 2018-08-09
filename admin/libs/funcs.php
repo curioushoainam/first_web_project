@@ -14,7 +14,11 @@ function checklogin(){
     	$_SESSION['login'] = $_COOKIE['login']; 
     	$_SESSION['account'] = $_COOKIE['account'];
     	$_SESSION['password'] = $_COOKIE['password'];
-        $_SESSION['avatar'] = $_COOKIE['avatar'];
+        
+        if(isset($_COOKIE['avatar']) && $_COOKIE['avatar']){
+            $_SESSION['avatar'] = $_COOKIE['avatar'];
+        }
+        
 	}
 
     if (isset($_SESSION['login']) && $_SESSION['login']){
@@ -33,27 +37,49 @@ function checkpermission(){
     require_once ('./class/Process_account.php');
     $process_account = new Process_account();
     require_once ('./class/Permission.php');
-    $permission = new Permission(); 
+    $permission = new Permission();    
 
     if (isset($_GET['view']) && $_GET['view']){
-        $curlink = explode("_",$_GET['view'])[0];    
+        $curlink = explode("_",$_GET['view'])[0];
+        if ($curlink == 'logout' || $curlink == 'error' || $curlink == 'home')
+            return true;
     } else 
-        $curlink = 'home';    
+        return true;        // ai cũng vào trang chủ được
+
 
     if (isset($_SESSION['account']) && $_SESSION['account']) {
-        $links = $permission->readLinkOfUser($process_account->getID($_SESSION['account']));
-        viewArr($links);
-        
-        echo $curlink;
-        foreach ($links as $link){
-             echo $link->link.'<br>';
+        $mng = $process_account->getMngLevel($_SESSION['account']);
+
+        // manager có toàn quyền
+        if(isset($mng) && $mng)
+            return true;
+        // việc set quyền chỉ cho manager thực hiện
+        if ($curlink == 'adminAssign'){
+            return false;
+        }
+
+        $links = $permission->readLinkOfUser($process_account->getID($_SESSION['account'])); 
+
+        foreach ($links as $link){           
             if($link->link == $curlink)
                 return true;
         }
         return false;
+
     } else 
         return false;
 }  
+
+
+function notify(){
+    if (isset($_SESSION['msg']) && $_SESSION['msg']){
+        $msg = $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    } else
+        $msg = '';
+
+    return $msg;
+}
 
 
 function chuyentrang($link){

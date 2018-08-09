@@ -142,7 +142,7 @@ viewArr($input);
 	<form class="well form-horizontal" method="post" enctype="multipart/form-data">
         <fieldset class="creation-border">
             <legend class="creation-border">
-                <div class="pull-left"><span><a href="?view=products">Sản phẩm  </a></span> >>  Thêm sản phẩm </div>
+                <div class="pull-left"><span><a href="?view=product">Sản phẩm  </a></span> >>  Thêm sản phẩm </div>
                 <!-- <div class="pull-right"><input type="button" class="btn btn-info" id="edit" name="edit" value="Edit"></div> -->
             </legend>
             <div class="form-group">
@@ -337,7 +337,7 @@ viewArr($input);
                 <div class="col-md-8 col-md-offset-2">
                     <div class="pull-right" style="text-align: right;">
                         <button type="submit" class="btn btn-success" name="product_add" id="add" value="true">Create</button>
-                        <a type="button" class="btn btn-default" href="?view=products" >Cancel</a>
+                        <a type="button" class="btn btn-default" href="?view=product" >Cancel</a>
                     </div>
                 </div>      
             </div>                      

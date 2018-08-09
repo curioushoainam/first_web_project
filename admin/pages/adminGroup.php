@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		$input['ngay_cap_nhat'] = date('Y-m-d H:i:s');			
 		$result = $databaseFuncs->update('admin_group',$input,array('ma'=>$id));
 		if($result)			
-			chuyentrang('?view=admin_group');
+			chuyentrang('?view=adminGroup');
 		else 
 			$feedback = '<h4 style="color:red"><i>Cập nhật vào database thất bại</i></h4>';
 	}
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		$id = $validation->test_input($_POST['delete']);
 		$result = $databaseFuncs->update('admin_group',array('trang_thai'=>2,'ngay_cap_nhat'=>date('Y-m-d H:i:s')),array('ma'=>$id));
 		if($result)			
-			chuyentrang('?view=admin_group');
+			chuyentrang('?view=adminGroup');
 		else 
 			echo '<h4 style="color:red"><i>Xóa #id=>'.$id.' thất bại</i></h4>';
 	}
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 														'ngay_cap_nhat'=>NULL	
 														));
 		$lastID = $databaseFuncs->getLastId();
-		chuyentrang('?view=admin_group&status=edit&id='.$lastID);
+		chuyentrang('?view=adminGroup&status=edit&id='.$lastID);
 	}
 }
 
@@ -112,9 +112,9 @@ $data = $databaseFuncs->read('admin_group',array('*'));
 	    <form action="" method="post">	
 	    	<tr> 
 	    		<td>
-	    			<a href="?view=admin_group&status=edit&id=<?= $row->ma ?>"><span class="glyphicon glyphicon-edit" title="Edit"></span></a>
+	    			<a href="?view=adminGroup&status=edit&id=<?= $row->ma ?>"><span class="glyphicon glyphicon-edit" title="Edit"></span></a>
 					 | 
-					<a href="?view=admin_group&status=delete&id=<?= $row->ma ?>"><span class="glyphicon glyphicon-trash" title="Delete"></span></a>
+					<a href="?view=adminGroup&status=delete&id=<?= $row->ma ?>"><span class="glyphicon glyphicon-trash" title="Delete"></span></a>
 	    		</td> 
 	    		<td><?= $ma ?></td>
 	    		<td><input type="text" style="width: 120px;" value="<?= $ten ?>" name="ten<?= $ma ?>" <?= $readonly ?>></td> 
@@ -134,7 +134,7 @@ $data = $databaseFuncs->read('admin_group',array('*'));
 	    		<td><?= $ngay_cap_nhat ?></td>
 	    		<td>
 	    			<button class="btn-success" style="margin: 2px " <?= $hide ?> type="submit" name="<?= $name ?>" value="<?= $ma ?>"><?= $button ?></button> 
-	    			<button style="margin: 2px " <?= $hide ?>><a href="?view=admin_group">Cancel</a></button>
+	    			<button style="margin: 2px " <?= $hide ?>><a href="?view=adminGroup">Cancel</a></button>
     			</td>
 	    	</tr>
 	    </form>

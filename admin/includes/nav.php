@@ -44,24 +44,24 @@ $permission = new Permission();
                 <a data-toggle="collapse" data-target="#subadmin"><i class="fa fa-fw fa-group"></i> ADMINISTRATORS <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 <ul id="subadmin" class="collapse">
                     <li><a href="?view=admin"><i class="fa fa-angle-double-right"></i> Admin </a></li>
-                    <li><a href="?view=admin_group"><i class="fa fa-angle-double-right"></i> Admin Group </a></li>
-                    <li><a href="?view=admin_assign"><i class="fa fa-angle-double-right"></i> Permission </a></li>                  
+                    <li><a href="?view=adminGroup"><i class="fa fa-angle-double-right"></i> Admin Group </a></li>
+                    <li><a href="?view=adminAssign"><i class="fa fa-angle-double-right"></i> Permission </a></li>                  
                 </ul>
             </li>            
             <li>
                 <a href="#" data-toggle="collapse" data-target="#subproduct"><i class="fa fa-television"></i> PRODUCTS <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 <ul id="subproduct" class="collapse">
-                    <li><a href="?view=products"><i class="fa fa-angle-double-right"></i> Product </a></li>
+                    <li><a href="?view=product"><i class="fa fa-angle-double-right"></i> Product </a></li>
                     <li><a href="?view=product_add"><i class="fa fa-angle-double-right"></i> Add Product </a></li>
-                    <li><a href="?view=product_catalog"><i class="fa fa-angle-double-right"></i> Catalog </a></li>
-                    <li><a href="?view=product_supplier"><i class="fa fa-angle-double-right"></i> Supplier </a></li>
+                    <li><a href="?view=productCatalog"><i class="fa fa-angle-double-right"></i> Catalog </a></li>
+                    <li><a href="?view=productSupplier"><i class="fa fa-angle-double-right"></i> Supplier </a></li>
                 </ul>
             </li>
             <li>
                 <a href="#" data-toggle="collapse" data-target="#subarticle"><i class="fa fa-newspaper-o "></i>  ARTICLES <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 <ul id="subarticle" class="collapse">
                     <li><a href="?view=article"><i class="fa fa-angle-double-right"></i> Article </a></li>
-                    <li><a href="?view=article_group"><i class="fa fa-angle-double-right"></i> Article Group </a></li>
+                    <li><a href="?view=articleGroup"><i class="fa fa-angle-double-right"></i> Article Group </a></li>
                 </ul>
             </li>
             <li>
@@ -72,7 +72,7 @@ $permission = new Permission();
                 </ul>
             </li>
             <li>
-                <a href="?view=home"><i class="fa fa-fw fa-server"></i> MENU </a>
+                <a href="#"><i class="fa fa-fw fa-server"></i> MENU </a>
             </li>
             <li>
                 <a href="#" data-toggle="collapse" data-target="#subinbox"><i class="fa fa-fw fa-inbox"></i> EMAIL <i class="fa fa-fw fa-angle-down pull-right"></i></a>
@@ -92,7 +92,7 @@ $permission = new Permission();
                 <a href="?view=configure"><i class="fa fa-fw fa fa-cogs"></i> CONFIGURE </a>
             </li>
             <li>
-                <a href="?view=home"><i class="fa fa-fw fa-history"></i> HISTORY </a>
+                <a href="#"><i class="fa fa-fw fa-history"></i> HISTORY </a>
             </li>
             
         </ul>

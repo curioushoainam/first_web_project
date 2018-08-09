@@ -48,7 +48,7 @@ $ten = isset($group->ten) ? $group->ten : '';
                 <div class="col-md-8 col-md-offset-2">
                     <div class="pull-right" style="text-align: right;">
                         <button type="submit" class="btn btn-success" name="article_group_delete" id="article_group_delete" value="true">Delete</button>
-                        <a type="button" class="btn btn-default" href="?view=article_group">Cancel</a>
+                        <a type="button" class="btn btn-default" href="?view=articleGroup">Cancel</a>
                     </div>
                 </div>      
             </div>

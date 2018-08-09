@@ -61,7 +61,7 @@ $hinhArr = isset($product->hinh) ? $product->hinh : '';
                 <div class="col-md-8 col-md-offset-2">
                     <div class="pull-right" style="text-align: right;">
                         <button type="submit" class="btn btn-success" name="delete" id="delete" value="true">Delete</button>
-                        <a type="button" class="btn btn-default" href="?view=products">Cancel</a>
+                        <a type="button" class="btn btn-default" href="?view=product">Cancel</a>
                     </div>
                 </div>      
             </div>

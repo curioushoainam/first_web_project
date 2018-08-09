@@ -18,7 +18,7 @@ if(isset($_GET['id']) && $_GET['id']){
 			$_SESSION['msg'] = 'Phân quyền thành công cho id => '.$_GET['id'];
 		else 
 			$_SESSION['msg'] = 'Phân quyền thất bại cho id => '.$_GET['id'];
-		chuyentrang('?view=admin_assign');
+		chuyentrang('?view=adminAssign');
 	}	
 
 	$user = $permission->readUserInfo($_GET['id']);
@@ -48,7 +48,7 @@ function isPerm($function, $permlist){
 ?>
 
 <div class="admin_grant">
-	<h4><span><a href="?view=admin_assign"><b>Danh sách người dùng </b></a></span> >> Phân quyền cho người dùng</h4>
+	<h4><span><a href="?view=adminAssign"><b>Danh sách người dùng </b></a></span> >> Phân quyền cho người dùng</h4>
 	<br>
 	<div align="center">
 		<table width="40%" border="1">

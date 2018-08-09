@@ -1,4 +1,13 @@
+<?php 
+	if (isset($_SESSION['msg']) && $_SESSION['msg']){
+		$msg = $_SESSION['msg'];
+		unset($_SESSION['msg']);
+	} else
+		$msg = '';
+?>
+
 <div class="home" style="">	
+	<div align="center" style="color:red"><i><?= $msg ?></i></div>
 	<div class="container-fluid" id="btn-control">		
 		<p class="col-sm-3">
 			<a type="button" class="btn btn-success" id="btn-mng-img" href="?view=ql_anh">Quản lý ảnh</a>

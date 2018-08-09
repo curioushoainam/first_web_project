@@ -11,7 +11,7 @@ $article_group = $articles->get_article_groups();
 <div class="admin" id="admin">	
 	<div class="container-fluid" id="btn-control">		
 		<div class="col-sm-2">
-			<a type="button" class="btn btn-success" id="add-service" href="?view=article_group_add"><span class="glyphicon glyphicon-plus"></span> Thêm nhóm tin</a>			
+			<a type="button" class="btn btn-success" id="add-service" href="?view=articleGroup_add"><span class="glyphicon glyphicon-plus"></span> Thêm nhóm tin</a>			
 		</div>
 			
 		<div class="col-sm-offset-10">
@@ -59,9 +59,9 @@ $article_group = $articles->get_article_groups();
 	    ?>	
 	    	<tr>
 	    		<td>
-	    			<a href="?view=article_group_edit&id=<?= $group->ma ?>"><span class="glyphicon glyphicon-edit" title="Edit"></span></a>
+	    			<a href="?view=articleGroup_edit&id=<?= $group->ma ?>"><span class="glyphicon glyphicon-edit" title="Edit"></span></a>
 					 | 
-					<a href="?view=article_group_delete&id=<?= $group->ma ?>"><span class="glyphicon glyphicon-trash" title="Delete"></span></a>
+					<a href="?view=articleGroup_delete&id=<?= $group->ma ?>"><span class="glyphicon glyphicon-trash" title="Delete"></span></a>
 
 	    		</td>	    		
 	    		<td><?= $group->ma ?></td>

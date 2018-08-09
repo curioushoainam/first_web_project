@@ -43,9 +43,9 @@ if(isset($_SESSION['msg']) && $_SESSION['msg']){
 		    		<td style="text-align: left;"><?= $ten_dang_nhap ?></td>
 		    		<td><?= $ma_nhom ?></td>
 		    		<td><?= $trang_thai ?></td>	    		   		
-		    		<td><a href="?view=admin_grant&id=<?= $ma ?>"><span class="fa fa-user-circle fa-2x" title="Cấp quyền"></span></a>
+		    		<td><a href="?view=adminAssign_grant&id=<?= $ma ?>"><span class="fa fa-user-circle fa-2x" title="Cấp quyền"></span></a>
 		    			  |  
-		    			<a href="?view=admin_revoke&id=<?= $ma ?>"><span class="fa fa-user-times fa-2x" title="Thu hồi"></span></a>
+		    			<a href="?view=adminAssign_revoke&id=<?= $ma ?>"><span class="fa fa-user-times fa-2x" title="Thu hồi"></span></a>
 
 		    		</td>
 		    	</tr>

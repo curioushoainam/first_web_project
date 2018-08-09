@@ -86,15 +86,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if (isset($_FILES['avatar'])){        
         if (!($ten_dang_nhapErr || $emailErr ||$mat_khauErr || $ho_tenErr || $dia_chiErr || $ma_nhomErr || $trang_thaiErr)){
-            $result = upload_file($_FILES['avatar'], AVATAR_PATH, $ten_dang_nhap, AVATAR_SIZE);
-            if($result['error']){
-                $avatarErr = $result['msg'];                
-            } else {                
-                $avatar = $validation->test_input($result['msg']);                         
-                $createdDate = date("Y-m-d h:m:s");
-                $process_account->addAccount(array($ten_dang_nhap, $email, $mat_khau, $avatar, $ho_ten, $dia_chi, $ma_nhom, $trang_thai , $createdDate));                            
-                chuyentrang('?view=admin');
-            }
+            $result = upload_file($_FILES['avatar'], AVATAR_PATH, $ten_dang_nhap, AVATAR_SIZE); 
+            if($result["error"])                         
+                $_SESSION['msg'] = 'Avatar xảy ra lỗi => '.$result["msg"] .' <= Hãy vào edit để upload lại.';                 
+             else 
+                $avatar = $validation->test_input($result["msg"]);         
+                                     
+            $createdDate = date("Y-m-d h:m:s");
+            $process_account->addAccount(array($ten_dang_nhap, $email, $mat_khau, $avatar, $ho_ten, $dia_chi, $ma_nhom, $trang_thai , $createdDate));                            
+            chuyentrang('?view=admin');            
         }
     } else {         
         $avatarErr = "Hình làm avatar avatar không tồn tại";
@@ -109,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 ?>
 
 <div class="add_account" style="">	
-	<form class="well form-horizontal" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) . '?view=add_account'; ?>" method="post" enctype="multipart/form-data">
+	<form class="well form-horizontal" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) . '?view=admin_add'; ?>" method="post" enctype="multipart/form-data">
 		<fieldset class="creation-border">
 			<legend class="creation-border">Thêm quản trị</legend>			
              <div class="form-group">
@@ -187,7 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="form-group">
                 <label class="col-md-2 control-label">Avatar</label>
                 <div class="col-md-8 inputGroupContainer">
-                    <div><input type="file" name="avatar" required /></div>
+                    <div><input type="file" name="avatar" /></div>
                 </div>
                 <div class="col-md-2 error">
                     <p><?= $avatarErr; ?></p>

@@ -10,7 +10,7 @@ if(isset($_SESSION['rpp']) && $_SESSION['rpp']){
    		$_SESSION['rpp']=$_POST["rpp"];   
 	}
 } else {
-	$_SESSION['rpp'] = 5;
+	$_SESSION['rpp'] = 10;
 }
 
 if(!empty($_GET['status']) && $_GET['status']){	
@@ -62,15 +62,16 @@ if(!empty($_GET['status']) && $_GET['status']){
 
 ?>
 
-<div class="admin" id="admin">	
+<div class="admin" id="admin">
+	<div align="center" style="color:red"><i><?= notify() ?></i></div>
 	<div class="container-fluid" id="btn-control">		
 		<div class="col-sm-2">
-			<a type="button" class="btn btn-success" id="add-service" href="?view=add_account"><span class="glyphicon glyphicon-plus"></span> Thêm quản trị</a>			
+			<a type="button" class="btn btn-success" id="add-service" href="?view=admin_add"><span class="glyphicon glyphicon-plus"></span> Thêm quản trị</a>			
 		</div>
 		<div class="col-sm-4 dropdown">			
 				<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" id="btn-select-active" href="#">Chọn thao tác <span class="caret"></span></button>
 				<ul class="dropdown-menu">
-					<li><a href="?view=admin">Hiện danh sách hiển thị</a></li>
+					<li><a href="?view=admin">Hiện danh sách đang hoạt động</a></li>
 					<li><a href="?view=admin&status=all">Hiện toàn bộ danh sách</a></li>
 					<li><a href="?view=admin&status=hidden">Hiện danh sách ẩn</a></li>
 					<li><a href="?view=admin&status=deleted">Hiện danh sách bị xóa</a></li>					
@@ -93,7 +94,7 @@ if(!empty($_GET['status']) && $_GET['status']){
 					<label>Số dòng trên trang</label>
 					<select class="search" name="rpp" id="rpp" onchange="this.form.submit()">
 					<?php  	
-						$rpp_arr = [5, 10, 25];
+						$rpp_arr = [10, 25, 50, 100];
 						foreach ($rpp_arr as $item){
                         $selectVar = $_SESSION['rpp'] == $item ? 'selected' : '';
                         echo '<option '.$selectVar.' value="'. $item .'">'.   $item .'</option>'; 
@@ -117,7 +118,7 @@ if(!empty($_GET['status']) && $_GET['status']){
 				echo '<p><i>* Danh sách đã bị xóa</i></p>';
 			}
 		} else{
-			echo '<p><i>* Danh sách hiển thị</i></p>';
+			echo '<p><i>* Danh sách đang hoạt động</i></p>';
 		}
 		?>
 
@@ -155,7 +156,7 @@ if(!empty($_GET['status']) && $_GET['status']){
 	    		<td>
 	    			<a href="#" id="<?= $account->ma ?>" class="view_data" data-toggle="modal" data-target="#modal_view"><span class="glyphicon glyphicon-list-alt" title="View"></span></a>
 	    			 | 
-					<a href="?view=edit_account&id=<?= $account->ma ?>"><span class="glyphicon glyphicon-edit" title="Edit"></span></a>
+					<a href="?view=admin_edit&id=<?= $account->ma ?>"><span class="glyphicon glyphicon-edit" title="Edit"></span></a>
 					 | 
 					<a href="#" id="<?= $account->ma ?>" class="deleting_account" data-toggle="modal" data-target="#modal_delete"><span class="glyphicon glyphicon-trash" title="Delete"></span></a>
 
