@@ -9,6 +9,16 @@ include ('./libs/ckeditor_funcs.php');
 
 if (!checklogin())
 	chuyentrang('login.php');
+
+// if (!checkpermission()){
+// 	// $_SESSION['msg'] = 'Xin lỗi bạn. Bạn đã truy cập vào link không thuộc quyền của bạn.'
+// 	// chuyentrang('?view=home');	
+// 	echo '<script type="text/javascript">alert("'. '==> false <==' .'")</script>';
+// } else 
+// 	echo '<script type="text/javascript">alert("'. '==> true <==' .'")</script>';
+
+
+
 ?>
 <!-- =============================================================== -->
 
@@ -42,6 +52,15 @@ if (!checklogin())
 <?php 
 	include ('./includes/nav.php');
 	include ('./includes/header.php');
+
+	// if (!checkpermission()){
+	// // $_SESSION['msg'] = 'Xin lỗi bạn. Bạn đã truy cập vào link không thuộc quyền của bạn.'
+	// // chuyentrang('?view=home');	
+	// 	echo '<script type="text/javascript">alert("'. '==> false <==' .'")</script>';
+	// } else 
+	// 	echo '<script type="text/javascript">alert("'. '==> true <==' .'")</script>';
+	
+
 ?>
 <!-- /navigation -->    
 

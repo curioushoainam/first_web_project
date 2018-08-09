@@ -1,3 +1,9 @@
+<?php 
+require_once ('./class/Permission.php');
+$permission = new Permission();
+
+?>
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -39,7 +45,7 @@
                 <ul id="subadmin" class="collapse">
                     <li><a href="?view=admin"><i class="fa fa-angle-double-right"></i> Admin </a></li>
                     <li><a href="?view=admin_group"><i class="fa fa-angle-double-right"></i> Admin Group </a></li>
-                    <li><a href="?view=permission"><i class="fa fa-angle-double-right"></i> Permission </a></li>                  
+                    <li><a href="?view=admin_assign"><i class="fa fa-angle-double-right"></i> Permission </a></li>                  
                 </ul>
             </li>            
             <li>

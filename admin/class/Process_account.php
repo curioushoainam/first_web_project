@@ -104,6 +104,17 @@ class Process_account extends Database {
 			return false;		
 	}
 
+	// Hàm kiểm tra trạng thái của account
+	// Nếu trạng thái = 1, trả về true; ngược lại là false
+	function isActive($account){
+		$sql = 'SELECT trang_thai FROM `' . $this->table .'` WHERE ten_dang_nhap = ?';
+		$this->setQuery($sql);
+		if ($this->loadRow(array($account))->trang_thai == 1)
+			return true;
+		else
+			return false;
+	}
+
 	function addAccount($newAccount = array()){
 		$sql = 'INSERT INTO `'. $this->table .'`(ten_dang_nhap, email, mat_khau, avatar, ho_ten, dia_chi, ma_nhom, trang_thai, ngay_tao) VALUES (?,?,?,?,?,?,?,?,?)';
 		$this->setQuery($sql);
@@ -142,6 +153,12 @@ class Process_account extends Database {
 		$sql = 'SELECT avatar FROM `' . $this->table . '` WHERE ten_dang_nhap = ?';		
 		$this->setQuery($sql);
 		return $this->loadRow(array($account))->avatar;
+	}
+
+	function getID($account){
+		$sql = 'SELECT ma FROM `' . $this->table . '` WHERE ten_dang_nhap = ?';		
+		$this->setQuery($sql);
+		return $this->loadRow(array($account))->ma;
 	}
 
 	function getGroupName($id){

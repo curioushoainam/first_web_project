@@ -7,17 +7,54 @@ function viewArr($ar){
 }
 
 function checklogin(){
+    require_once ('./class/Process_account.php');
+    $process_account = new Process_account();
+    
 	if(isset($_COOKIE['login'], $_COOKIE['account'], $_COOKIE['password']) && $_COOKIE['login'] && $_COOKIE['account'] &&  $_COOKIE['password']){
-	$_SESSION['login'] = $_COOKIE['login']; 
-	$_SESSION['account'] = $_COOKIE['account'];
-	$_SESSION['password'] = $_COOKIE['password'];
-    $_SESSION['avatar'] = $_COOKIE['avatar'];
+    	$_SESSION['login'] = $_COOKIE['login']; 
+    	$_SESSION['account'] = $_COOKIE['account'];
+    	$_SESSION['password'] = $_COOKIE['password'];
+        $_SESSION['avatar'] = $_COOKIE['avatar'];
 	}
+
     if (isset($_SESSION['login']) && $_SESSION['login']){
-        return true;
+        if($process_account->isActive($_SESSION['account'])){
+            return true;
+        } else {
+            $_SESSION['msg'] = 'Tài khoản đã bị khóa. Vui lòng liên hệ với admin';
+            return false;
+        }
+        
     } else
         return false;
 }
+
+function checkpermission(){
+    require_once ('./class/Process_account.php');
+    $process_account = new Process_account();
+    require_once ('./class/Permission.php');
+    $permission = new Permission(); 
+
+    if (isset($_GET['view']) && $_GET['view']){
+        $curlink = explode("_",$_GET['view'])[0];    
+    } else 
+        $curlink = 'home';    
+
+    if (isset($_SESSION['account']) && $_SESSION['account']) {
+        $links = $permission->readLinkOfUser($process_account->getID($_SESSION['account']));
+        viewArr($links);
+        
+        echo $curlink;
+        foreach ($links as $link){
+             echo $link->link.'<br>';
+            if($link->link == $curlink)
+                return true;
+        }
+        return false;
+    } else 
+        return false;
+}  
+
 
 function chuyentrang($link){
     header('location: '.$link);

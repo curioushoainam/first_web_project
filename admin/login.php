@@ -15,34 +15,44 @@ $accountErr = $passwordErr = '';
 if (isset($_POST['account'], $_POST['password']) && $_POST['account'] && $_POST['password']){
     $account = $validation->test_input($_POST['account']);
 	if ($process_account->isAccount($account)){
-        $password = $validation->test_input($_POST['password']);       
-        if ($validation->isPassword($password)){
-            $password = md5($password);                       
-            if ($process_account->checkPassword($account, $password)){
-                $_SESSION['login'] = true; 
-                $_SESSION['account'] = $account;
-                $_SESSION['password'] = $password;                
-                $_SESSION['avatar'] = $process_account->getAvatar($account);
-                
-                if (isset($_POST['remember']) && $_POST['remember']){
-                    setcookie('login', $_SESSION['login'], time() + 3600*24*30);
-                    setcookie('account', $_SESSION['account'], time() + 3600*24*30);
-                    setcookie('password', $_SESSION['password'], time() + 3600*24*30); 
-                    setcookie('avatar', $_SESSION['avatar'], time() + 3600*24*30);                  
-                }
-                
-                chuyentrang('index');
+        if($process_account->isActive($account)){
+            $password = $validation->test_input($_POST['password']);       
+            if ($validation->isPassword($password)){
+                $password = md5($password);                       
+                if ($process_account->checkPassword($account, $password)){
+                    $_SESSION['login'] = true; 
+                    $_SESSION['account'] = $account;
+                    $_SESSION['password'] = $password;                
+                    $_SESSION['avatar'] = $process_account->getAvatar($account);                    
+                    
+                    if (isset($_POST['remember']) && $_POST['remember']){
+                        setcookie('login', $_SESSION['login'], time() + 3600*24*30);
+                        setcookie('account', $_SESSION['account'], time() + 3600*24*30);
+                        setcookie('password', $_SESSION['password'], time() + 3600*24*30); 
+                        setcookie('avatar', $_SESSION['avatar'], time() + 3600*24*30);                  
+                    }
+                    
+                    chuyentrang('index');
 
+                } else {
+                    $passwordErr = 'Mật khẩu không đúng';
+                }
             } else {
-                $passwordErr = 'Mật khẩu không đúng';
+                $passwordErr = 'Mật khẩu không hợp lệ';
             }
         } else {
-            $passwordErr = 'Mật khẩu không hợp lệ';
+            $_SESSION['msg'] = 'Tài khoản đã bị khóa. Vui lòng liên hệ với người admin';
         }
     } else {
         $accountErr = 'Tài khoản không tồn tại';
     }	
 }
+
+if(isset($_SESSION['msg']) && $_SESSION['msg']){
+    $msg = $_SESSION['msg'];
+    unset($_SESSION['msg']);
+} else 
+    $msg = '';
 ?>
 
 <!-- =========================================================================== -->
@@ -63,7 +73,8 @@ if (isset($_POST['account'], $_POST['password']) && $_POST['account'] && $_POST[
 	<!-- /login -->	
 
 </head>
-<body>	
+<body>
+    <div style="color: red" align="center"><i></i><?= $msg; ?><i></div>	
     <div class="container">
         <div class="row">
             <div class="col-md-12">
