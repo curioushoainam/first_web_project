@@ -12,10 +12,10 @@ $data = $databaseFuncs->read('products',array('*'),array(),array('ma'=>'DESC'));
 		<div class="col-sm-2 dropdown">			
 				<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" id="btn-select-active" href="#">Chọn thao tác <span class="caret"></span></button>
 				<ul class="dropdown-menu">
-					<li><a href="?view=admin">Hiện danh sách hiển thị</a></li>
-					<li><a href="?view=admin&status=all">Hiện toàn bộ danh sách</a></li>
-					<li><a href="?view=admin&status=hidden">Hiện danh sách ẩn</a></li>
-					<li><a href="?view=admin&status=deleted">Hiện danh sách bị xóa</a></li>				
+					<li><a href="?view=product">Hiện danh sách hiển thị</a></li>
+					<li><a href="?view=product&status=all">Hiện toàn bộ danh sách</a></li>
+					<li><a href="?view=product&status=hidden">Hiện danh sách ẩn</a></li>
+					<li><a href="?view=product&status=deleted">Hiện danh sách bị xóa</a></li>				
 				</ul>			
 		</div>
 			

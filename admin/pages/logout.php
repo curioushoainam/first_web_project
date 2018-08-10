@@ -12,5 +12,5 @@ setcookie('account', '', -1);
 setcookie('password', '', -1);
 setcookie('avatar', '', -1);
 
-chuyentrang('index');
+chuyentrang('index.php');
 ?>

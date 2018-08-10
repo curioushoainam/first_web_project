@@ -24,7 +24,7 @@
         $('.view_data').click(function(){
             var ma = $(this).attr("id");            
             $.ajax({
-                url     : "pages/view_account.php",
+                url     : "./pages/view_account.php",
                 type    : "text",
                 method  : "post",
                 data    : {ma : ma},

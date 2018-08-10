@@ -43,7 +43,24 @@ function isPerm($function, $permlist){
 	return false;
 }
 
+function treeview($permlist, $ma = 0, $is_sub=FALSE){		
+	$attr = (!$is_sub) ? 'class="checktree"' : 'class="sub"';
+	$tree = '<ul '.$attr.' >';		// open
 
+	GLOBAL $permission;
+
+	$chucnangs = $permission->readFuncOfFather($ma);
+	foreach ($chucnangs as $chucnang){
+		$ten = isset($chucnang->ten) ? $chucnang->ten : '';
+		$ma = isset($chucnang->ma) ? $chucnang->ma : '';
+		$tree .= '<li>';
+		$tree .= '<input type="checkbox" name="chucnang[]" value="'.$ma.'" '.(isPerm($ma,$permlist)?'checked' : '').' /><label>'.$ten.'</label>';
+		$sub = treeview($permlist, $ma, TRUE);
+		$tree .= $sub.'</li>';
+	}
+
+	return $tree. '</ul>';		// close
+}
 
 ?>
 
@@ -61,26 +78,36 @@ function isPerm($function, $permlist){
 		</table>
 	</div>
 	<hr>
-	<div class="col-sm-offset-4">
+
+	<div class="col-sm-offset-4">		
 		<form action="" method="post">
-		<?php 
-			$chucnangchas = $permission->readFuncOfFather();
-			foreach ($chucnangchas as $chucnangcha){
-				$tencha = isset($chucnangcha->ten) ? $chucnangcha->ten : '';
-				$macha = isset($chucnangcha->ma) ? $chucnangcha->ma : '';
-				echo '<label><input type="checkbox" '. (isPerm($macha,$permlist)?'checked' : '') .' name="chucnang[]" value="'.$macha.'"> '.$tencha.'</label><br>';
-				$chucnangcons = $permission->readFuncOfFather($macha);
-				foreach ($chucnangcons as $chucnangcon){
-					$ten = isset($chucnangcon->ten) ? $chucnangcon->ten : '';
-					$ma = isset($chucnangcon->ma) ? $chucnangcon->ma : '';
-					echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.'<label><input type="checkbox" '. (isPerm($ma,$permlist)?'checked' : '') .' name="chucnang[]" value="'.$ma.'"><span style="font-style: normal;"> '.$ten.'</span></label><br>';
-				}		
-			}
-		?>
-		<br>
-		<button class="btn btn-primary" name="grant" value="true">Submit</button>	
-		</form>
+			<?php 
+			echo treeview($permlist);
+			?>
+			<br>
+			<button class="btn btn-primary" name="grant" value="true">Submit</button>	
+		</form>	
 	</div>
 </div>
+
+<script>
+	$(function(){
+			$("ul.checktree").checktree();
+	});
+</script>
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-36251023-1']);
+	_gaq.push(['_setDomainName', 'jqueryscript.net']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
 
 

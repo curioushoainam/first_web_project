@@ -1,6 +1,6 @@
 <?php 
 require_once ('./../config.php');
-require_once ('./../class/database.php');
+require_once ('./../class/Database.php');
 require_once ('./../class/Process_account.php');
 require_once ('./../class/Validation.php');
 

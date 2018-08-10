@@ -26,7 +26,7 @@
         $('.deleting_account').click(function(){
             var ma = $(this).attr("id");            
             $.ajax({
-                url     : "pages/delete_account.php",
+                url     : "./pages/delete_account.php",
                 type    : "text",
                 method  : "post",
                 data    : {del_ma : ma},

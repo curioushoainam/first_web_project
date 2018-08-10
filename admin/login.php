@@ -32,7 +32,7 @@ if (isset($_POST['account'], $_POST['password']) && $_POST['account'] && $_POST[
                         setcookie('avatar', $_SESSION['avatar'], time() + 3600*24*30);                  
                     }
                     
-                    chuyentrang('index');
+                    chuyentrang('index.php');
 
                 } else {
                     $passwordErr = 'Mật khẩu không đúng';
