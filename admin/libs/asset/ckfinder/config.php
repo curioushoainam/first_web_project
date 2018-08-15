@@ -60,7 +60,8 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseUrl = 'http://localhost/First web project/admin/';	
+// $baseUrl = 'http://localhost/First web project/admin/';	
+$baseUrl = '/First web project/admin/';	
 
 // truy xuất file vào trình duyệt
 /*

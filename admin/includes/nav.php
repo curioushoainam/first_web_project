@@ -54,7 +54,7 @@ $permission = new Permission();
                     <li><a href="?view=product"><i class="fa fa-angle-double-right"></i> Product </a></li>
                     <li><a href="?view=product_add"><i class="fa fa-angle-double-right"></i> Add Product </a></li>
                     <li><a href="?view=productCatalog"><i class="fa fa-angle-double-right"></i> Catalog </a></li>
-                    <li><a href="?view=productSupplier"><i class="fa fa-angle-double-right"></i> Supplier </a></li>
+                    <li><a href="?view=productBrand"><i class="fa fa-angle-double-right"></i> Brand </a></li>
                 </ul>
             </li>
             <li>
@@ -84,7 +84,7 @@ $permission = new Permission();
             <li>
                 <a href="#" data-toggle="collapse" data-target="#submedia"><i class="fa fa-fw fa-youtube-play"></i> MEDIA <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 <ul id="submedia" class="collapse">
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Slider </a></li>
+                    <li><a href="?view=media_slider"><i class="fa fa-angle-double-right"></i> Slider </a></li>
                     <li><a href="#"><i class="fa fa-angle-double-right"></i> Banner </a></li>
                 </ul> 
             </li>
