@@ -218,7 +218,7 @@ $ma_sps = $slider->ma_sp();
 	    ?>	    
     	<tr> 
     		<td>
-    			<a href="?view=media_slider&status=edit&id=<?= $row->ma ?>"><span class="glyphicon glyphicon-edit" title="Edit"></span></a>					
+    			<a href="?view=mediaSlider&status=edit&id=<?= $row->ma ?>"><span class="glyphicon glyphicon-edit" title="Edit"></span></a>					
     		</td> 
     		<td><?= $ma ?></td>
     		<td><?= $ma_sp ?></td>
@@ -268,12 +268,14 @@ $ma_sps = $slider->ma_sp();
             <div class="form-group">
                 <label class="col-md-3 control-label">Hình slider</label>
                 <div class="col-md-5">
-                	<div class="col-sm-2" style="padding: 0px">
+                	<div class="col-sm-7" style="padding: 0px">
                 		<input type="button" name="button1" id="button1" onclick="BrowseServer();" value="Select slider" class="btn btn-info">
+                		<input id="hinh" name="hinh" class="form-control" type="text" required="" readonly>
                 	</div>
-                	<div class="col-sm-10" style="padding: 0px">
-                		<input id="hinh" name="hinh" class="form-control" type="text" required="">
-                	</div>                 	             	                   	
+                	<div class="col-sm-5" style="padding: 0px">                		
+                		<img alt="" width="200" height="65" id="img" class=" pull-right">                		
+                	</div>
+                	 
                 </div>
                 <div class="col-md-3 error">
                     <p><?= $hinhErr ?></p>
@@ -334,7 +336,7 @@ $ma_sps = $slider->ma_sp();
                 <div class="col-md-8">
                     <div class="pull-right" style="text-align: right;">
                         <button type="submit" class="btn btn-success" name="add" id="add" value="true">Add</button>
-                        <a type="button" class="btn btn-default" href="?view=media_slider">Cancel</a>
+                        <a type="button" class="btn btn-default" href="?view=mediaSlider">Cancel</a>
                     </div>
                 </div>      
             </div>                      
@@ -395,15 +397,14 @@ $ma_sps = $slider->ma_sp();
 
             <div class="form-group">
                 <label class="col-md-3 control-label">Hình slider</label>
-                <div class="col-md-5">
-                	<!-- <div class="row"> -->
-	                	<div class="col-sm-2" style="padding: 0px">
-	                		<input type="button" name="button1" id="button1" onclick="BrowseServer();" value="Select slider" class="btn btn-info">
-	                	</div>
-	                	<div class="col-sm-10" style="padding: 0px">
-	                		<input id="hinhedit" name="hinhedit" class="form-control" type="text" value="<?= $hinh ?>">
-	                	<!-- </div> -->
-                	</div>                   	
+                <div class="col-md-5">                	
+                	<div class="col-sm-7" style="padding: 0px">
+                		<input type="button" name="button1" id="button1" onclick="BrowseServer();" value="Select slider" class="btn btn-info">
+                		<input id="hinhedit" name="hinhedit" class="form-control" type="text" value="<?= $hinh ?>" readonly>
+                	</div>
+                	<div class="col-sm-5" style="padding: 0px">                		
+                		<img alt="" width="200" height="65" id="imgedit" src="<?= $hinh ?>" class="pull-right">
+            		</div>                   	
                 </div>
                 <div class="col-md-3 error">
                     <p><?= $hinhErr ?></p>
@@ -465,7 +466,7 @@ $ma_sps = $slider->ma_sp();
                 <div class="col-md-8">
                     <div class="pull-right" style="text-align: right;">
                         <button type="submit" class="btn btn-success" name="edit" id="edit" value="true">Edit</button>
-                        <a type="button" class="btn btn-default" href="?view=media_slider">Cancel</a>
+                        <a type="button" class="btn btn-default" href="?view=mediaSlider">Cancel</a>
                     </div>
                 </div>      
             </div>                      
@@ -511,6 +512,9 @@ $ma_sps = $slider->ma_sp();
 	// This is a sample function which is called when a file is selected in CKFinder.
 	function SetFileField( fileUrl ){
 		document.getElementById( 'hinh' ).value = fileUrl;
-		document.getElementById( 'hinhedit' ).value = fileUrl;
+		document.getElementById( 'img' ).setAttribute('src',fileUrl);
+
+		document.getElementById( 'hinhedit' ).value = fileUrl;		
+		document.getElementById( 'imgedit' ).setAttribute('src',fileUrl);
 	}
 </script>

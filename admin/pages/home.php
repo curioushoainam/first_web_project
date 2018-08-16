@@ -33,5 +33,10 @@
         </div>
         <!-- /.row -->
     </div>
-    <!-- /.container-fluid -->    
+    <!-- /.container-fluid -->
+
 </div>
+<?php 
+$basedir = isset($_GET['fd']) && $_GET['fd'] ? $_GET['fd'] : 'images';
+selectImages($basedir);
+?>

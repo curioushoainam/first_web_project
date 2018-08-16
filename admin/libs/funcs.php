@@ -195,10 +195,10 @@ function upfile($file,$path,$name='file_'){
     }   
 }
  
-/*
-Upload multiple files to server
-*/
+
 function myuploads($file,$path,&$kq,&$loi,$namein = 'file_',$maxsize=1,$extallow=array('jpg','png','gif')){
+    // Upload multiple files to server
+    
     $kq = array();
     $loi=array();
     
@@ -226,6 +226,30 @@ function myuploads($file,$path,&$kq,&$loi,$namein = 'file_',$maxsize=1,$extallow
         return true;            
     }else
         return false;
+}
+
+
+// define('baseurl','http://localhost/First%20web%20project/admin/');
+//$basedir = isset($_GET['fd']) && $_GET['fd'] ? $_GET['fd'] : 'images';
+function selectImages($folder = 'images',$filename='?view=home'){  
+    $f = opendir($folder);
+     echo '<div>'.BASEURL.$folder.'/</div>';
+    while(($file = readdir($f))){
+        $ext = explode('.', $file);
+        $ext = isset($ext[count($ext)-1]) ? $ext[count($ext)-1] : '';
+        $pathfile = $folder.'/'.$file;  
+        if(is_file($pathfile) && in_array($ext, array('jpg','png','gif','bmp'))){
+            echo '<div style="float: left; margin: 20px"><img src="'.BASEURL.$pathfile.'" width="100px" height="70px" /><br>
+                    <span>'.$file.'</span>
+                    <input type="checkbox" name="select[]" value="'.BASEURL.$pathfile.'"/>
+            </div>';
+        } else if (!is_file($pathfile) && $file != '.' && $file != '..' ) {
+            $pathfolder = $filename.'&fd='.$folder.'/'.$file;
+            echo '<div style="float: left; margin: 20px"><a href="'.$pathfolder.'"><img src="'.BASEURL.'images/fd.png" width="100px" height="70px"/>                                      
+                    <br><span>'.$file.'</span></a>
+            </div>'; 
+        }
+    }
 }
 
 ?>

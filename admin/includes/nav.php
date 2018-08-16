@@ -72,7 +72,7 @@ $permission = new Permission();
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-fw fa-server"></i> MENU </a>
+                <a href="?view=menu"><i class="fa fa-fw fa-server"></i> MENU </a>
             </li>
             <li>
                 <a href="#" data-toggle="collapse" data-target="#subinbox"><i class="fa fa-fw fa-inbox"></i> EMAIL <i class="fa fa-fw fa-angle-down pull-right"></i></a>
@@ -84,7 +84,7 @@ $permission = new Permission();
             <li>
                 <a href="#" data-toggle="collapse" data-target="#submedia"><i class="fa fa-fw fa-youtube-play"></i> MEDIA <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 <ul id="submedia" class="collapse">
-                    <li><a href="?view=media_slider"><i class="fa fa-angle-double-right"></i> Slider </a></li>
+                    <li><a href="?view=mediaSlider"><i class="fa fa-angle-double-right"></i> Slider </a></li>
                     <li><a href="#"><i class="fa fa-angle-double-right"></i> Banner </a></li>
                 </ul> 
             </li>

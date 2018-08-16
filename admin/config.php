@@ -13,7 +13,8 @@ define('ARTICLE_SIZE', '2.0');
 define('PRODUCT_PATH', 'images/products');
 define('PRODUCT_SIZE', '2.0');
 
-
 date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+define('BASEURL','/First web project/admin/');
 
 ?>
