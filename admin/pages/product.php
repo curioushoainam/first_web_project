@@ -67,7 +67,7 @@ $data = $databaseFuncs->read('products',array('*'),array(),array('ma'=>'DESC'));
 	    		$alias = isset($row->alias) ? $row->alias : '';   		
 		    	$ma_nhom = isset($row->ma_nhom) ? $row->ma_nhom : '';  	
 		    	$noi_dung_tom_tat = isset($row->noi_dung_tom_tat) ? $row->noi_dung_tom_tat : '';
-				$hinhArr = isset($row->hinh) ? $row->hinh : '';
+				$hinh = isset($row->hinh) ? $row->hinh : '';
 		    	$ma_loai = isset($row->ma_loai) ? $row->ma_loai : '';
 		    	$don_gia = isset($row->don_gia) ? $row->don_gia : '';    		
 		    	$so_luong = isset($row->so_luong) ? $row->so_luong : '';
@@ -86,14 +86,7 @@ $data = $databaseFuncs->read('products',array('*'),array(),array('ma'=>'DESC'));
 	    		<td style="text-align: left;"><?= $alias ?></td>
 	    		<td><?= $ma_nhom ?></td>
 	    		<td style="text-align: left;"><?= $noi_dung_tom_tat ?></td>
-	    		<td style="text-align: left;">
-	    			<?php 
-	    			$hinhs = explode("|",$hinhArr);
-    				foreach($hinhs as $hinh){
-    					echo '<img src="./images/products/'.$hinh.'" alt="" width="50" height="50">';
-    				}
-	    			?>
-	    		</td>
+	    		<td><img src="<?= $hinh ?>" alt="" width="50" height="50"></td>
 	    		<td><?= $ma_loai ?></td>
 	    		<td><?= $don_gia ?></td>
 	    		<td><?= $so_luong ?></td>

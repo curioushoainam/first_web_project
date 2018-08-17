@@ -229,23 +229,29 @@ function myuploads($file,$path,&$kq,&$loi,$namein = 'file_',$maxsize=1,$extallow
 }
 
 
-// define('baseurl','http://localhost/First%20web%20project/admin/');
 //$basedir = isset($_GET['fd']) && $_GET['fd'] ? $_GET['fd'] : 'images';
-function selectImages($folder = 'images',$filename='?view=home'){  
+function selectImages($folder = 'images',$filename='?view=home',$name='imgselected'){
+    /*input : 
+        - $folder là folder chứa hình ảnh
+        - $filename là url để chạy file gọi hàm
+        - BASEURL được định nghĩa trong config.php. Nó định rõ đường dẫn từ gốc tới $folder
+        - $basedir lấy vị trí folder dựa &fd=folder_name trên url
+        - "imgselected[]" là name để PHP use $_POST lấy dữ liệu
+    */
     $f = opendir($folder);
-     echo '<div>'.BASEURL.$folder.'/</div>';
+     echo '<div><p style="color: blue">'.BASEURL.$folder.'/<p></div>';
     while(($file = readdir($f))){
         $ext = explode('.', $file);
         $ext = isset($ext[count($ext)-1]) ? $ext[count($ext)-1] : '';
         $pathfile = $folder.'/'.$file;  
         if(is_file($pathfile) && in_array($ext, array('jpg','png','gif','bmp'))){
-            echo '<div style="float: left; margin: 20px"><img src="'.BASEURL.$pathfile.'" width="100px" height="70px" /><br>
+            echo '<div class="col-md-3 col-sm-4 col-xs-6" style="margin: 10px auto"><img src="'.BASEURL.$pathfile.'" width="100px" height="70px"/><br>
                     <span>'.$file.'</span>
-                    <input type="checkbox" name="select[]" value="'.BASEURL.$pathfile.'"/>
+                    <input type="checkbox" name="'.$name.'[]" value="'.BASEURL.$pathfile.'">
             </div>';
         } else if (!is_file($pathfile) && $file != '.' && $file != '..' ) {
             $pathfolder = $filename.'&fd='.$folder.'/'.$file;
-            echo '<div style="float: left; margin: 20px"><a href="'.$pathfolder.'"><img src="'.BASEURL.'images/fd.png" width="100px" height="70px"/>                                      
+            echo '<div class="col-md-3 col-sm-4 col-xs-6" style="margin: 10px auto"><a href="'.$pathfolder.'"><img src="'.BASEURL.'images/fd.png" width="100px" height="70px">                                      
                     <br><span>'.$file.'</span></a>
             </div>'; 
         }
@@ -253,3 +259,4 @@ function selectImages($folder = 'images',$filename='?view=home'){
 }
 
 ?>
+<div style="margin"></div>

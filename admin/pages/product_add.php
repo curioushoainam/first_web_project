@@ -43,11 +43,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $noi_dung_tom_tatErr = '* Có lỗi xảy ra';
         }        
 
-        if(isset($_POST['danh_sach_hinh'])){
-            $input['danh_sach_hinh'] = $validation->test_input($_POST['danh_sach_hinh']);
-        } else {
-            $danh_sach_hinhErr = '* Có lỗi xảy ra';
-        }
+        if(isset($_POST['imgselected'])){
+            $imgs = '';
+            foreach ($_POST['imgselected'] as $img){
+                $imgs .= $img .'||';
+            }
+            $imgs = rtrim($imgs,'||');            
+            $input['danh_sach_hinh'] = $imgs;            
+        } 
 
         if(isset($_POST['tieu_de'])){
             $input['tieu_de'] = $validation->test_input($_POST['tieu_de']);
@@ -99,30 +102,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             }           
         }
 
-        if(isset($_FILES['hinh']) && !($_FILES['hinh']['error'][0]>0)){                       
-            $result = myuploads($_FILES['hinh'], PRODUCT_PATH,$hinhArr,$hinhErrArr);
-            if($result){                
-                $input['hinh'] .= implode("|",$hinhArr);
-                $hinhErr = implode("|",$hinhErrArr);                               
-            } else {
-                $hinhErr = 'Kiểm tra việc chọn file';
-            }
+        if(isset($_POST['hinh'])){                       
+            $input['hinh'] = $validation->test_input($_POST['hinh']);
         }
 
-        if(isset($_FILES['hinh_chia_se']) && !($_FILES['hinh_chia_se']['error'][0]>0)){             
-            $result = myuploads($_FILES['hinh_chia_se'], PRODUCT_PATH,$hinh_chia_seArr,$hinh_chia_seErrArr);
-            if($result){                
-                $input['hinh_chia_se'] .= implode("|",$hinh_chia_seArr);              
-                $hinh_chia_seErr = implode("|",$hinh_chia_seErrArr);                   
-            } else {
-                $hinh_chia_seErr = 'Kiểm tra việc chọn file';
-            }
+         if(isset($_POST['hinh_cs'])){                       
+            $input['hinh_chia_se'] = $validation->test_input($_POST['hinh_cs']);
         }
-viewArr($input);
+
+// viewArr($input);
         if(!($tenErr||$aliasErr||$ma_nhomErr||$noi_dung_chi_tietErr||$noi_dung_tom_tatErr||$danh_sach_hinhErr||$tieu_deErr||$tu_khoaErr||$mo_taErr||$ma_loaiErr||$so_luongErr||$don_giaErr||$trang_thaiErr)){
 
             $input['ngay_tao'] = date('Y-m-d H:i:s');
-viewArr($input);                       
+// viewArr($input);                       
             $kq = $databaseFuncs->create('products',$input);
             if($kq){
                 foreach($input as $key => $val){
@@ -203,17 +195,7 @@ viewArr($input);
                 <div class="col-md-2 error">
                     <p><?= $noi_dung_chi_tietErr ?></p>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">Danh sách hình</label>
-                <div class="col-md-8">
-                   <input id="danh_sach_hinh" name="danh_sach_hinh" class="form-control" type="text" value="<?= $input['danh_sach_hinh'] ?>">
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $danh_sach_hinhErr ?></p>
-                </div>
-            </div>
+            </div>            
 
             <div class="form-group">
                 <label class="col-md-2 control-label">Mã loại</label>
@@ -306,31 +288,51 @@ viewArr($input);
                     <p><?= $mo_taErr ?></p>
                 </div>
             </div>
-
-            <!-- =============================================== -->
-        <hr>        
-            <legend class="creation-border">
-                <div class="pull-left">Hình ảnh </div>
-            </legend>
         <hr>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Cập nhật hình mới</label>
-                <div class="col-md-8">
-                   <input id="hinh" name="hinh[]" class="form-control" type="file" multiple="multiple"  style="padding-left: 0">
+            <!-- =============================================== -->
+             <div class="form-group">
+                <label class="col-md-2 control-label">Hình</label>
+                <div class="col-md-8">                  
+                    <div class="col-sm-8" style="padding: 0px">
+                        <input type="button" name="button1" id="button1" onclick="BrowseServer();" value="Select image" class="btn btn-info">
+                        <input id="hinh" name="hinh" class="form-control lock2" type="text" value="" readonly>
+                    </div>
+                    <div class="col-sm-4" style="padding: 0px">                     
+                        <img alt="" width="100" height="75" id="img" src="" class="pull-right">
+                    </div>                      
                 </div>
-                <div class="col-md-2 error">
+                <div class="col-md-3 error">
                     <p><?= $hinhErr ?></p>
                 </div>
-            </div>            
+            </div>
+
             <div class="form-group">
-                <label class="col-md-2 control-label">Hình chia sẻ</label>
-                <div class="col-md-8">
-                    <input id="hinh_chia_se" name="hinh_chia_se[]" class="form-control" type="file" multiple="multiple" style="padding-left: 0">
+                <label class="col-md-2 control-label">Hình chia sẽ</label>
+                <div class="col-md-8">                  
+                    <div class="col-sm-8" style="padding: 0px">
+                        <input type="button" name="button1" id="button1" onclick="BrowseServerCS();" value="Select image" class="btn btn-info">
+                        <input id="hinh_cs" name="hinh_cs" class="form-control lock2" type="text" value="" readonly>
+                    </div>
+                    <div class="col-sm-4" style="padding: 0px">                     
+                        <img alt="" width="100" height="75" id="img_cs" src="" class="pull-right">
+                    </div>                      
                 </div>
-                <div class="col-md-2 error">
-                    <p><?= $hinh_chia_seErr ?></p>
+                <div class="col-md-3 error">
+                    <p><?= $hinhErr ?></p>
                 </div>
-            </div>            
+            </div>           
+            
+            <div class="form-group">
+                <label class="col-md-2 control-label">Chọn danh sách hình</label>
+                <div class="col-md-8"> 
+                    <!-- name="imgselected[]" -->
+                    <?php
+                    $filename = '?view=product_add';
+                    $basedir = isset($_GET['fd']) && $_GET['fd'] ? $_GET['fd'] : 'images';
+                    selectImages($basedir,$filename);
+                    ?>            
+              </div>                
+            </div>     
 
             <!-- =============================================== -->
             <div class="form-group" >
@@ -343,4 +345,33 @@ viewArr($input);
             </div>                      
         </fieldset>
     </form>
-</div>      
+</div>  
+
+<script type="text/javascript" src="libs/asset/ckfinder/ckfinder.js"></script>
+<script type="text/javascript"> 
+    function BrowseServer(){
+        // You can use the "CKFinder" class to render CKFinder in a page:
+        var finder = new CKFinder();
+        finder.basePath = '/First web project/admin/';  // The path for the installation of CKFinder (default = "/ckfinder/").
+        finder.selectActionFunction = SetFileField;
+        finder.popup();
+    }
+    // This is a sample function which is called when a file is selected in CKFinder.
+    function SetFileField( fileUrl ){
+        document.getElementById( 'hinh' ).value = fileUrl;      
+        document.getElementById( 'img' ).setAttribute('src',fileUrl);
+    }
+
+    function BrowseServerCS(){
+        // You can use the "CKFinder" class to render CKFinder in a page:
+        var finder = new CKFinder();
+        finder.basePath = '/First web project/admin/';  // The path for the installation of CKFinder (default = "/ckfinder/").
+        finder.selectActionFunction = SetFileFieldCS;
+        finder.popup();
+    }
+    // This is a sample function which is called when a file is selected in CKFinder.
+    function SetFileFieldCS( fileUrl ){
+        document.getElementById( 'hinh_cs' ).value = fileUrl;      
+        document.getElementById( 'img_cs' ).setAttribute('src',fileUrl);
+    }
+</script>    
