@@ -1,3 +1,5 @@
+<!-- Chưa thêm don_gia_cu section -->
+
 <?php 
 //require_once ('./class/Pagination.php');  
 //$paging = new Pagination();
@@ -53,6 +55,7 @@ $data = $databaseFuncs->read('products',array('*'),array(),array('ma'=>'DESC'));
 	    		<th>Hình</th>
 	    		<th>Mã loại</th>
 	    		<th>Đơn giá</th>
+	    		<th>Đơn giá cũ</th>
 	    		<th>Số lượng</th>	    		
 	    		<th>Trạng thái</th>
 	    		<th>Ngày tạo</th>
@@ -69,7 +72,8 @@ $data = $databaseFuncs->read('products',array('*'),array(),array('ma'=>'DESC'));
 		    	$noi_dung_tom_tat = isset($row->noi_dung_tom_tat) ? $row->noi_dung_tom_tat : '';
 				$hinh = isset($row->hinh) ? $row->hinh : '';
 		    	$ma_loai = isset($row->ma_loai) ? $row->ma_loai : '';
-		    	$don_gia = isset($row->don_gia) ? $row->don_gia : '';    		
+		    	$don_gia = isset($row->don_gia) ? $row->don_gia : '0'; 
+		    	$don_gia_cu = isset($row->don_gia_cu) ? $row->don_gia_cu : '0';    		
 		    	$so_luong = isset($row->so_luong) ? $row->so_luong : '';
 		    	$trang_thai = isset($row->trang_thai) ? $row->trang_thai : '';    		
 		    	$ngay_tao = isset($row->ngay_tao) ? $row->ngay_tao : '';    		
@@ -88,7 +92,8 @@ $data = $databaseFuncs->read('products',array('*'),array(),array('ma'=>'DESC'));
 	    		<td style="text-align: left;"><?= $noi_dung_tom_tat ?></td>
 	    		<td><img src="<?= $hinh ?>" alt="" width="50" height="50"></td>
 	    		<td><?= $ma_loai ?></td>
-	    		<td><?= $don_gia ?></td>
+	    		<td><?= number_format($don_gia) ?></td>
+	    		<td><?= number_format($don_gia_cu) ?></td>
 	    		<td><?= $so_luong ?></td>
 	    		<td><?= $trang_thai ?></td>
 	    		<td><?= $ngay_tao ?></td>

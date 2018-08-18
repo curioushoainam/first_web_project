@@ -239,24 +239,63 @@ function selectImages($folder = 'images',$filename='?view=home',$name='imgselect
         - "imgselected[]" là name để PHP use $_POST lấy dữ liệu
     */
     $f = opendir($folder);
-     echo '<div><p style="color: blue">'.BASEURL.$folder.'/<p></div>';
+     echo '<div><p id="fd" style="color: blue">'.$folder.'/<p></div>';
     while(($file = readdir($f))){
         $ext = explode('.', $file);
         $ext = isset($ext[count($ext)-1]) ? $ext[count($ext)-1] : '';
         $pathfile = $folder.'/'.$file;  
         if(is_file($pathfile) && in_array($ext, array('jpg','png','gif','bmp'))){
             echo '<div class="col-md-3 col-sm-4 col-xs-6" style="margin: 10px auto"><img src="'.BASEURL.$pathfile.'" width="100px" height="70px"/><br>
-                    <span>'.$file.'</span>
+                    <span style="font-size: 13px">'.$file.'</span>
                     <input type="checkbox" name="'.$name.'[]" value="'.BASEURL.$pathfile.'">
             </div>';
         } else if (!is_file($pathfile) && $file != '.' && $file != '..' ) {
             $pathfolder = $filename.'&fd='.$folder.'/'.$file;
-            echo '<div class="col-md-3 col-sm-4 col-xs-6" style="margin: 10px auto"><a href="'.$pathfolder.'"><img src="'.BASEURL.'images/fd.png" width="100px" height="70px">                                      
-                    <br><span>'.$file.'</span></a>
+            echo '<div class="col-md-3 col-sm-4 col-xs-6" style="margin: 10px auto"><a class="imgssl" href="'.$pathfolder.'"><img src="'.BASEURL.'images/fd.png" width="100px" height="70px">                                      
+                    <br><span style="font-size: 13px">'.$file.'</span></a>
             </div>'; 
         }
     }
 }
 
+
+function selectImages2($folder = 'images',$root = './',$name='imgs'){
+/* 
+    Hàm hiển thị danh sách ảnh và cho chọn nhiều ảnh
+    
+    input :         
+        - $folder là folder chứa hình ảnh
+        - BASEURL được định nghĩa trong config.php. Nó định rõ đường dẫn từ gốc tới $folder
+        - $root  lấy vị trí folder dựa &fd=folder_name trên url
+        - "imgs" là name để PHP use $_POST lấy dữ liệu
+
+    output : hàm trả về dạng text đoạn mã html gồm đường dẫn và hình ảnh
+*/
+    $html = '';
+    if(is_dir($root.$folder)){
+        $f = opendir($root.$folder);                 
+        $html .= '<div><p id="fd" style="color: blue">'.BASEURL.$folder.'/<p></div>';
+        while(($file = readdir($f))){
+            $ext = explode('.', $file);
+            $ext = isset($ext[count($ext)-1]) ? $ext[count($ext)-1] : '';
+            $pathfile = $folder.'/'.$file;  
+            if(is_file($root.$pathfile) && in_array($ext, array('jpg','png','gif','bmp'))){
+                $html .= '<div class="col-md-3 col-sm-6 col-xs-12" style="margin: 10px auto"><img src="'.BASEURL.$pathfile.'" width="100px" height="70px"/><br>
+                        <span style="font-size: 13px">'.$file.'</span>
+                        <input type="checkbox" name="'.$name.'[]" value="'.BASEURL.$pathfile.'">
+                </div>';
+            } else if (!is_file($pathfile) && $file != '.' && $file != '..' ) {
+                $pathfolder = $folder.'/'.$file;
+                $html .= '<div class="col-md-3 col-sm-6 col-xs-12" style="margin: 10px auto"><a class="imgssl" href="'.$pathfolder.'"><img src="'.BASEURL.'images/fd.png" width="100px" height="70px">                                      
+                        <br><span style="font-size: 13px">'.$file.'</span></a>
+                </div>'; 
+            }
+        }
+        closedir($f);
+    } else 
+        $html = 'Folder không tồn tại';
+
+    return $html;
+}
+
 ?>
-<div style="margin"></div>
