@@ -52,7 +52,7 @@ $permission = new Permission();
                 <a href="#" data-toggle="collapse" data-target="#subproduct"><i class="fa fa-television"></i> PRODUCTS <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 <ul id="subproduct" class="collapse">
                     <li><a href="?view=product"><i class="fa fa-angle-double-right"></i> Product </a></li>
-                    <li><a href="?view=product_add&fd=images/products"><i class="fa fa-angle-double-right"></i> Add Product </a></li>
+                    <li><a href="?view=product_add"><i class="fa fa-angle-double-right"></i> Add Product </a></li>
                     <li><a href="?view=productCatalog"><i class="fa fa-angle-double-right"></i> Catalog </a></li>
                     <li><a href="?view=productBrand"><i class="fa fa-angle-double-right"></i> Brand </a></li>
                 </ul>

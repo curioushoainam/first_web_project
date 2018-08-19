@@ -247,7 +247,7 @@ function selectImages($folder = 'images',$filename='?view=home',$name='imgselect
         if(is_file($pathfile) && in_array($ext, array('jpg','png','gif','bmp'))){
             echo '<div class="col-md-3 col-sm-4 col-xs-6" style="margin: 10px auto"><img src="'.BASEURL.$pathfile.'" width="100px" height="70px"/><br>
                     <span style="font-size: 13px">'.$file.'</span>
-                    <input type="checkbox" name="'.$name.'[]" value="'.BASEURL.$pathfile.'">
+                    <input class="imgsl" type="checkbox" name="'.$name.'[]" value="'.BASEURL.$pathfile.'">
             </div>';
         } else if (!is_file($pathfile) && $file != '.' && $file != '..' ) {
             $pathfolder = $filename.'&fd='.$folder.'/'.$file;
@@ -280,13 +280,13 @@ function selectImages2($folder = 'images',$root = './',$name='imgs'){
             $ext = isset($ext[count($ext)-1]) ? $ext[count($ext)-1] : '';
             $pathfile = $folder.'/'.$file;  
             if(is_file($root.$pathfile) && in_array($ext, array('jpg','png','gif','bmp'))){
-                $html .= '<div class="col-md-3 col-sm-6 col-xs-12" style="margin: 10px auto"><img src="'.BASEURL.$pathfile.'" width="100px" height="70px"/><br>
+                $html .= '<div class="col-md-3 col-sm-6 col-xs-12" style="margin: 10px auto"><img src="'.BASEURL.$pathfile.'" height="70px" width="100"/><br>
                         <span style="font-size: 13px">'.$file.'</span>
-                        <input type="checkbox" name="'.$name.'[]" value="'.BASEURL.$pathfile.'">
+                        <input class="imgsl" type="checkbox" name="'.$name.'[]" value="'.BASEURL.$pathfile.'">
                 </div>';
             } else if (!is_file($pathfile) && $file != '.' && $file != '..' ) {
                 $pathfolder = $folder.'/'.$file;
-                $html .= '<div class="col-md-3 col-sm-6 col-xs-12" style="margin: 10px auto"><a class="imgssl" href="'.$pathfolder.'"><img src="'.BASEURL.'images/fd.png" width="100px" height="70px">                                      
+                $html .= '<div class="col-md-3 col-sm-6 col-xs-12" style="margin: 10px auto"><a class="imgssl" href="'.$pathfolder.'"><img src="'.BASEURL.'images/fd.png" height="70px" width="80">                                      
                         <br><span style="font-size: 13px">'.$file.'</span></a>
                 </div>'; 
             }

@@ -13,6 +13,7 @@
 
 .error {
 	color: red;
+    font-size: 1.5em;
 }
 
 .edit_table table tbody td input {
