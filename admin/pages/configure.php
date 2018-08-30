@@ -8,12 +8,13 @@ $configure = new Configure();
 
 <div class="configure">
 	<h3><i class="fa fa-cogs fa-fw"></i>  Configure Manager</h3>
-	<hr>
+	<hr>			
 	<ul class="nav nav-tabs" id="configure">
-	    <li class="active"><a data-toggle="tab" href="#general">General Info</a></li>
-	    <li><a data-toggle="tab" href="#smtp">SMTP</a></li>
-	    <li><a data-toggle="tab" href="#seo">SEO</a></li>
-	    <li><a data-toggle="tab" href="#footer">Footer</a></li>
+	    <li class="active"><a data-toggle="tab" href="#general"><b>General Info</b></a></li>
+	    <li><a data-toggle="tab" href="#smtp"><b>SMTP</b></a></li>
+	    <li><a data-toggle="tab" href="#seo"><b>SEO</b></a></li>
+	    <li><a data-toggle="tab" href="#footer"><b>Footer</b></a></li>
+	    <li><a data-toggle="tab" href="#about"><b>About us</b></a></li>
   	</ul>
 	
 	<div class="tab-content">
@@ -38,8 +39,13 @@ $configure = new Configure();
     		require_once ('./pages/configure_footer.php');
     	?>
     </div>
+    <div id="about" class="tab-pane fade">
+	 	<?php 
+    		require_once ('./pages/configure_about.php');
+    	?>
+    </div>
   </div>
-
+</div>
 <script>
 	$(document).ready(function(){
 	    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
@@ -51,4 +57,3 @@ $configure = new Configure();
 	    }
 	});
 </script>
-</div>

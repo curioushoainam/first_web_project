@@ -75,36 +75,66 @@ class Pagination {
     }
 
     // Hàm tạo giao diện
-    function html() {
-    	$p = '';    	
+    function html() {  
+		$p = '';    	
     	if ($this->_config['total_record'] > $this->_config['limit']){
-    		$p .= '<div class="pagination"><ul>';
+    		$p .= '<div class="product-pagination text-center"><nav><ul class="pagination">';
 
-    		$displayFirst = $this->_config['current_page'] > 1 ? 'href="'.$this->__link('1').'"' : '';
-    		$displayPrev = $this->_config['current_page'] > 1 ? 'href="'.$this->__link($this->_config['current_page']-1).'"' : '';
 
-			$p .= '<li><a '.$displayFirst.' >First</a></li>';
-			$p .= '<li><a '.$displayPrev.' >Prev</a></li>';    		
+
+    		$displayFirst = $this->_config['current_page'] > 1 ? $this->__link('1') : '#';
+    		$displayPrev = $this->_config['current_page'] > 1 ? $this->__link($this->_config['current_page']-1) : '#';
+
+            $p .= '<li><a class="page" href="'.$displayFirst.'" aria-label="Previous"><span aria-hidden="true">&lt;&lt;</span></a></li>';
+            $p .= '<li><a class="page" href="'.$displayPrev.'" aria-label="Previous"><span aria-hidden="true">&lt;</span></a></li>';
+
+			// $p .= '<li><a '.$displayFirst.' >First</a></li>';
+			// $p .= '<li><a '.$displayPrev.' >Prev</a></li>';    		
 
     		// Các trang ở giữa
     		for ($i=$this->_config['min']; $i<=$this->_config['max']; $i++){
     			// current page
     			if ($this->_config['current_page'] == $i){
-    				$p .= '<li><span>'. $i .'</span></li>';
+    				$p .= '<li><span  style="background-color: cyan">'. $i .'</span></li>';
     			} else {
-    				$p .= '<li><a href="'.$this->__link($i).'"> '.$i.' </a></li>';
+    				$p .= '<li><a class="page" href="'.$this->__link($i).'"> '.$i.' </a></li>';
     			}
     		}
 
     		// Next | Last
-    		if ($this->_config['current_page'] < $this->_config['total_page']){    			
-    			$p .= '<li><a href="'. $this->__link($this->_config['current_page'] + 1).'">Next</a></li>';
-    			$p .= '<li><a href="'. $this->__link($this->_config['total_page']).'">Last</a></li>';
+    		if ($this->_config['current_page'] < $this->_config['total_page']){ 
+                $p .= '<li><a class="page" href="'.$this->__link($this->_config['current_page'] + 1).'" aria-label="Next"><span aria-hidden="true">&gt;</span></a></li>';
+                $p .= '<li><a class="page" href="'.$this->__link($this->_config['total_page']).'" aria-label="Next"><span aria-hidden="true">&gt;&gt;</span></a></li>';
+
+    			// $p .= '<li><a href="'. $this->__link($this->_config['current_page'] + 1).'">Next</a></li>';
+    			// $p .= '<li><a href="'. $this->__link($this->_config['total_page']).'">Last</a></li>';
     		}
-    		$p .= '</ul></div>';
+    		$p .= '</nav></div>';
     	}
+		
+		
+		
+		
     	return $p;
     }
 }	
+
+?>
+
+
+<?php 
+
+// How to use
+// $config = array(
+//         'current_page'  => isset($_GET['page']) ? $_GET['page'] : 1, // Trang hiện tại
+//         'total_record'  => $process_account->total_accounts(),      // Tổng số record
+//         'limit'         => $_SESSION['rpp'],                // limit
+//         'link_full'     => '?view=admin&page={page}',// Link full có dạng như sau: domain/com/page/{page}
+//         'link_first'    => '?view=admin',   // Link trang đầu tiên       
+//     );
+
+// $paging->init($config);
+
+// echo $paging->html();
 
 ?>

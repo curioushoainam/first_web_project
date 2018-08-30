@@ -1,3 +1,20 @@
+/*Go to top symbol*/
+#gototop {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99; 
+  border: none;
+  outline: none;  
+  cursor: pointer;  
+  border-radius: 50%;
+}
+
+#gototop:hover {
+  background-color: lightgrey;
+}
+/* /Go to top symbol*/
 
 #btn-control{
     width: 100%;

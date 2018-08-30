@@ -3,17 +3,12 @@ $validation = new Validation();
 $databaseFuncs = new DatabaseFuncs();
 
 // define variables and set to empty values
-$input = array("ten"=>NULL, "alias"=>NULL, "ma_nhom"=>NULL, "noi_dung_chi_tiet"=>NULL, "noi_dung_tom_tat"=>NULL, "danh_sach_hinh"=>NULL, "tieu_de"=>NULL, "tu_khoa"=>NULL, "mo_ta"=>NULL, "ma_loai"=>NULL, "so_luong"=>NULL, "don_gia"=>NULL, "trang_thai"=>NULL, "ngay_tao"=>NULL, "ngay_cap_nhat"=>NULL);
+$input = array("ten"=>NULL, "alias"=>NULL, "ma_nhom"=>NULL, "noi_dung_chi_tiet"=>NULL, "noi_dung_tom_tat"=>NULL, "danh_sach_hinh"=>NULL, "tieu_de"=>NULL, "tu_khoa"=>NULL, "mo_ta"=>NULL, "ma_loai"=>NULL, "so_luong"=>NULL, "don_gia"=>NULL,"don_gia_cu"=>NULL, "trang_thai"=>NULL, "ngay_tao"=>NULL, "ngay_cap_nhat"=>NULL, "hinh"=>NULL, "hinh_chia_se"=>NULL);
 
-$tenErr=$aliasErr=$ma_nhomErr=$noi_dung_chi_tietErr=$noi_dung_tom_tatErr=$danh_sach_hinhErr=$tieu_deErr=$tu_khoaErr=$mo_taErr=$ma_loaiErr=$so_luongErr=$don_giaErr=$trang_thaiErr=$ngay_taoErr='';
-
-$input2 = array("hinh"=>NULL, "hinh_chia_se"=>NULL, "danh_sach_hinh"=>NULL);
-$hinhErr=$hinh_chia_seErr='';
+$tenErr=$aliasErr=$ma_nhomErr=$noi_dung_chi_tietErr=$noi_dung_tom_tatErr=$danh_sach_hinhErr=$tieu_deErr=$tu_khoaErr=$mo_taErr=$ma_loaiErr=$so_luongErr=$don_giaErr=$don_gia_cuErr=$trang_thaiErr=$ngay_taoErr=$hinhErr=$hinh_chia_seErr='';
 
 $hinhArr=$hinh_chia_seArr=array();
-$hinhErrArr=$hinh_chia_seErrArr=array();
-
-$feedback = $feedback2 = NULL;
+$feedback='';
 
 if(isset($_GET['id']) && $_GET['id']){
     $data = $databaseFuncs->read('products',array('*'),array('ma'=>$_GET['id']));
@@ -30,117 +25,261 @@ if(isset($_GET['id']) && $_GET['id']){
     $input["ma_loai"] = isset($data[0]->ma_loai) ? $data[0]->ma_loai : NULL;
     $input["so_luong"] = isset($data[0]->so_luong) ? $data[0]->so_luong : NULL;
     $input["don_gia"] = isset($data[0]->don_gia) ? $data[0]->don_gia : NULL;
+    $input["don_gia_cu"] = isset($data[0]->don_gia_cu) ? $data[0]->don_gia_cu : NULL;
     $input["trang_thai"] = isset($data[0]->trang_thai) ? $data[0]->trang_thai : NULL;
     $input["ngay_tao"] = isset($data[0]->ngay_tao) ? $data[0]->ngay_tao : NULL;
     $input["ngay_cap_nhat"] = isset($data[0]->ngay_cap_nhat) ? $data[0]->ngay_cap_nhat : NULL;
     
-    $input2["hinh"] = isset($data[0]->hinh) ? $data[0]->hinh : NULL;
-    $input2["hinh_chia_se"] = isset($data[0]->hinh_chia_se) ? $data[0]->hinh_chia_se : NULL;   
-    $input2["danh_sach_hinh"] = isset($data[0]->danh_sach_hinh) ? $data[0]->danh_sach_hinh : NULL; 
+    $input["hinh"] = isset($data[0]->hinh) ? $data[0]->hinh : NULL;
+    $input["hinh_chia_se"] = isset($data[0]->hinh_chia_se) ? $data[0]->hinh_chia_se : NULL;   
+    $input["danh_sach_hinh"] = isset($data[0]->danh_sach_hinh) ? $data[0]->danh_sach_hinh : NULL; 
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(isset($_POST['product_update']) && $_POST['product_update']) { 
+$chitiet = array(
+    'group1'=>array('Màn hình',NULL),
+    'cnmh'=>array('Công nghệ màn hình:',NULL),
+    'dpgmh'=>array('Độ phân giải:',NULL),
+    'ktmh'=>array('Kích thước màn hình:',NULL),
+    'mkcu'=>array('Mặt kính cảm ứng:',NULL),
+
+    'group2'=>array('Hệ điều hành-CPU',NULL),
+    'hdh'=>array('Hệ điều hành:',NULL),
+    'cscpu'=>array('Chipset (hãng SX CPU):',NULL),
+    'tdcpu'=>array('Tốc độ CPU:',NULL),
+    'cdhgpu'=>array('Chip đồ họa (GPU):',NULL),
+
+    'group3'=>array('Bộ nhớ',NULL),
+    'ram'=>array('RAM:',NULL),
+    'bnt'=>array('Bộ nhớ trong:',NULL),
+    'tnn'=>array('Thẻ nhớ ngoài:',NULL),
+
+    'group4'=>array('Kết nối',NULL),
+    'mdd'=>array('Mạng di động:',NULL),
+    'sim'=>array('SIM:',NULL),
+    'wifi'=>array('Wifi:',NULL),
+    'gps'=>array('GPS:',NULL),
+    'blt'=>array('Bluetooth:',NULL),
+    'ckn'=>array('Cổng kết nối/sạc:',NULL),
+    'jtn'=>array('Jack tai nghe:',NULL),
+    'knk'=>array('Kết nối khác:',NULL),
+
+    'group5'=>array('Camera sau',NULL),
+    'dpgcs'=>array('Độ phân giải:',NULL),
+    'qp'=>array('Quay phim:',NULL),
+    'df'=>array('Đèn Flash:',NULL),
+    'canc'=>array('Chụp ảnh nâng cao:',NULL),
+
+    'group6'=>array('Camera trước',NULL),
+    'dpgct'=>array('Độ phân giải:',NULL),
+    'vdc'=>array('Videocall:',NULL),
+    'ttk'=>array('Thông tin khác:',NULL),
+
+    'group7'=>array('Thiết kế',NULL),
+    'tk'=>array('Thiết kế:',NULL),
+    'cl'=>array('Chất liệu:',NULL),
+    'kt'=>array('Kích thước:',NULL),
+    'tl'=>array('Trọng lượng:',NULL),
+
+    'group8'=>array('Pin & Sạc',NULL),
+    'dlp'=>array('Dung lượng pin:',NULL),
+    'lp'=>array('Loại pin:',NULL),
+
+    'group9'=>array('Tiện ích',NULL),
+    'bmnc'=>array('Bảo mật nâng cao:',NULL),
+    'tndb'=>array('Tính năng đặc biệt:',NULL),
+    'ga'=>array('Ghi âm:',NULL),
+    'radio'=>array('Radio:',NULL)
+);
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if(isset($_POST['product_update']) && $_POST['product_update']){ 
 
         if(isset($_POST['ten']) && $_POST['ten']){
             $input['ten'] = $validation->test_input($_POST['ten']);          
         } else {
-            $tenErr = '* Có lỗi xảy ra';         
+            $tenErr = '* err';         
         } 
 
         if(isset($_POST['alias']) && $_POST['alias']){
             $input['alias'] = $validation->test_input($_POST['alias']);
         } else {
-            $aliasErr = '* Có lỗi xảy ra';
+            $aliasErr = '* err';
         }        
 
         if(isset($_POST['ma_nhom']) && $_POST['ma_nhom']){
             $input['ma_nhom'] = $validation->test_input($_POST['ma_nhom']);
+            if(!is_numeric($input['ma_nhom'])){
+            	$input['ma_nhom'] = '';
+            	$ma_nhomErr = '* err';
+            }
         } else {
-            $ma_nhomErr = '* Có lỗi xảy ra';
-        }
-
-        if(isset($_POST['noi_dung_chi_tiet'])){
-            // $input['noi_dung_chi_tiet'] = $validation->test_input($_POST['noi_dung_chi_tiet']);            
-            $input['noi_dung_chi_tiet'] = $_POST['noi_dung_chi_tiet'];            
-        } else {
-            $noi_dung_chi_tietErr = '* Có lỗi xảy ra';
-        }
+            $ma_nhomErr = '* err';
+        }        
 
         if(isset($_POST['noi_dung_tom_tat'])){
             $input['noi_dung_tom_tat'] = $validation->test_input($_POST['noi_dung_tom_tat']);
         } else {
-            $noi_dung_tom_tatErr = '* Có lỗi xảy ra';
-        }        
-
-        if(isset($_POST['danh_sach_hinh'])){
-            $input['danh_sach_hinh'] = $validation->test_input($_POST['danh_sach_hinh']);
-        } else {
-            $danh_sach_hinhErr = '* Có lỗi xảy ra';
-        }
+            $noi_dung_tom_tatErr = '* err';
+        } 
 
         if(isset($_POST['tieu_de'])){
             $input['tieu_de'] = $validation->test_input($_POST['tieu_de']);
         } else {
-            $tieu_deErr = '* Có lỗi xảy ra';
+            $tieu_deErr = '* err';
         }
 
         if(isset($_POST['tu_khoa'])){
             $input['tu_khoa'] = $validation->test_input($_POST['tu_khoa']);
         } else {
-            $tu_khoaErr = '* Có lỗi xảy ra';
+            $tu_khoaErr = '* err';
         }
 
         if(isset($_POST['mo_ta'])){
             $input['mo_ta'] = $validation->test_input($_POST['mo_ta']);
         } else {
-            $mo_taErr = '* Có lỗi xảy ra';
+            $mo_taErr = '* err';
         }
 
         if(empty($_POST['ma_loai']) && $_POST['ma_loai'] !== '0'){
-            $ma_loaiErr = '* Có lỗi xảy ra';                     
+            $ma_loaiErr = '* err';                     
         } else {
             $input['ma_loai'] = $validation->test_input($_POST['ma_loai']);
-            if (!$validation->isNumber($input['ma_loai'])){
+            if (!is_numeric($input['ma_loai'])){
                 $input['ma_loai'] = '';
-                $ma_loaiErr = "Mã loại không hợp lệ";
+                $ma_loaiErr = "* err";
             }           
         }
 
         if(isset($_POST['so_luong'])){
             $input['so_luong'] = $validation->test_input($_POST['so_luong']);
+            if(!is_numeric($input['so_luong'])){
+            	$input['so_luong'] = '';
+            	$so_luongErr = '* err';
+            }
         } else {
-            $so_luongErr = '* Có lỗi xảy ra';
+            $so_luongErr = '* err';
         }
 
         if(isset($_POST['don_gia'])){
             $input['don_gia'] = $validation->test_input($_POST['don_gia']);
+            if(!is_numeric($input['don_gia'])){
+            	$input['don_gia'] = '';
+            	$don_giaErr = '* err';
+            }
         } else {
-            $don_giaErr = '* Có lỗi xảy ra';
+            $don_giaErr = '* err';
+        }
+
+        if(isset($_POST['don_gia_cu'])){
+            $input['don_gia_cu'] = $validation->test_input($_POST['don_gia_cu']);
+            if(!is_numeric($input['don_gia_cu'])){
+                $input['don_gia_cu'] = '';
+                $don_gia_cuErr = '* err';
+            }
+        } else {
+            $don_gia_cuErr = '* err';
         }
 
         if(empty($_POST['trang_thai']) && $_POST['trang_thai'] !== '0'){
-            $trang_thaiErr = '* Có lỗi xảy ra';                     
+            $trang_thaiErr = '* err';                     
         } else {
             $input['trang_thai'] = $validation->test_input($_POST['trang_thai']);
-            if (!$validation->isNumber($input['trang_thai'])){
+            if (!is_numeric($input['trang_thai'])){
                 $input['trang_thai'] = '';
-                $trang_thaiErr = "Trạng thái không hợp lệ";
+                $trang_thaiErr = "* err";
             }           
         }
 
-        if(isset($_POST['ngay_tao'])){
-            $input['ngay_tao'] = $validation->test_input($_POST['ngay_tao']);
-        } else {
-            $ngay_taoErr = '* Có lỗi xảy ra';
+        if(isset($_POST['hinh'])){                       
+            $input['hinh'] = $validation->test_input($_POST['hinh']);
         }
 
-        if(!($tenErr||$aliasErr||$ma_nhomErr||$noi_dung_chi_tietErr||$noi_dung_tom_tatErr||$danh_sach_hinhErr||$tieu_deErr||$tu_khoaErr||$mo_taErr||$ma_loaiErr||$so_luongErr||$don_giaErr||$trang_thaiErr||$ngay_taoErr)){
+         if(isset($_POST['hinh_cs'])){                       
+            $input['hinh_chia_se'] = $validation->test_input($_POST['hinh_cs']);
+        }
+
+         if(isset($_POST['imgselected'])){
+            $imgs = '';
+            foreach ($_POST['imgselected'] as $img){
+                $imgs .= $img .'||';
+            }
+            $imgs = rtrim($imgs,'||');            
+            $input['danh_sach_hinh'] = $imgs;            
+        } 
+
+        // Product detail
+			$chitiet['group1'][1] = '-';
+			$chitiet['cnmh'][1] = isset($_POST['cnmh']) && $_POST['cnmh'] ? $_POST['cnmh'] : '-';
+			$chitiet['dpgmh'][1] = isset($_POST['dpgmh']) && $_POST['dpgmh'] ? $_POST['dpgmh'] : '-';
+		    $chitiet['ktmh'][1] = isset($_POST['ktmh']) && $_POST['ktmh'] ? $_POST['ktmh'] : '-';
+		    $chitiet['mkcu'][1] = isset($_POST['mkcu']) && $_POST['mkcu'] ? $_POST['mkcu'] : '-';
+
+		    $chitiet['group2'][1] = '-';
+		    $chitiet['hdh'][1] = isset($_POST['hdh']) && $_POST['hdh'] ? $_POST['hdh'] : '-';
+		    $chitiet['cscpu'][1] = isset($_POST['cscpu']) && $_POST['cscpu'] ? $_POST['cscpu'] : '-';
+		    $chitiet['tdcpu'][1] = isset($_POST['tdcpu']) && $_POST['tdcpu'] ? $_POST['tdcpu'] : '-';
+		    $chitiet['cdhgpu'][1] = isset($_POST['cdhgpu']) && $_POST['cdhgpu'] ? $_POST['cdhgpu'] : '-';
+
+		    $chitiet['group3'][1] = '-';
+		    $chitiet['ram'][1] = isset($_POST['ram']) && $_POST['ram'] ? $_POST['ram'] : '-';
+		    $chitiet['bnt'][1] = isset($_POST['bnt']) && $_POST['bnt'] ? $_POST['bnt'] : '-';
+		    $chitiet['tnn'][1] = isset($_POST['tnn']) && $_POST['tnn'] ? $_POST['tnn'] : '-';
+
+		    $chitiet['group4'][1] = '-';
+		    $chitiet['mdd'][1] = isset($_POST['mdd']) && $_POST['mdd'] ? $_POST['mdd'] : '-';
+		    $chitiet['sim'][1] = isset($_POST['sim']) && $_POST['sim'] ? $_POST['sim'] : '-';
+		    $chitiet['wifi'][1] = isset($_POST['wifi']) && $_POST['wifi'] ? $_POST['wifi'] : '-';
+		    $chitiet['gps'][1] = isset($_POST['gps']) && $_POST['gps'] ? $_POST['gps'] : '-';
+		    $chitiet['blt'][1] = isset($_POST['blt']) && $_POST['blt'] ? $_POST['blt'] : '-';
+		    $chitiet['ckn'][1] = isset($_POST['ckn']) && $_POST['ckn'] ? $_POST['ckn'] : '-';
+		    $chitiet['jtn'][1] = isset($_POST['jtn']) && $_POST['jtn'] ? $_POST['jtn'] : '-';
+		    $chitiet['knk'][1] = isset($_POST['knk']) && $_POST['knk'] ? $_POST['knk'] : '-';
+
+		    $chitiet['group5'][1] = '-';
+		    $chitiet['dpgcs'][1] = isset($_POST['dpgcs']) && $_POST['dpgcs'] ? $_POST['dpgcs'] : '-';
+		    $chitiet['qp'][1] = isset($_POST['qp']) && $_POST['qp'] ? $_POST['qp'] : '-';
+		    $chitiet['df'][1] = isset($_POST['df']) && $_POST['df'] ? $_POST['df'] : '-';
+		    $chitiet['canc'][1] = isset($_POST['canc']) && $_POST['canc'] ? $_POST['canc'] : '-';
+
+		    $chitiet['group6'][1] = '-';
+		    $chitiet['dpgct'][1] = isset($_POST['dpgct']) && $_POST['dpgct'] ? $_POST['dpgct'] : '-';
+		    $chitiet['vdc'][1] = isset($_POST['vdc']) && $_POST['vdc'] ? $_POST['vdc'] : '-';
+		    $chitiet['ttk'][1] = isset($_POST['ttk']) && $_POST['ttk'] ? $_POST['ttk'] : '-';
+
+		    $chitiet['group7'][1] = '-';
+		    $chitiet['tk'][1] = isset($_POST['tk']) && $_POST['tk'] ? $_POST['tk'] : '-';
+		    $chitiet['cl'][1] = isset($_POST['cl']) && $_POST['cl'] ? $_POST['cl'] : '-';
+		    $chitiet['kt'][1] = isset($_POST['kt']) && $_POST['kt'] ? $_POST['kt'] : '-';
+		    $chitiet['tl'][1] = isset($_POST['tl']) && $_POST['tl'] ? $_POST['tl'] : '-';
+
+		    $chitiet['group8'][1] = '-';
+		    $chitiet['dlp'][1] = isset($_POST['dlp']) && $_POST['dlp'] ? $_POST['dlp'] : '-';
+		    $chitiet['lp'][1] = isset($_POST['lp']) && $_POST['lp'] ? $_POST['lp'] : '-';
+
+		    $chitiet['group9'][1] = '-';
+		    $chitiet['bmnc'][1] = isset($_POST['bmnc']) && $_POST['bmnc'] ? $_POST['bmnc'] : '-';
+		    $chitiet['tndb'][1] = isset($_POST['tndb']) && $_POST['tndb'] ? $_POST['tndb'] : '-';
+		    $chitiet['ga'][1] = isset($_POST['ga']) && $_POST['ga'] ? $_POST['ga'] : '-';
+		    $chitiet['radio'][1] = isset($_POST['radio']) && $_POST['radio'] ? $_POST['radio'] : '-';
+		
+        $input['noi_dung_chi_tiet'] = '';
+		foreach($chitiet as $key => $val){
+			$init = (substr($key,0,5)=='group')?'>>>|':'';
+			$input['noi_dung_chi_tiet'] .= $init.$key.'||'.implode('||',$val). '|||';
+		}	
+        $input['noi_dung_chi_tiet'] = trim($input['noi_dung_chi_tiet'],'>>>|');
+// viewArr($chitiet);
+
+        if(!($tenErr||$aliasErr||$ma_nhomErr||$noi_dung_chi_tietErr||$noi_dung_tom_tatErr||$danh_sach_hinhErr||$tieu_deErr||$tu_khoaErr||$mo_taErr||$ma_loaiErr||$so_luongErr||$don_giaErr||$don_gia_cuErr||$trang_thaiErr)){
 
             $input['ngay_cap_nhat'] = date('Y-m-d H:i:s');
-                       
+// viewArr($input);
+			// $kq = '';                       
             $kq = $databaseFuncs->update('products',$input,array('ma'=>$_GET['id']));
             if($kq){
+                foreach($input as $key => $val){
+                    $input[$key] = NULL;
+                }                
                  $feedback = '<h4 style="color:blue"><i>Cập nhật vào database thành công</i></h4>';
             } else 
                  $feedback = '<h4 style="color:red"><i>Cập nhật vào database Thất Bại</i></h4>';
@@ -150,356 +289,226 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 ?>
 
-<div class="product_edit" style="">
-    <div class="text-center"><?= $feedback ?></div>
-	<form class="well form-horizontal" method="post" enctype="multipart/form-data">
-        <fieldset class="creation-border">
-            <legend class="creation-border">
-                <div class="pull-left"><span><a href="?view=product">Sản phẩm  </a></span> >>  Thông tin chi tiết </div>
-                <div class="pull-right"><input type="button" class="btn btn-info" id="edit" name="edit" value="Edit"></div>
-            </legend>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Tên sản phẩm</label>
-                <div class="col-md-8">
-                   <input id="ten" name="ten" class="form-control lock" type="text" required value="<?= $input['ten'] ?>">
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $tenErr ?></p>
-                </div>
-            </div>            
-			<div class="form-group">
-                <label class="col-md-2 control-label">Alias</label>
-                <div class="col-md-8">
-                   <input id="alias" name="alias" class="form-control lock" type="text" required value="<?= $input['alias'] ?>">
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $aliasErr ?></p>
-                </div>
-            </div>
+<div class="product_add">
+<div class="text-center"><?= $feedback ?></div>
+<form action="" method="post" enctype="multipart/form-data">	
+	<div class="">
+		<div class="row">
+			<div class="col-sm-6"><h3>Thay đổi thông tin</h3></div>
+			<div class="col-sm-6 align-content-center" style="margin-top: 20px">
+				<button class="btn btn-success" type="submit" value="true" name="product_update">Update</button>
+				<a type="button" class="btn btn-default" href="?view=product">Cancel</a>
+			</div>
+		</div>
+	<hr>	
+		<div class="tabbable">
+			<ul class="nav nav-tabs">
+	            <li class="active"><a href="#general" data-toggle="tab"><b>Thông tin chung</b></a></li>
+	            <li><a href="#detail" data-toggle="tab"><b>Chi tiết sản phẩm</b></a></li>	            
+	            <li><a href="#seo" data-toggle="tab"><b>SEO</b></a></li>
+	            <li><a href="#image" data-toggle="tab"><b>Hình ảnh</b></a></li>
+          	</ul>
+          	<div class="tab-content">
+          		<div class="tab-pane active" id="general">          			
+					<div class="col-md-8 col-md-offset-2">
+		            	<table class="table">
+		        			<tbody>
+		            		<tr>
+		            			<td class="leftCol success col-sm-3" style="font-size: 14px">Tên sản phẩm: <span class="error"><?= $tenErr?></span></td>
+		            			<td class="rightCol"><input type="text" name="ten" style="width: 100%; " value="<?= $input['ten'] ?>"></td>
+		            		</tr>
+		            		<tr>
+		            			<td class="leftCol success" style="font-size: 14px">Alias: <span class="error"><?= $aliasErr?></span></td>
+		            			<td class="rightCol"><input type="text" name="alias" style="width: 100%; " value="<?= $input['alias'] ?>"></td>
+		            		</tr>
+		            		<tr>
+		            			<td class="leftCol success" style="font-size: 14px">Mã nhóm: <span class="error"><?= $ma_nhomErr?></span></td>
+		            			<td class="rightCol"> 
+		            				<select id="ma_nhom" name="ma_nhom" style="width: 100%; ">
+									<?php
+				                    $product_group = $databaseFuncs->read('product_group',array('ma','ten'));
+				                    foreach($product_group as $item){
+				                        $selectVar = $input['ma_nhom'] == $item->ma ? 'selected' : '';
+				                        echo '<option '.$selectVar.' value="'. $item->ma .'">'.   $item->ten .'</option>';
+				                    }
+				                    ?>  
+				                    </select>
+		            			</td>
+		            		</tr>
+		            		<tr>
+		            			<td class="leftCol success" style="font-size: 14px">Tóm tắt: <span class="error"><?= $noi_dung_tom_tatErr?></span></td>
+		            			<td class="rightCol">		            				
+		            				<textarea rows="3" id="noi_dung_tom_tat" name="noi_dung_tom_tat" style="width: 100%; " class="form-control" type="text"><?= $input['noi_dung_tom_tat'] ?></textarea>
+		            			</td>
+		            		</tr>
+		            		<tr>
+		            			<td class="leftCol success" style="font-size: 14px">Mã loại: <span class="error"><?= $ma_loaiErr?></span></td>
+		            			<td class="rightCol">		            				
+		            				<select id="ma_loai" name="ma_loai" style="width: 100%; ">
+				                    <?php
+				                    $product_catalog = $databaseFuncs->read('product_catalog',array('ma','ten'));
+				                    foreach($product_catalog as $item){
+				                        $selectVar = $input['ma_nhom'] == $item->ma ? 'selected' : '';
+				                        echo '<option '.$selectVar.' value="'. $item->ma .'">'.   $item->ten .'</option>';
+				                    }
+				                    ?>  
+				                    </select>
+		            			</td>
+		            		</tr>
+		            		<tr>
+		            			<td class="leftCol success" style="font-size: 14px">Số lượng: <span class="error"><?= $so_luongErr?></span></td>
+		            			<td class="rightCol">
+									<input id="so_luong" name="so_luong" type="number" style="width: 100%;" value="<?= $input['so_luong'] ?>">
+		            			</td>
+		            		</tr>
 
-            <div class="form-group">
-                <label class="col-md-2 control-label">Mã nhóm</label>
-                <div class="col-md-8">                    
-                    <select id="ma_nhom" name="ma_nhom" class="form-control lock">
-                    <?php
-                    $product_group = $databaseFuncs->read('product_group',array('ma','ten'));
-                    foreach($product_group as $item){
-                        $selectVar = $input['ma_nhom'] == $item->ma ? 'selected' : '';
-                        echo '<option '.$selectVar.' value="'. $item->ma .'">'.   $item->ten .'</option>';
-                    }
-                    ?>  
-                    </select>
-                    <!-- <option value="<?= $article->ma ?>"><?= $article->ten ?></option> -->
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $ma_nhomErr ?></p>
-                </div>
-            </div>     
+		            		<tr>
+		            			<td class="leftCol success" style="font-size: 14px">Đơn giá: <span class="error"><?= $don_giaErr?></span></td>
+		            			<td class="rightCol">		            				
+		            				<input id="don_gia" name="don_gia" style="width: 100%; " type="text" value="<?= number_format($input['don_gia']) ?>">
+		            			</td>
+		            		</tr>
 
-            <div class="form-group">
-                <label class="col-md-2 control-label">Tóm tắt</label>
-                <div class="col-md-8">
-                   <textarea rows="3" id="noi_dung_tom_tat" name="noi_dung_tom_tat" class="form-control lock" type="text" required ><?= $input['noi_dung_tom_tat'] ?></textarea>
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $noi_dung_tom_tatErr ?></p>
-                </div>
-            </div>
+                            <tr>
+                                <td class="leftCol success" style="font-size: 14px">Đơn giá cũ: <span class="error"><?= $don_gia_cuErr?></span></td>
+                                <td class="rightCol">                                   
+                                    <input id="don_gia" name="don_gia" style="width: 100%; " type="text" value="<?= number_format($input['don_gia_cu']) ?>">
+                                </td>
+                            </tr>
 
-            <div class="form-group">
-                <label class="col-md-2 control-label">Chi tiết</label>
-                <div class="col-md-8">                  
-                   <?php
-                    echo ckeditor("noi_dung_chi_tiet",  $input['noi_dung_chi_tiet'], array('30em','100%'));
-                    ?>
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $noi_dung_chi_tietErr ?></p>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <label class="col-md-2 control-label">Danh sách hình</label>
-                <div class="col-md-8">
-                   <input id="danh_sach_hinh" name="danh_sach_hinh" class="form-control lock" type="text"  value="<?= $input['danh_sach_hinh'] ?>">
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $danh_sach_hinhErr ?></p>
-                </div>
-            </div>
+		            		<tr>
+		            			<td class="leftCol success" style="font-size: 14px">Trạng thái: <span class="error"><?= $trang_thaiErr?></span></td>
+		            			<td class="rightCol">
+		            				
+		            				<select id="trang_thai" name="trang_thai"style="width: 100%; ">
+			                       <?php 
+			                        $trang_thais = [0,1];
+			                        foreach ($trang_thais as $item){
+			                            $selectVar = $input['trang_thai'] == $item ? 'selected' : '';
+			                            echo '<option '.$selectVar.' value="'. $item .'">'.   $item .'</option>'; 
+			                        }
+			                        ?>
+			                   </select>
+		            			</td>
+		            		</tr>
+		            		</tbody>
+		        		</table>
+		    		</div>
+        		</div>
 
-            <div class="form-group">
-                <label class="col-md-2 control-label">Mã loại</label>
-                <div class="col-md-8">                    
-                    <select id="ma_loai" name="ma_loai" class="form-control lock">
-                    <?php
-                    $product_catalog = $databaseFuncs->read('product_catalog',array('ma','ten'));
-                    foreach($product_catalog as $item){
-                        $selectVar = $input['ma_nhom'] == $item->ma ? 'selected' : '';
-                        echo '<option '.$selectVar.' value="'. $item->ma .'">'.   $item->ten .'</option>';
-                    }
-                    ?>  
-                    </select>
-                    <!-- <option value="<?= $article->ma ?>"><?= $article->ten ?></option> -->
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $ma_loaiErr ?></p>
-                </div>
-            </div>
+        		<div class="tab-pane" id="detail">
+					<?php 
+						include ('/pages/product_edit_detail.php');
 
-            <div class="form-group">
-                <label class="col-md-2 control-label">Số lượng</label>
-                <div class="col-md-8">
-                   <input id="so_luong" name="so_luong" class="form-control lock" type="text" required value="<?= $input['so_luong'] ?>">
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $so_luongErr ?></p>
-                </div>
-            </div>
+					?>
+				</div>				
 
-            <div class="form-group">
-                <label class="col-md-2 control-label">Đơn giá</label>
-                <div class="col-md-8">
-                   <input id="don_gia" name="don_gia" class="form-control lock" type="text" required value="<?= $input['don_gia'] ?>">
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $don_giaErr ?></p>
-                </div>
-            </div>            
+        		<div class="tab-pane" id="seo">
+					<div class="col-md-8 col-md-offset-2">
+		            	<table class="table">
+		        			<tbody>
+		            		<tr>
+		            			<td class="leftCol success col-sm-3" style="font-size: 14px">Tiêu đề: <span class="error"><?= $tieu_deErr?></span></td>
+		            			<td class="rightCol">		            				
+		            				<input id="tieu_de" name="tieu_de" type="text" style="width: 100%;" value="<?= $input['tieu_de'] ?>">
+		            			</td>
+		            		</tr>
+		            		<tr>
+		            			<td class="leftCol success" style="font-size: 14px">Từ khóa: <span class="error"><?= $tu_khoaErr?></span></td>
+		            			<td class="rightCol">
+		            				<input id="tu_khoa" name="tu_khoa" style="width: 100%;" type="text" value="<?= $input['tu_khoa'] ?>">
+		            			</td>
+		            		</tr>
+		            		<tr>
+		            			<td class="leftCol success" style="font-size: 14px">Mô tả: <span class="error"><?= $mo_taErr?></span></td>
+		            			<td class="rightCol">
+		            				<textarea id="mo_ta" name="mo_ta" style="width: 100%;" type="text" rows="5"><?= $input['mo_ta'] ?></textarea>
+		            			</td>
+		            		</tr>	                		
+		            		</tbody>
+		        		</table>
+		    		</div>
+        		</div>
 
-            <div class="form-group">
-                <label class="col-md-2 control-label">Trạng thái</label>
-                <div class="col-md-8">
-                   <select id="trang_thai" name="trang_thai" class="form-control lock">
-                       <?php 
-                        $trang_thais = [0,1];
-                        foreach ($trang_thais as $item){
-                            $selectVar = $input['trang_thai'] == $item ? 'selected' : '';
-                            echo '<option '.$selectVar.' value="'. $item .'">'.   $item .'</option>'; 
-                        }
-                        ?>
-                   </select>
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $trang_thaiErr ?></p>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">Ngày tạo</label>
-                <div class="col-md-8">
-                   <input id="ngay_tao" name="ngay_tao" class="form-control" type="text" readonly value="<?= $input['ngay_tao'] ?>">
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $ngay_taoErr ?></p>
-                </div>
-            </div> 
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">Ngày cập nhật</label>
-                <div class="col-md-8">
-                   <input id="ngay_cap_nhat" name="ngay_cap_nhat" class="form-control" type="text" readonly value="<?= $input['ngay_cap_nhat'] ?>">
-                </div>
-            </div> 
-
-        </fieldset>
-        <!-- =============================================== -->
-        <hr>
-        <fieldset class="creation-border">
-            <legend class="creation-border">
-                <div class="pull-left">SEO </div>
-            </legend>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">Tiêu đề</label>
-                <div class="col-md-8">
-                   <input id="tieu_de" name="tieu_de" class="form-control lock" type="text" value="<?= $input['tieu_de'] ?>">
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $tieu_deErr ?></p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Từ khóa</label>
-                <div class="col-md-8">
-                   <input id="tu_khoa" name="tu_khoa" class="form-control lock" type="text" value="<?= $input['tu_khoa'] ?>">
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $tu_khoaErr ?></p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Mô tả</label>
-                <div class="col-md-8">
-                   <textarea id="mo_ta" name="mo_ta" class="form-control lock" type="text" rows="5"><?= $input['mo_ta'] ?></textarea>
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $mo_taErr ?></p>
-                </div>
-            </div>
-
-            <!-- =============================================== -->
-            <div class="form-group" >
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="pull-right" style="text-align: right;">
-                        <button type="submit" class="btn btn-success" name="product_update" id="update" value="true">Update</button>
-                        <a type="button" class="btn btn-default" href="<?= htmlspecialchars($_SERVER["PHP_SELF"]).'?view='.$_GET['view'].'&id='.$_GET['id']; ?>" >Cancel</a>
-                    </div>
-                </div>      
-            </div>                      
-        </fieldset>
-    </form>
-<!-- ===========================================================================     -->
-
-<?php 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(isset($_POST['product_update_h']) && $_POST['product_update_h']) { 
-
-        if(!(empty($_POST['hinh']) && $_POST['hinh'] != false)){
-            $input2['hinh'] = $validation->test_input($_POST['hinh']);
-        }
-
-        if(!(empty($_POST['hinh_cs']) && $_POST['hinh_cs'] != false)){
-            $input2['hinh_chia_se'] = $validation->test_input($_POST['hinh_cs']);
-        }
-
-        if(isset($_POST['imgselected']) && $_POST['imgselected']){            
-            $imgs = '';
-            foreach ($_POST['imgselected'] as $img){
-                $imgs .= $img .'||';
-            }
-            $imgs = rtrim($imgs,'||');            
-            $input2['danh_sach_hinh'] = $imgs;
-        }        
-        
-        $input2['ngay_cap_nhat'] = date('Y-m-d H:i:s');                    
-        $kq = $databaseFuncs->update('products',$input2,array('ma'=>$_GET['id']));
-        if($kq){
-            foreach ($input2 as $key => $val){
-                $input2[$key] = NULL;
-            }
-
-            $feedback2 = '<h4 style="color:blue"><i>Hình cập nhật vào database thành công</i></h4>';
-        } else 
-             $feedback2 = '<h4 style="color:red"><i>Hình cập nhật vào database Thất Bại</i></h4>';
-                 
-    }
-}
-
-?>
-    <div class="text-center"><?= $feedback2 ?></div>
-    <form class="well form-horizontal" method="post" enctype="multipart/form-data">
-        <fieldset class="creation-border">
-            <legend class="creation-border">
-                <div class="pull-left"><span><a href="?view=product">Sản phẩm  </a></span> >>  Thông tin hình ảnh</div>
-                <div class="pull-right"><input type="button" class="btn btn-info" id="edit_h" name="edit_h" value="Edit"></div>
-            </legend>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">Hình</label>
-                <div class="col-md-8">                  
-                    <div class="col-sm-8" style="padding: 0px">
-                        <input type="button" name="button1" id="button1" onclick="BrowseServer();" value="Select image" class="btn btn-info">
-                        <input id="hinh" name="hinh" class="form-control lock2" type="text" value="<?= $input2['hinh'] ?>" readonly>
-                    </div>
-                    <div class="col-sm-4" style="padding: 0px">                     
-                        <img alt="" width="100" height="75" id="img" src="<?= $input2['hinh'] ?>" class="pull-right">
-                    </div>                      
-                </div>
-                <div class="col-md-3 error">
-                    <p><?= $hinhErr ?></p>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">Hình chia sẽ</label>
-                <div class="col-md-8">                  
-                    <div class="col-sm-8" style="padding: 0px">
-                        <input type="button" name="button1" id="button1" onclick="BrowseServerCS();" value="Select image" class="btn btn-info">
-                        <input id="hinh_cs" name="hinh_cs" class="form-control lock2" type="text" value="<?= $input2['hinh_chia_se'] ?>" readonly>
-                    </div>
-                    <div class="col-sm-4" style="padding: 0px">                     
-                        <img alt="" width="100" height="75" id="img_cs" src="<?= $input2['hinh_chia_se'] ?>" class="pull-right">
-                    </div>                      
-                </div>
-                <div class="col-md-3 error">
-                    <p><?= $hinhErr ?></p>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label class="col-md-2 control-label">Danh sách hình đã có</label>
-                <div class="col-md-8">
-                   <input id="hinh_chia_se_prv" name="hinh_chia_se_prv" class="form-control lock2" type="text" value="<?= $input2['danh_sach_hinh'] ?>">
-                   <?php 
-                    $imgs = explode('||',$input2['danh_sach_hinh']);
-                    if (isset($imgs) && $imgs){
-                        foreach ($imgs as $img){                             
-                   ?>
-                        <div class="col-md-3 col-sm-4 col-xs-6" style="margin: 10px auto">
-                                <img src="<?= $img ?>" alt="" width="100px" height="75px">
-                        </div>
-                   <?php 
-                        }
-                    };
-                    ?>
-                </div>
-                <div class="col-md-2 error">
-                    <p><?= $aliasErr ?></p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Chọn danh sách hình</label>
-                <div class="col-md-8"> 
-                    <!-- name="imgselected[]" -->
-                    <?php
-                    $filename = '?view=product_edit&id='.$_GET['id'];
-                    $basedir = isset($_GET['fd']) && $_GET['fd'] ? $_GET['fd'] : 'images';
-                    selectImages($basedir,$filename);
-                    ?>            
-              </div>                
-            </div>
-            <!-- =============================================== -->
-            <div class="form-group" >
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="pull-right" style="text-align: right;">
-                        <button type="submit" class="btn btn-success" name="product_update_h" id="update_h" value="true">Update</button>
-                        <a type="button" class="btn btn-default" href="<?= htmlspecialchars($_SERVER["PHP_SELF"]).'?view='.$_GET['view'].'&id='.$_GET['id']; ?>">Cancel</a>
-                    </div>
-                </div>      
-            </div>                      
-        </fieldset>
-    </form>
+				<div class="tab-pane" id="image">
+					<div class="col-md-8 col-md-offset-2">
+		            	<table class="table">
+		        			<tbody>
+		            		<tr>
+		            			<!-- <td class="leftCol success col-sm-3" style="font-size: 14px">Hình: </td> -->
+		            			<td class="leftCol success col-sm-3" style="font-size: 14px"><input type="button" name="button1" id="button1" onclick="BrowseServer();" value="Chọn hình" class="btn btn-info" style="width:100%"> </td>
+		            			<td class="rightCol">		            				
+		            				<div class="col-sm-8" style="padding: 0px">				                        
+				                        <input id="hinh" name="hinh" class="form-control" type="text" value="<?= $input['hinh'] ?>" >
+				                    </div>
+				                    <div class="col-sm-4" style="padding: 0px">                     
+				                        <img alt="" height="75" id="img" src="<?= $input['hinh'] ?>" class="pull-right">
+				                    </div>   
+		            			</td>
+		            		</tr>
+		            		<tr>
+		            			<td class="leftCol success" style="font-size: 14px">
+		            				<input type="button" name="button1" id="button1" onclick="BrowseServerCS();" value="Hình chia sẽ" class="btn btn-info" style="width:100%">
+		            			</td>
+		            			<td class="rightCol">		            				
+		            				<div class="col-sm-8" style="padding: 0px">				                        
+				                        <input id="hinh_cs" name="hinh_cs" class="form-control " type="text" value="<?= $input['hinh_chia_se'] ?>" >
+				                    </div>
+				                    <div class="col-sm-4" style="padding: 0px">                     
+				                        <img alt="" height="75" id="img_cs" src="<?= $input['hinh_chia_se'] ?>" class="pull-right">
+				                    </div>
+		            			</td>
+		            		</tr>
+                            <tr>
+                                <td class="leftCol success" style="font-size: 14px">
+                                    <input type="button" name="button1" id="button1" onclick="BrowseServerCS();" value="Danh sách hình đã up" class="btn btn-info" style="width:100%">
+                                </td>
+                                <td class="rightCol">                                   
+                                    <div>                                     
+                                        <input id="ds_hinh_up" name="ds_hinh_up" class="form-control " type="text" value="<?= $input['danh_sach_hinh'] ?>" style="width: 100%">                                        
+                                    </div>
+                                    <div>
+                                        <?php 
+                                        $imgs = explode('||',$input['danh_sach_hinh']);
+                                        if (isset($imgs) && $imgs){
+                                            foreach ($imgs as $img){                             
+                                       ?>
+                                            <div class="col-md-3 col-sm-4 col-xs-6" style="margin: 10px auto">
+                                                    <img src="<?= $img ?>" alt="" width="50px" height="75px">
+                                                    <?php $name = explode('/',$img);?>
+                                                    <br><span><?= isset($name)?end($name):'' ?></span>
+                                            </div>
+                                       <?php 
+                                            }
+                                        };
+                                        ?>
+                                    </div>                                    
+                                </td>
+                            </tr>
+		            		<tr>		            			
+		            			<td class="leftCol success">
+		            				<input type="button" name="btn_slmulimg" id="btn_slmulimg" value="Chọn danh sách hình" class="btn btn-info"  style="width:100%">
+		            				<input type="button" id="selectAll" value="Select all" class="btn btn-default pull-right" style="width:50%">
+		            			</td>
+		            			<td class="rightCol">
+		            				<div id="mulImages">
+			            					<!-- Show Images -->
+		            				</div>
+		            			</td>
+		            		</tr>	                		
+		            		</tbody>
+		        		</table>
+		    		</div>
+        		</div>
+			</div>
+		</div>
+		<!-- /tabs -->
+	</div>
+</form>	
 </div>
 
 
-<!-- ===========================================================================     -->
-<script>
-    $(document).ready(function(){
-        $('.lock').attr('readonly', 'readonly');
-        $("#update").hide();
-        $("#ma_nhom").attr('disabled','disabled');
-        $("#ma_loai").attr('disabled','disabled');
-
-        $("#edit").click(function(){           
-            $('.lock').removeAttr('readonly');          
-            $("#update").show();           
-            $("#edit").hide();
-            $("#ma_nhom").removeAttr('disabled');
-            $("#ma_loai").removeAttr('disabled');
-        });
-
-        $('.lock2').attr('readonly', 'readonly'); 
-        $("#update_h").hide();
-
-        $("#edit_h").click(function(){           
-            $('.lock2').removeAttr('readonly');          
-            $("#update_h").show();           
-            $("#edit_h").hide();
-        });
-    });
-</script>
 
 <script type="text/javascript" src="libs/asset/ckfinder/ckfinder.js"></script>
 <script type="text/javascript"> 
@@ -527,5 +536,75 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     function SetFileFieldCS( fileUrl ){
         document.getElementById( 'hinh_cs' ).value = fileUrl;      
         document.getElementById( 'img_cs' ).setAttribute('src',fileUrl);
-    }
-</script>
+    }  
+
+ //    $(document).ready(function(){
+	// 	 $.ajax({
+	//         url: 'class/API.php',
+	//         type : "post",			// post method
+ //            dataType : "text",		// data type of server respose
+ //            data : {				// list of arguments will be sent to server
+
+ //            	location : 'images'
+ //            },
+ //            success : function(response){	// call-back function uses for process server response which will store inside variable result
+ //                $('#mulImages').html(response);
+ //            },
+ //            error : function (err){
+ //            	 $('#mulImages').html(err);
+ //            }
+	//     });	    
+	// });  
+
+    $('#mulImages').on("click",".imgssl", function(event){
+    	// alert($(this).attr('href'));
+	    event.preventDefault(); 
+	    $.ajax({
+	        url: 'class/API.php',
+	        type : "post",			// post method
+            dataType : "text",		// data type of server respose
+            data : {				// list of arguments will be sent to server
+
+            	location : $(this).attr('href')
+            },
+            success : function(response){	// call-back function uses for process server response which will store inside variable result
+                $('#mulImages').html(response);
+            },
+            error : function (err){
+            	 $('#mulImages').html(err);
+            }
+	    });
+	    return false; // for good measure
+	});
+
+	$('#btn_slmulimg').click(function(){
+		 $.ajax({
+	        url: 'class/API.php',
+	        type : "post",			// post method
+            dataType : "text",		// data type of server respose
+            data : {				// list of arguments will be sent to server
+
+            	location : 'images'
+            },
+            success : function(response){	// call-back function uses for process server response which will store inside variable result
+                $('#mulImages').html(response);
+            },
+            error : function (err){
+            	 $('#mulImages').html(err);
+            }
+	    });	    
+	});
+
+	var select = false;
+	$('#selectAll').click(function(){
+		if(!select){
+			$('.imgsl').prop("checked",true);
+			select = true;
+		} else {
+			$('.imgsl').prop("checked",false);
+			select = false;
+		}
+	});
+
+</script> 
+

@@ -80,6 +80,26 @@ if (!checkpermission()){
 	// });	
 </script>
 <!-- echo '<script type="text/javascript">alert("'. '==> DEBUG <==' .'")</script>'; -->
+<script>
+	// Go to top
+	window.onscroll = function() {scrollFunction()};
+
+	function scrollFunction() {
+	    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+	        document.getElementById("gototop").style.display = "block";
+	    } else {
+	        document.getElementById("gototop").style.display = "none";
+	    }
+	}
+	
+	$("#gototop").click(function() {
+	     $("html, body").animate({ scrollTop: 0 }, "slow");
+	     return false;
+	});
+	//  -/- Go to top
+
+</script>
+
 
 </body>
 </html>

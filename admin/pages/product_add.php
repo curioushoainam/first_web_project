@@ -66,8 +66,7 @@ $chitiet = array(
     'radio'=>array('Radio:',NULL)
 );
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-	echo '<script type="text/javascript">alert("'. '==> DEBUG <==' .'")</script>';
+if($_SERVER["REQUEST_METHOD"] == "POST"){	
     if(isset($_POST['product_add']) && $_POST['product_add']){ 
 
         if(isset($_POST['ten']) && $_POST['ten']){
@@ -228,12 +227,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		    $chitiet['ga'][1] = isset($_POST['ga']) && $_POST['ga'] ? $_POST['ga'] : '-';
 		    $chitiet['radio'][1] = isset($_POST['radio']) && $_POST['radio'] ? $_POST['radio'] : '-';
 		
+        $input['noi_dung_chi_tiet'] = '';
 		foreach($chitiet as $key => $val){
 			$init = (substr($key,0,5)=='group')?'>>>|':'';
-			$input['noi_dung_chi_tiet'] .= $init.$key.'|'.implode('||',$val). '|||';
-		}		
-// viewArr($chitiet);
-//echo 'ndct=>'.$input['noi_dung_chi_tiet'];exit();
+			$input['noi_dung_chi_tiet'] .= $init.$key.'||'.implode('||',$val). '|||';
+		}
+        $input['noi_dung_chi_tiet'] = strim($input['noi_dung_chi_tiet'],'>>>|');
 
         // /Product detail
 // viewArr($input);
@@ -257,6 +256,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 ?>
 
 <div class="product_add">
+<div class="text-center"><?= $feedback ?></div>
 <form action="" method="post" enctype="multipart/form-data">	
 	<div class="">
 		<div class="row">
@@ -272,7 +272,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	            <li class="active"><a href="#general" data-toggle="tab"><b>Thông tin chung</b></a></li>
 	            <li><a href="#detail" data-toggle="tab"><b>Chi tiết sản phẩm</b></a></li>	            
 	            <li><a href="#seo" data-toggle="tab"><b>SEO</b></a></li>
-	            <li><a href="#mage" data-toggle="tab"><b>Hình ảnh</b></a></li>
+	            <li><a href="#image" data-toggle="tab"><b>Hình ảnh</b></a></li>
           	</ul>
           	<div class="tab-content">
           		<div class="tab-pane active" id="general">          			
@@ -390,7 +390,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		    		</div>
         		</div>
 
-				<div class="tab-pane" id="mage">
+				<div class="tab-pane" id="image">
 					<div class="col-md-8 col-md-offset-2">
 		            	<table class="table">
 		        			<tbody>
@@ -471,23 +471,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         document.getElementById( 'img_cs' ).setAttribute('src',fileUrl);
     }  
 
-    $(document).ready(function(){
-		 $.ajax({
-	        url: 'class/API.php',
-	        type : "post",			// post method
-            dataType : "text",		// data type of server respose
-            data : {				// list of arguments will be sent to server
+ //    $(document).ready(function(){
+	// 	 $.ajax({
+	//         url: 'class/API.php',
+	//         type : "post",			// post method
+ //            dataType : "text",		// data type of server respose
+ //            data : {				// list of arguments will be sent to server
 
-            	location : 'images'
-            },
-            success : function(response){	// call-back function uses for process server response which will store inside variable result
-                $('#mulImages').html(response);
-            },
-            error : function (err){
-            	 $('#mulImages').html(err);
-            }
-	    });	    
-	});  
+ //            	location : 'images'
+ //            },
+ //            success : function(response){	// call-back function uses for process server response which will store inside variable result
+ //                $('#mulImages').html(response);
+ //            },
+ //            error : function (err){
+ //            	 $('#mulImages').html(err);
+ //            }
+	//     });	    
+	// });  
 
     $('#mulImages').on("click",".imgssl", function(event){
     	// alert($(this).attr('href'));
@@ -510,7 +510,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	    return false; // for good measure
 	});
 
-	$('#btn_slmulimg').click(function(){
+	$('#btn_slmulimg').click(function(){                     
 		 $.ajax({
 	        url: 'class/API.php',
 	        type : "post",			// post method
@@ -524,6 +524,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             },
             error : function (err){
             	 $('#mulImages').html(err);
+            },
+            always : function(){
+                alert('hello');
             }
 	    });	    
 	});

@@ -2,7 +2,7 @@
 		list-style-type: none;
 }
 .pagination  li {
-	float:left; margin: 3px; border: solid 1px gray;    	
+	float:left; margin: 3px;  	
 }
 .pagination a {
 	padding: 5px;
@@ -10,6 +10,6 @@
 .pagination span {
 	display:inline-block; 
 	padding: 0px 3px; 
-	background: blue; 
-	color:white;
+	/*background: blue; */
+	/*color:white;*/
 }
