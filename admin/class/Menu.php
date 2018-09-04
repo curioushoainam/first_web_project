@@ -21,7 +21,7 @@ class Menu extends database {
 	}
 
 	function update($input = array()){
-		$sql = 'UPDATE `'.$this->table.'` SET `ten` = :ten, `link` = :link, `action` = :action, `ma_cha` =:ma_cha ,`trang_thai` = :trang_thai, `ngay_cap_nhat` = NOW() WHERE `'.$this->table.'`.`ma` = :ma';
+		$sql = 'UPDATE `'.$this->table.'` SET `ten` = :ten, `link` = :link, `action` = :action, `ma_cha` =:ma_cha ,`trang_thai` = :trang_thai, `ngay_cap_nhat` = NOW(), `alias`=:alias WHERE `'.$this->table.'`.`ma` = :ma';
 		$this->setQuery($sql);
 		return $this->execute($input);
 	}

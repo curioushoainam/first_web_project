@@ -6,7 +6,7 @@ $validation = new Validation();
 $menu = new Menu();
 
 
-$tenErr=$linkErr=$ma_chaErr=$trang_thaiErr=$hack='';
+$tenErr=$linkErr=$ma_chaErr=$trang_thaiErr=$hack=$aliasErr='';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){	
 	$input = array(	
@@ -14,13 +14,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		'link'=>NULL,
 		'action'=>NULL,
 		'ma_cha'=>NULL,
-		'trang_thai'=>NULL
+		'trang_thai'=>NULL,
+		'alias'=>NULL
 	);
 	if(isset($_POST['add']) && $_POST['add']){
 		if(!(empty($_POST['ten']) && $_POST['ten'] != 0)){
-			$input['ten'] = $validation->test_input($_POST['ten']);
+			$input['ten'] = $validation->test_input($_POST['ten']);			
 		} else {
 			$tenErr = 'Thông tin không hợp lệ';
+		}
+
+		if(isset($_POST['alias'])){
+			$input['alias'] = $validation->test_input($_POST['alias']);			
 		}
 
 		if(!(empty($_POST['link']) && $_POST['link'] != 0)){
@@ -74,6 +79,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			$input['ten'] = $validation->test_input($_POST['ten_ed']);
 		} else {
 			$tenErr = 'Thông tin không hợp lệ';
+		}
+
+		if(isset($_POST['alias_ed'])){
+			$input['alias'] = $validation->test_input($_POST['alias_ed']);			
 		}
 
 		if(!(empty($_POST['link_ed']) && $_POST['link_ed'] != 0)){
@@ -152,8 +161,9 @@ $data = $menu->loadAll();
 	    <thead >
 	    	<tr class="success">	<!-- style="width: 15%" -->
 	    		<th>Todo</th>	    		
-	    		<th>Mã</th>	
+	    		<th>Mã</th>
 	    		<th>Tên</th>
+	    		<th>Alias</th>
 	    		<th>Link</th> 
 	    		<th>Action</th>
 	    		<th>Mã cha</th> 
@@ -172,7 +182,8 @@ $data = $menu->loadAll();
 		    	$ma_cha = isset($row->ma_cha) ? $row->ma_cha : ''; 
 		    	$trang_thai = isset($row->trang_thai) ? $row->trang_thai : '';    		
 		    	$ngay_tao = isset($row->ngay_tao) ? $row->ngay_tao : '';    		
-		    	$ngay_cap_nhat = isset($row->ngay_cap_nhat) ? $row->ngay_cap_nhat : '';		    	
+		    	$ngay_cap_nhat = isset($row->ngay_cap_nhat) ? $row->ngay_cap_nhat : '';		
+		    	$alias = isset($row->alias) ? $row->alias : ''; 	
 	    ?>
 	    <form action="" method="post">	
 	    	<tr> 
@@ -181,6 +192,7 @@ $data = $menu->loadAll();
 	    		</td> 
 	    		<td><?= $ma ?></td>	    		
 	    		<td style="text-align: left"><?= $ten ?></td>	    		
+	    		<td style="text-align: left"><?= $alias ?></td>	    		
 	    		<td style="text-align: left"><?= $link ?></td>	    		
 	    		<td style="text-align: left"><?= $action ?></td>	    		
 	    		<td><?= $ma_cha ?></td>	    		
@@ -197,8 +209,8 @@ $data = $menu->loadAll();
 	</div>
 
 <!-- ======================================================================= -->
-	<!-- add slider -->
-	<div id="add_div">
+	<!-- add menu -->
+	<div id="add_div" hidden>
 		<form class="well form-horizontal" method="post" enctype="multipart/form-data">
         <fieldset class="creation-border">
             <legend class="creation-border">
@@ -215,6 +227,16 @@ $data = $menu->loadAll();
                 	<p><?= $tenErr ?></p>
                 </div>
             </div> 
+			
+			<div class="form-group">
+                <label class="col-md-3 control-label">Alias</label>
+                <div class="col-md-5">						    		
+                   <input id="alias" name="alias" class="form-control" type="text" required value="<?= $alias ?>">
+                </div>
+                <!-- <div class="col-md-3 error">
+                	<p><?= $aliasErr ?></p>
+                </div> -->
+            </div>
 
             <div class="form-group">
                 <label class="col-md-3 control-label">Link</label>
@@ -267,10 +289,10 @@ $data = $menu->loadAll();
         </fieldset>
     	</form>
 	</div>	
-	<!-- // add slider -->
+	<!-- // add menu -->
 <!-- ======================================================================= -->
-	<!-- edit slider -->
-	<div id="<?=$edit_div?>" >
+	<!-- edit menu -->
+	<div id="<?=$edit_div?>">
 		<form class="well form-horizontal" method="post" enctype="multipart/form-data">
         <fieldset class="creation-border">
             <legend class="creation-border">
@@ -281,6 +303,7 @@ $data = $menu->loadAll();
 
             <?php
             	$ten = isset($datum) && $datum ? $datum->ten : '';
+            	$alias = isset($datum) && $datum ? $datum->alias : '';
             	$link = isset($datum) && $datum ? $datum->link : '';
             	$ma_cha = isset($datum) && $datum ? $datum->ma_cha : '';            	
             	$trang_thai = isset($datum) && $datum ? $datum->trang_thai : '';
@@ -300,6 +323,16 @@ $data = $menu->loadAll();
                 <div class="col-md-3 error">
                 	<p><?= $tenErr ?></p>
                 </div>
+            </div> 
+
+            <div class="form-group">
+                <label class="col-md-3 control-label">Alias</label>
+                <div class="col-md-5">						    		
+                   <input id="alias_ed" name="alias_ed" class="form-control" type="text" required value="<?= $alias ?>">
+                </div>
+                <!-- <div class="col-md-3 error">
+                	<p><?= $aliasErr ?></p>
+                </div> -->
             </div> 
 
             <div class="form-group">
@@ -354,13 +387,13 @@ $data = $menu->loadAll();
         </fieldset>
     </form>
 	</div>
-	<!-- // edit slider -->	
+	<!-- // edit menu -->	
 </div>
 
 <!-- =========================================================================== -->
 <script>
 	$(document).ready(function(){
-		$("#add_div").hide();
+		// $("#add_div").hide();
 		$("#edit_div").hide();		
 
 		$("#add_btn").click(function(){			
@@ -385,4 +418,14 @@ $data = $menu->loadAll();
 		document.getElementById( 'hinh' ).value = fileUrl;
 		document.getElementById( 'hinh_ed' ).value = fileUrl;
 	}
+</script>
+
+<script>
+	$(document).on('click','#alias', function(){		
+		str2alias('ten','alias');
+	});
+
+	$(document).on('click','#alias_ed', function(){		
+		str2alias('ten_ed','alias_ed');
+	});
 </script>
