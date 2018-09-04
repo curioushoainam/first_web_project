@@ -15,7 +15,7 @@ class Menu extends database {
 	}
 
 	function add($input = array()){
-		$sql = 'INSERT INTO `menu` (`ten`, `link`, `action`, `ma_cha`, `trang_thai`, `ngay_tao`, `ngay_cap_nhat`) VALUES (:ten, :link, :action, :ma_cha, :trang_thai, NOW(), NULL);';
+		$sql = 'INSERT INTO `menu` (`ten`, `link`, `action`, `ma_cha`, `trang_thai`, `ngay_tao`, `ngay_cap_nhat`, `alias`) VALUES (:ten, :link, :action, :ma_cha, :trang_thai, NOW(), NULL, :alias);';
 		$this->setQuery($sql);
 		return $this->execute($input);
 	}

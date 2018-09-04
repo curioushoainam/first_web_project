@@ -161,20 +161,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
 
         if(isset($_POST['don_gia'])){
-            $input['don_gia'] = $validation->test_input($_POST['don_gia']);
+            $input['don_gia'] = $validation->test_input($_POST['don_gia']);  
+            $input['don_gia'] = filter_var($input['don_gia'], FILTER_SANITIZE_NUMBER_INT);
             if(!is_numeric($input['don_gia'])){
-            	$input['don_gia'] = '';
+                viewArr($input['don_gia']);
+            	$input['don_gia'] = 0;
             	$don_giaErr = '* err';
             }
+
         } else {
             $don_giaErr = '* err';
         }
 
         if(isset($_POST['don_gia_cu'])){
             $input['don_gia_cu'] = $validation->test_input($_POST['don_gia_cu']);
+            $input['don_gia_cu'] = filter_var($input['don_gia_cu'], FILTER_SANITIZE_NUMBER_INT);
             if(!is_numeric($input['don_gia_cu'])){
-                $input['don_gia_cu'] = '';
-                $don_gia_cuErr = '* err';
+                $input['don_gia_cu'] = 0;                
             }
         } else {
             $don_gia_cuErr = '* err';
@@ -294,7 +297,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <form action="" method="post" enctype="multipart/form-data">	
 	<div class="">
 		<div class="row">
-			<div class="col-sm-6"><h3>Thay đổi thông tin</h3></div>
+			<div class="col-sm-6"><h4><a href="?view=product">Sản phẩm </a><span> >> Thay đổi thông tin</span></h4></div>
 			<div class="col-sm-6 align-content-center" style="margin-top: 20px">
 				<button class="btn btn-success" type="submit" value="true" name="product_update">Update</button>
 				<a type="button" class="btn btn-default" href="?view=product">Cancel</a>
@@ -315,11 +318,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		        			<tbody>
 		            		<tr>
 		            			<td class="leftCol success col-sm-3" style="font-size: 14px">Tên sản phẩm: <span class="error"><?= $tenErr?></span></td>
-		            			<td class="rightCol"><input type="text" name="ten" style="width: 100%; " value="<?= $input['ten'] ?>"></td>
+		            			<td class="rightCol"><input type="text" name="ten" id="ten" style="width: 100%; " value="<?= $input['ten'] ?>"></td>
 		            		</tr>
 		            		<tr>
 		            			<td class="leftCol success" style="font-size: 14px">Alias: <span class="error"><?= $aliasErr?></span></td>
-		            			<td class="rightCol"><input type="text" name="alias" style="width: 100%; " value="<?= $input['alias'] ?>"></td>
+		            			<td class="rightCol"><input type="text" name="alias" id="alias" style="width: 100%; " value="<?= $input['alias'] ?>"></td>
 		            		</tr>
 		            		<tr>
 		            			<td class="leftCol success" style="font-size: 14px">Mã nhóm: <span class="error"><?= $ma_nhomErr?></span></td>
@@ -372,7 +375,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <tr>
                                 <td class="leftCol success" style="font-size: 14px">Đơn giá cũ: <span class="error"><?= $don_gia_cuErr?></span></td>
                                 <td class="rightCol">                                   
-                                    <input id="don_gia" name="don_gia" style="width: 100%; " type="text" value="<?= number_format($input['don_gia_cu']) ?>">
+                                    <input id="don_gia_cu" name="don_gia_cu" style="width: 100%; " type="text" value="<?= number_format($input['don_gia_cu']) ?>">
                                 </td>
                             </tr>
 
@@ -608,3 +611,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 </script> 
 
+<script>
+    $(document).on('click','#alias', function(){        
+        str2alias('ten','alias');
+    });    
+</script>

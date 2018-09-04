@@ -260,7 +260,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <form action="" method="post" enctype="multipart/form-data">	
 	<div class="">
 		<div class="row">
-			<div class="col-sm-6"><h3>Thêm sản phẩm mới</h3></div>
+			<div class="col-sm-6"><h4><a href="?view=product">Sản phẩm </a><span> >> Thêm sản phẩm mới</span></h4></div>
 			<div class="col-sm-6 align-content-center" style="margin-top: 20px">
 				<button class="btn btn-success" type="submit" value="true" name="product_add">Add</button>
 				<a type="button" class="btn btn-default" href="?view=product_add">Cancel</a>
@@ -281,11 +281,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		        			<tbody>
 		            		<tr>
 		            			<td class="leftCol success col-sm-3" style="font-size: 14px">Tên sản phẩm: <span class="error"><?= $tenErr?></span></td>
-		            			<td class="rightCol"><input type="text" name="ten" style="width: 100%; "></td>
+		            			<td class="rightCol"><input type="text" id="ten" name="ten" style="width: 100%; "></td>
 		            		</tr>
 		            		<tr>
 		            			<td class="leftCol success" style="font-size: 14px">Alias: <span class="error"><?= $aliasErr?></span></td>
-		            			<td class="rightCol"><input type="text" name="alias" style="width: 100%; "></td>
+		            			<td class="rightCol"><input type="text" id="alias" name="alias" style="width: 100%; "></td>
 		            		</tr>
 		            		<tr>
 		            			<td class="leftCol success" style="font-size: 14px">Mã nhóm: <span class="error"><?= $ma_nhomErr?></span></td>
@@ -544,3 +544,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 </script> 
 
+<script>
+    $(document).on('click','#alias', function(){        
+        str2alias('ten','alias');
+    });    
+</script>
