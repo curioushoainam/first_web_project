@@ -22,6 +22,7 @@ if(isset($loadabout) && $loadabout)
 	foreach ($loadabout as $item)
 		$about = $item->gia_tri;
 ?>
+
 <div class="text-center">		
 	<?php 
 		if(isset($_SESSION['msgabout'])){
@@ -30,6 +31,7 @@ if(isset($loadabout) && $loadabout)
 		}
 	?>
 </div>
+
 <div tabbable> 
     <div class="col-md-10 col-md-offset-1 table-responsive">
 		<form action="" method="post">

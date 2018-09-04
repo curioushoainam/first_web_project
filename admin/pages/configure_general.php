@@ -56,10 +56,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 				$ngay_tao = date('Y-m-d H:i:s');
 				$result = $db->update('config',array('gia_tri'=>$ipgnr, 'trang_thai'=>1, 'ngay_tao'=>$ngay_tao), array('khoa'=>'generalInfo'));
 			if($result){
-				$_SESSION['msggnr'] = 'Cập nhật SMTP thành công';
+				$_SESSION['msggnr'] = 'Cập nhật General thành công';
 				
 			} else {
-				$_SESSION['msggnr'] = 'Cập nhật SMTP thất bại';
+				$_SESSION['msggnr'] = 'Cập nhật General thất bại';
 				
 			}
 		} 

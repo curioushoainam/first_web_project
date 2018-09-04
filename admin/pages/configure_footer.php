@@ -50,6 +50,7 @@ if(isset($loadf1) && $loadf1)
 		}
 	?>
 </div>
+
 <div> 
     <div class="tabbable">
       	<ul class="nav nav-tabs" id="footer">
@@ -187,7 +188,7 @@ if(isset($loadf3) && $loadf3)
 
 <?php
 $ipfooter4 = array(	
-	'catalog'=>NUll
+	'newsletter'=>NUll
 );
 
 if(isset($_POST['btn_f4']) && $_POST['btn_f4']){	

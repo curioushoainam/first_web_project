@@ -7,8 +7,9 @@ $validation = new Validation();
 $configure = new Configure();
 
 $config = $configure->getSMTPConfig();
-// viewArr($config);
-// exit();
+//viewArr($config);   
+$config = json_decode($config->gia_tri);
+//viewArr($config);
 
 $email=$subject=$content='';
 $emailErr=$subjectErr=$contentErr='';
@@ -38,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         
         if(!($emailErr||$subjectErr||$contentErr)){            
-            $result = sendMail($configure->getSMTPConfig(), $email, $subject, $content,1);
+            $result = sendMail($config, $email, $subject, $content,1);
             if($result){                
                 $email=$subject=$content='';
                 $feedback = '<h5 style="color:blue"><i>Gửi mail thành công</i></h5>';

@@ -3,7 +3,7 @@ class Menu extends database {
 	private $table = 'menu';
 
 	function loadAll(){
-		$sql = 'SELECT * FROM `'.$this->table.'` WHERE trang_thai=1' ;
+		$sql = 'SELECT * FROM `'.$this->table.'` WHERE trang_thai != 2' ;
 		$this->setQuery($sql);
 		return $this->loadRows();
 	}
