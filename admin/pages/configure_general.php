@@ -101,8 +101,8 @@ if(isset($loadgnr) && $loadgnr)
 				<tr><input type="text" name="address" style="width: 100%" value="<?= $gnr['address'] ?>"></tr>
 				<tr><p style="color: red"><?= $addressErr ?></p></tr>
 				<br>
-				<tr><label for="">Map</label></tr>
-				<tr><?php echo ckeditor("map", $gnr['map'], array('10em','100%')) ?></tr>				
+				<tr><label for="">Map</label></tr>				
+				<tr><textarea name="map" id="" rows="10em" style="width: 100%"><?= $gnr['map'] ?></textarea></tr>				
 				<tr><p style="color: red"><?= $mapErr ?></p></tr>
 				<br>
 				<tr><label for="">Company Email</label></tr>

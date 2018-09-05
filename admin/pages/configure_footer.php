@@ -103,10 +103,11 @@ $ipfooter2 = array(
 
 if(isset($_POST['btn_f2']) && $_POST['btn_f2']){	
 	if($_POST['naviHtml'])
-		$ipfooter2['naviHtml'] = $_POST['naviHtml'];
+		// $ipfooter2['naviHtml'] = $_POST['naviHtml'];
+		$ipf2 = $_POST['naviHtml'];
+		
+	// $ipf2 = json_encode($ipfooter2);
 	
-	
-	$ipf2 = json_encode($ipfooter2);
 	$ngay_tao = date('Y-m-d H:i:s');
 	$result = $db->update('config',array('gia_tri'=>$ipf2, 'trang_thai'=>1, 'ngay_tao'=>$ngay_tao), array('khoa'=>'footer2'));
 	if($result){
@@ -121,15 +122,17 @@ $loadf2 = $db->read('config',array('gia_tri'), array('khoa'=>'footer2'));
 
 if(isset($loadf2) && $loadf2)
 	foreach ($loadf2 as $item)
-		$ipfooter2 = json_decode($item->gia_tri,512);
+		$ipfooter2 = $item->gia_tri;
+		// $ipfooter2 = json_decode($item->gia_tri,512);
 ?>
 
 	        <div class="tab-pane " id="footer2">
 	        	<div class="col-md-8 col-md-offset-2 table-responsive">
 				<form action="" method="post">
 					<table class="table">
-						<tr><label for="">Mục User navigation</label></tr>											
-						<tr><?php echo ckeditor("naviHtml", $ipfooter2['naviHtml'], array('20em','100%')) ?></tr>
+						<br>
+						<tr><label for="">Mục User navigation</label></tr><br>
+						<tr><textarea name="naviHtml" id="" rows="20em" style="width: 100%"><?= $ipfooter2 ?></textarea></tr>
 					</table>
 
 					<button type="submit" class="btn btn-success pull-right" name="btn_f2" value="1">Submit</button>
@@ -148,10 +151,11 @@ $ipfooter3 = array(
 
 if(isset($_POST['btn_f3']) && $_POST['btn_f3']){	
 	if($_POST['catalog'])
-		$ipfooter3['catalog'] = $_POST['catalog'];
+		$ipf3 = $_POST['catalog'];
+		// $ipfooter3['catalog'] = $_POST['catalog'];
 	
 	
-	$ipf3 = json_encode($ipfooter3);
+	// $ipf3 = json_encode($ipfooter3);
 	$ngay_tao = date('Y-m-d H:i:s');
 	$result = $db->update('config',array('gia_tri'=>$ipf3, 'trang_thai'=>1, 'ngay_tao'=>$ngay_tao), array('khoa'=>'footer3'));
 	if($result){
@@ -166,15 +170,16 @@ $loadf3 = $db->read('config',array('gia_tri'), array('khoa'=>'footer3'));
 
 if(isset($loadf3) && $loadf3)
 	foreach ($loadf3 as $item)
-		$ipfooter3 = json_decode($item->gia_tri,512);
+		$ipfooter3 = $item->gia_tri;
+		// $ipfooter3 = json_decode($item->gia_tri,512);
 ?>
 
 	        <div class="tab-pane" id="footer3">
 	       		<div class="col-md-8 col-md-offset-2 table-responsive">
 				<form action="" method="post">
 					<table class="table">
-						<tr><label for="">Mục Categories</label></tr>											
-						<tr><?php echo ckeditor("catalog", $ipfooter3['catalog'], array('20em','100%')) ?></tr>
+						<tr><label for="">Mục Categories</label></tr>
+						<tr><textarea name="catalog" id="" rows="20em" style="width: 100%"><?= $ipfooter3 ?></textarea></tr>
 					</table>
 
 					<button type="submit" class="btn btn-success pull-right" name="btn_f3" value="1">Submit</button>
@@ -190,13 +195,14 @@ if(isset($loadf3) && $loadf3)
 $ipfooter4 = array(	
 	'newsletter'=>NUll
 );
-
+$ipf4 ='';
 if(isset($_POST['btn_f4']) && $_POST['btn_f4']){	
 	if($_POST['newsletter'])
-		$ipfooter4['newsletter'] = $_POST['newsletter'];
+		$ipf4 = $_POST['newsletter'];
+		// $ipfooter4['newsletter'] = $_POST['newsletter'];
 	
 	
-	$ipf4 = json_encode($ipfooter4);
+	// $ipf4 = json_encode($ipfooter4);
 	$ngay_tao = date('Y-m-d H:i:s');
 	$result = $db->update('config',array('gia_tri'=>$ipf4, 'trang_thai'=>1, 'ngay_tao'=>$ngay_tao), array('khoa'=>'footer4'));
 	if($result){
@@ -211,15 +217,15 @@ $loadf4 = $db->read('config',array('gia_tri'), array('khoa'=>'footer4'));
 
 if(isset($loadf4) && $loadf4)
 	foreach ($loadf4 as $item)
-		$ipfooter4 = json_decode($item->gia_tri,512);
+		$ipfooter4 = $item->gia_tri;
 ?>
 
 	        <div class="tab-pane" id="footer4">
 	        	<div class="col-md-8 col-md-offset-2 table-responsive">
 				<form action="" method="post">
 					<table class="table">
-						<tr><label for="">Mục Newsletter</label></tr>											
-						<tr><?php echo ckeditor("newsletter", $ipfooter4['newsletter'], array('20em','100%')) ?></tr>
+						<tr><label for="">Mục Newsletter</label></tr>
+						<tr><textarea name="newsletter" id="" rows="20em" style="width: 100%"><?= $ipfooter4 ?></textarea></tr>
 					</table>
 
 					<button type="submit" class="btn btn-success pull-right" name="btn_f4" value="1">Submit</button>
