@@ -39,10 +39,13 @@ if (!checkpermission()){
 	<link href="./css/error.css" rel="stylesheet" />
 	<link href="./css/add_account.css" rel="stylesheet" />
 	<link href="./css/pagination.css" rel="stylesheet" />
-	<link href="./css/product_add.css" rel="stylesheet" />	
+	<link href="./css/product_add.css" rel="stylesheet" />		
 	
 	<script src="./js/checktree.js" type="text/javascript"></script>
 	<link href="./css/checktree.css" rel="stylesheet" />
+
+	<script src="./js/toastr.js" type="text/javascript"></script>
+	<link href="./css/toastr.css" rel="stylesheet" >
 
 </head>
 <body>	
